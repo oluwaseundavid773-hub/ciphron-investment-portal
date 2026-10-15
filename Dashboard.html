@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Investor Dashboard | Ciphron Investment & Finance</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -25,48 +24,29 @@
             }
         }
     </script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Chart.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Direct Card Payment Gateway SDKs -->
-    <script src="https://js.paystack.co/v1/inline.js"></script>
-    <script src="https://checkout.flutterwave.com/v3.js"></script>
-    
     <style>
         body { font-family: 'Inter', sans-serif; }
-
-        /* Continuous smooth scrolling marquee animation */
         @keyframes scrollTicker {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-
         .animate-marquee {
             display: flex !important;
             width: max-content !important;
             animation: scrollTicker 20s linear infinite !important;
         }
-
-        .animate-marquee:hover {
-            animation-play-state: paused !important;
-        }
+        .animate-marquee:hover { animation-play-state: paused !important; }
     </style>
 </head>
 <body class="bg-brand-dark text-slate-100 flex h-screen overflow-hidden">
 
-    <!-- Mobile Sidebar Backdrop -->
-    <div id="mobileBackdrop" onclick="toggleMobileMenu()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-30 hidden md:hidden"></div>
-
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar -->
     <aside id="sidebar" class="w-64 bg-slate-900 border-r border-brand-border flex flex-col fixed md:relative h-full z-40 transition-transform duration-300 -translate-x-full md:translate-x-0">
-        <!-- Logo Header -->
         <div class="p-6 flex items-center justify-between border-b border-brand-border">
-            <div class="flex items-center space-x-3">
+            <a href="index.html" class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
                     <i class="fa-solid fa-shield-halved text-slate-950 text-xl font-bold"></i>
                 </div>
@@ -74,13 +54,9 @@
                     <h1 class="font-bold text-lg tracking-wider text-white">CIPHRON</h1>
                     <p class="text-xs text-emerald-400 font-medium tracking-widest uppercase">Investment & Finance</p>
                 </div>
-            </div>
-            <button onclick="toggleMobileMenu()" class="md:hidden text-slate-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
+            </a>
         </div>
 
-        <!-- Navigation Links -->
         <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
             <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">
                 <i class="fa-solid fa-chart-pie w-5"></i>
@@ -88,7 +64,7 @@
             </a>
             <a href="investments.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
                 <i class="fa-solid fa-layer-group w-5"></i>
-                <span>Investment Plans</span>
+                <span>My Investments</span>
             </a>
             <a href="kyc.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
                 <i class="fa-solid fa-user-shield w-5"></i>
@@ -96,17 +72,16 @@
             </a>
         </nav>
 
-        <!-- User Quick Profile / Logout -->
         <div class="p-4 border-t border-brand-border flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400">
-                    CI
+                <div class="w-10 h-10 rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400" id="userAvatar">
+                    U
                 </div>
                 <div>
-                    <p class="text-sm font-semibold text-white">Oluwaseun</p>
+                    <p class="text-sm font-semibold text-white" id="userNameDisplay">Investor</p>
                     <p class="text-[11px] text-emerald-400 flex items-center space-x-1">
                         <i class="fa-solid fa-circle text-[8px]"></i>
-                        <span>Verified Investor</span>
+                        <span>Verified Account</span>
                     </p>
                 </div>
             </div>
@@ -116,27 +91,14 @@
         </div>
     </aside>
 
-    <!-- Main Content Area -->
+    <!-- Main Content -->
     <div class="flex-1 flex flex-col h-screen overflow-y-auto w-full">
-        
-        <!-- Top Header Bar -->
         <header class="h-20 bg-slate-900/80 backdrop-blur border-b border-brand-border px-4 md:px-8 flex items-center justify-between sticky top-0 z-20">
-            <div class="flex items-center space-x-4">
-                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-white focus:outline-none">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-                <div>
-                    <h2 class="text-lg md:text-xl font-bold text-white">USD Investment Portal</h2>
-                    <p class="text-xs text-slate-400 hidden sm:block">Real-time portfolio tracking & direct card funding.</p>
-                </div>
+            <div>
+                <h2 class="text-lg md:text-xl font-bold text-white">USD Investment Portal</h2>
+                <p class="text-xs text-slate-400 hidden sm:block">Real-time portfolio tracking & direct card funding.</p>
             </div>
-
-            <!-- Quick Action Buttons -->
             <div class="flex items-center space-x-2 md:space-x-3">
-                <button type="button" onclick="openModal('calculatorModal')" class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition cursor-pointer">
-                    <i class="fa-solid fa-calculator"></i>
-                    <span class="hidden sm:inline">Calculate Returns</span>
-                </button>
                 <button type="button" onclick="openModal('depositModal')" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3.5 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center space-x-1.5 text-xs md:text-sm cursor-pointer">
                     <i class="fa-solid fa-credit-card"></i>
                     <span>Deposit USD</span>
@@ -148,901 +110,330 @@
             </div>
         </header>
 
-        <!-- Custom Animated Live Crypto & Forex Ticker Bar -->
+        <!-- Ticker -->
         <div class="w-full bg-slate-950/90 border-b border-brand-border py-2.5 overflow-hidden shrink-0 relative z-10">
             <div class="flex whitespace-nowrap animate-marquee space-x-8 text-xs font-medium">
-                
-                <!-- Bitcoin -->
                 <div class="flex items-center space-x-2 shrink-0">
                     <span class="text-amber-400 font-bold"><i class="fa-brands fa-bitcoin"></i> BTC/USD</span>
                     <span class="text-white font-semibold">$67,420.50</span>
-                    <span class="text-emerald-400 text-[10px] font-bold"><i class="fa-solid fa-caret-up"></i> +2.84%</span>
+                    <span class="text-emerald-400 text-[10px] font-bold">+2.84%</span>
                 </div>
-
-                <span class="text-slate-700">|</span>
-
-                <!-- Ethereum -->
                 <div class="flex items-center space-x-2 shrink-0">
                     <span class="text-indigo-400 font-bold"><i class="fa-brands fa-ethereum"></i> ETH/USD</span>
                     <span class="text-white font-semibold">$3,540.10</span>
-                    <span class="text-emerald-400 text-[10px] font-bold"><i class="fa-solid fa-caret-up"></i> +1.62%</span>
+                    <span class="text-emerald-400 text-[10px] font-bold">+1.62%</span>
                 </div>
-
-                <span class="text-slate-700">|</span>
-
-                <!-- Gold -->
-                <div class="flex items-center space-x-2 shrink-0">
-                    <span class="text-amber-300 font-bold"><i class="fa-solid fa-coins"></i> XAU/USD (Gold)</span>
-                    <span class="text-white font-semibold">$2,735.80</span>
-                    <span class="text-emerald-400 text-[10px] font-bold"><i class="fa-solid fa-caret-up"></i> +0.45%</span>
-                </div>
-
-                <span class="text-slate-700">|</span>
-
-                <!-- EUR/USD -->
-                <div class="flex items-center space-x-2 shrink-0">
-                    <span class="text-blue-400 font-bold"><i class="fa-solid fa-dollar-sign"></i> EUR/USD</span>
-                    <span class="text-white font-semibold">1.0864</span>
-                    <span class="text-red-400 text-[10px] font-bold"><i class="fa-solid fa-caret-down"></i> -0.12%</span>
-                </div>
-
-                <span class="text-slate-700">|</span>
-
-                <!-- Solana -->
-                <div class="flex items-center space-x-2 shrink-0">
-                    <span class="text-purple-400 font-bold"><i class="fa-solid fa-bolt"></i> SOL/USD</span>
-                    <span class="text-white font-semibold">$182.40</span>
-                    <span class="text-emerald-400 text-[10px] font-bold"><i class="fa-solid fa-caret-up"></i> +5.10%</span>
-                </div>
-
-                <span class="text-slate-700">|</span>
-
-                <!-- Repeat items for seamless infinite scroll -->
-                <div class="flex items-center space-x-2 shrink-0">
-                    <span class="text-amber-400 font-bold"><i class="fa-brands fa-bitcoin"></i> BTC/USD</span>
-                    <span class="text-white font-semibold">$67,420.50</span>
-                    <span class="text-emerald-400 text-[10px] font-bold"><i class="fa-solid fa-caret-up"></i> +2.84%</span>
-                </div>
-
-                <span class="text-slate-700">|</span>
-
-                <div class="flex items-center space-x-2 shrink-0">
-                    <span class="text-indigo-400 font-bold"><i class="fa-brands fa-ethereum"></i> ETH/USD</span>
-                    <span class="text-white font-semibold">$3,540.10</span>
-                    <span class="text-emerald-400 text-[10px] font-bold"><i class="fa-solid fa-caret-up"></i> +1.62%</span>
-                </div>
-
             </div>
         </div>
 
-        <!-- Main Body Container -->
         <main class="p-4 md:p-8 space-y-8 max-w-7xl mx-auto w-full box-border">
-
             <!-- Metrics Summary Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm relative">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-xs text-slate-400 font-medium">Available Unlocked Balance</p>
-                            <h3 id="userBalance" class="text-2xl font-bold text-white mt-1">$0.00</h3>
-                        </div>
-                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
-                            <i class="fa-solid fa-wallet"></i>
-                        </div>
-                    </div>
-                    <p class="text-[11px] text-emerald-400 font-medium mt-3 flex items-center">
-                        <i class="fa-solid fa-circle-check mr-1"></i> Matured Yield Only
-                    </p>
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+                    <p class="text-xs text-slate-400 font-medium">Available Unlocked Balance</p>
+                    <h3 id="userBalance" class="text-2xl font-bold text-white mt-1">$0.00</h3>
+                    <p class="text-[11px] text-emerald-400 font-medium mt-3">Ready for Withdrawal</p>
                 </div>
 
-                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm relative">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-xs text-slate-400 font-medium">Active Staked Capital</p>
-                            <h3 id="stakedCapitalDisplay" class="text-2xl font-bold text-white mt-1">$0.00</h3>
-                        </div>
-                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
-                            <i class="fa-solid fa-lock"></i>
-                        </div>
-                    </div>
-                    <p class="text-[11px] text-amber-400 mt-3 flex items-center">
-                        <i class="fa-solid fa-clock mr-1"></i> Locked until plan maturity
-                    </p>
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+                    <p class="text-xs text-slate-400 font-medium">Active Staked Capital</p>
+                    <h3 id="stakedCapitalDisplay" class="text-2xl font-bold text-white mt-1">$0.00</h3>
+                    <p id="stakedStatusText" class="text-[11px] text-slate-500 mt-3">No Active Investment</p>
                 </div>
 
-                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm relative">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-xs text-slate-400 font-medium">Total Profit Earned</p>
-                            <h3 id="totalProfitDisplay" class="text-2xl font-bold text-emerald-400 mt-1">+$0.00</h3>
-                        </div>
-                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
-                            <i class="fa-solid fa-chart-line"></i>
-                        </div>
-                    </div>
-                    <p class="text-[11px] text-emerald-400 font-medium mt-3 flex items-center">
-                        <i class="fa-solid fa-arrow-trend-up mr-1"></i> Accumulates after investment
-                    </p>
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+                    <p class="text-xs text-slate-400 font-medium">Total Profit Earned</p>
+                    <h3 id="totalProfitDisplay" class="text-2xl font-bold text-emerald-400 mt-1">+$0.00</h3>
+                    <p id="growthRateBadge" class="text-[11px] text-emerald-400 font-medium mt-3">Daily Incremental Yield Active</p>
                 </div>
 
-                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm relative">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-xs text-slate-400 font-medium">Total Cashouts</p>
-                            <h3 id="totalCashoutsDisplay" class="text-2xl font-bold text-white mt-1">$0.00</h3>
-                        </div>
-                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
-                            <i class="fa-solid fa-hand-holding-dollar"></i>
-                        </div>
-                    </div>
-                    <p class="text-[11px] text-slate-400 mt-3">Processed via USDT / Wire</p>
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+                    <p class="text-xs text-slate-400 font-medium">Total Cashouts</p>
+                    <h3 id="totalCashoutsDisplay" class="text-2xl font-bold text-white mt-1">$0.00</h3>
+                    <p class="text-[11px] text-slate-400 mt-3">Verified Payouts</p>
                 </div>
             </div>
 
-            <!-- Interactive Portfolio Performance Chart -->
-            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-sm space-y-4">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-brand-border/60 pb-4">
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <h3 class="text-lg font-bold text-white">Portfolio Yield Performance</h3>
-                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">LIVE METRICS</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-0.5">Automated compounding growth across your active staked capital.</p>
-                    </div>
-                    
-                    <!-- Filter Controls -->
-                    <div class="flex items-center space-x-2 bg-slate-950 p-1 rounded-xl border border-brand-border text-xs">
-                        <button type="button" onclick="updateChartTimeframe('7D')" id="btn-7D" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">7D</button>
-                        <button type="button" onclick="updateChartTimeframe('30D')" id="btn-30D" class="px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold shadow transition">30D</button>
-                        <button type="button" onclick="updateChartTimeframe('90D')" id="btn-90D" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">90D</button>
-                    </div>
-                </div>
-
-                <!-- Canvas Container -->
-                <div class="relative h-64 sm:h-72 w-full pt-2">
-                    <canvas id="portfolioChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Investment Plans Section Header -->
+            <!-- Investment Plans -->
             <div id="plans-section" class="space-y-4">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                    <div>
-                        <h3 class="text-lg font-bold text-white">Available Investment Plans (USD Only)</h3>
-                        <p class="text-xs text-slate-400">Select a tier to deposit and start receiving daily yields.</p>
-                    </div>
-                    <button type="button" onclick="openModal('calculatorModal')" class="text-xs text-emerald-400 hover:text-emerald-300 font-semibold flex items-center space-x-1 transition cursor-pointer">
-                        <i class="fa-solid fa-calculator"></i>
-                        <span>Open ROI Estimator</span>
-                    </button>
-                </div>
-
-                <!-- Plans Grid -->
+                <h3 class="text-lg font-bold text-white">Select Investment Plan</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Starter Plan -->
-                    <div class="bg-brand-card border border-brand-border rounded-2xl p-6 flex flex-col justify-between space-y-6 hover:border-emerald-500/50 transition">
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-xs font-semibold px-2.5 py-1 bg-slate-800 text-slate-300 rounded-lg">30 Days Lock-Up</span>
-                                <i class="fa-solid fa-seedling text-emerald-400"></i>
-                            </div>
-                            <h4 class="text-xl font-bold text-white">Starter Tier</h4>
-                            <div class="mt-4 flex items-baseline">
-                                <span class="text-3xl font-extrabold text-emerald-400">1.2%</span>
-                                <span class="text-xs text-slate-400 ml-1">/ Daily ROI</span>
-                            </div>
-                            <ul class="mt-4 space-y-2 text-xs text-slate-300">
-                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Min: $100 — Max: $999</li>
-                                <li class="flex items-center"><i class="fa-solid fa-lock text-amber-400 mr-2"></i> Capital Locked for 30 Days</li>
-                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Direct Card / Crypto Funding</li>
-                            </ul>
-                        </div>
-                        <button type="button" onclick="openPlanModal('Starter Tier', '1.2%', 100, 999, 30)" class="w-full bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 border border-brand-border text-white font-semibold py-2.5 rounded-xl transition text-xs cursor-pointer">
-                            Fund Starter Plan
-                        </button>
+                    <div class="bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4">
+                        <h4 class="text-xl font-bold text-white">Starter Tier (1.2% Daily)</h4>
+                        <p class="text-xs text-slate-400">$100 - $999 USD • 30 Days Lock</p>
+                        <button onclick="selectPlanAndOpenModal('Starter Tier', 1.2, 100)" class="w-full bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">Select Plan</button>
                     </div>
-
-                    <!-- Growth Plan -->
-                    <div class="bg-brand-card border-2 border-emerald-500/80 rounded-2xl p-6 flex flex-col justify-between space-y-6 relative shadow-lg shadow-emerald-500/10">
-                        <span class="absolute -top-3 right-6 bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider">Most Popular</span>
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-xs font-semibold px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg">60 Days Lock-Up</span>
-                                <i class="fa-solid fa-bolt text-emerald-400"></i>
-                            </div>
-                            <h4 class="text-xl font-bold text-white">Growth Tier</h4>
-                            <div class="mt-4 flex items-baseline">
-                                <span class="text-3xl font-extrabold text-emerald-400">1.8%</span>
-                                <span class="text-xs text-slate-400 ml-1">/ Daily ROI</span>
-                            </div>
-                            <ul class="mt-4 space-y-2 text-xs text-slate-300">
-                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Min: $1,000 — Max: $4,999</li>
-                                <li class="flex items-center"><i class="fa-solid fa-lock text-amber-400 mr-2"></i> Capital Locked for 60 Days</li>
-                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Auto-Deduct Bank Card</li>
-                            </ul>
-                        </div>
-                        <button type="button" onclick="openPlanModal('Growth Tier', '1.8%', 1000, 4999, 60)" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs shadow-md shadow-emerald-500/20 cursor-pointer">
-                            Fund Growth Plan
-                        </button>
+                    <div class="bg-brand-card border-2 border-emerald-500 rounded-2xl p-6 space-y-4">
+                        <h4 class="text-xl font-bold text-white">Growth Tier (1.8% Daily)</h4>
+                        <p class="text-xs text-slate-400">$1,000 - $4,999 USD • 60 Days Lock</p>
+                        <button onclick="selectPlanAndOpenModal('Growth Tier', 1.8, 1000)" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">Select Plan</button>
                     </div>
-
-                    <!-- Institutional Plan -->
-                    <div class="bg-brand-card border border-brand-border rounded-2xl p-6 flex flex-col justify-between space-y-6 hover:border-emerald-500/50 transition">
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-xs font-semibold px-2.5 py-1 bg-slate-800 text-slate-300 rounded-lg">90 Days Lock-Up</span>
-                                <i class="fa-solid fa-crown text-amber-400"></i>
-                            </div>
-                            <h4 class="text-xl font-bold text-white">Institutional Tier</h4>
-                            <div class="mt-4 flex items-baseline">
-                                <span class="text-3xl font-extrabold text-emerald-400">2.5%</span>
-                                <span class="text-xs text-slate-400 ml-1">/ Daily ROI</span>
-                            </div>
-                            <ul class="mt-4 space-y-2 text-xs text-slate-300">
-                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Min: $5,000 — Max: $50,000</li>
-                                <li class="flex items-center"><i class="fa-solid fa-lock text-amber-400 mr-2"></i> Capital Locked for 90 Days</li>
-                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Instant Wire / VIP Card Limits</li>
-                            </ul>
-                        </div>
-                        <button type="button" onclick="openPlanModal('Institutional Tier', '2.5%', 5000, 50000, 90)" class="w-full bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 border border-brand-border text-white font-semibold py-2.5 rounded-xl transition text-xs cursor-pointer">
-                            Fund Institutional Plan
-                        </button>
+                    <div class="bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4">
+                        <h4 class="text-xl font-bold text-white">Institutional Tier (2.5% Daily)</h4>
+                        <p class="text-xs text-slate-400">$5,000 - $50,000 USD • 90 Days Lock</p>
+                        <button onclick="selectPlanAndOpenModal('Institutional Tier', 2.5, 5000)" class="w-full bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">Select Plan</button>
                     </div>
                 </div>
             </div>
-
-            <!-- Referral & Affiliate Program Section -->
-            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-sm space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-brand-border/60 pb-4">
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <h3 class="text-lg font-bold text-white">Partner Referral Program</h3>
-                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20 uppercase">5% Instant Bonus</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-0.5">Invite new investors and earn a 5% instant commission on their active deposits.</p>
-                    </div>
-                    <div class="flex items-center space-x-4 bg-slate-950 px-4 py-2 rounded-xl border border-brand-border">
-                        <div>
-                            <p class="text-[10px] text-slate-400">Total Referrals</p>
-                            <p class="text-sm font-bold text-white">0 Partners</p>
-                        </div>
-                        <div class="h-8 w-px bg-brand-border"></div>
-                        <div>
-                            <p class="text-[10px] text-slate-400">Earned Commissions</p>
-                            <p class="text-sm font-bold text-emerald-400">+$0.00 USD</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Referral Link Copy Box -->
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-                    <div class="md:col-span-8">
-                        <label class="block text-xs text-slate-300 font-medium mb-1.5">Your Unique Affiliate Link</label>
-                        <div class="flex items-center space-x-2 bg-slate-950 border border-brand-border rounded-xl p-1.5 pl-4">
-                            <i class="fa-solid fa-link text-emerald-400 text-xs"></i>
-                            <input type="text" id="referralLinkInput" value="https://ciphron.com/ref/oluwaseun" readonly class="bg-transparent border-0 text-xs text-slate-200 font-mono flex-1 focus:outline-none">
-                            <button type="button" onclick="copyReferralLink()" id="copyBtn" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition flex items-center space-x-1.5 cursor-pointer shrink-0">
-                                <i class="fa-solid fa-copy"></i>
-                                <span>Copy Link</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="md:col-span-4 bg-slate-950/60 border border-brand-border/60 p-3.5 rounded-xl flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-coins"></i>
-                        </div>
-                        <p class="text-[11px] text-slate-300 leading-snug">
-                            Commissions are credited directly to your <strong>Unlocked Balance</strong> instantly upon deposit confirmation.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Institutional Security & Trust Badges Section -->
-            <div class="bg-slate-900/40 border border-brand-border rounded-2xl p-6">
-                <div class="text-center max-w-xl mx-auto mb-6">
-                    <h4 class="text-sm font-bold text-white uppercase tracking-wider">Institutional Grade Security & Compliance</h4>
-                    <p class="text-[11px] text-slate-400 mt-1">Your capital and transactions are fully protected by multi-layered cryptographic safeguards.</p>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    <div class="bg-brand-card border border-brand-border p-4 rounded-xl flex flex-col items-center justify-center space-y-2">
-                        <i class="fa-solid fa-lock text-emerald-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">256-Bit SSL</span>
-                        <span class="text-[10px] text-slate-400">Bank-Grade Encryption</span>
-                    </div>
-                    <div class="bg-brand-card border border-brand-border p-4 rounded-xl flex flex-col items-center justify-center space-y-2">
-                        <i class="fa-solid fa-shield-halved text-emerald-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">PCI-DSS Level 1</span>
-                        <span class="text-[10px] text-slate-400">Secure Card Processing</span>
-                    </div>
-                    <div class="bg-brand-card border border-brand-border p-4 rounded-xl flex flex-col items-center justify-center space-y-2">
-                        <i class="fa-solid fa-cloud-shield text-emerald-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">Cloudflare Secured</span>
-                        <span class="text-[10px] text-slate-400">DDoS & Firewall Shield</span>
-                    </div>
-                    <div class="bg-brand-card border border-brand-border p-4 rounded-xl flex flex-col items-center justify-center space-y-2">
-                        <i class="fa-solid fa-vault text-amber-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">Cold Storage Vault</span>
-                        <span class="text-[10px] text-slate-400">Offline Capital Reserve</span>
-                    </div>
-                </div>
-            </div>
-
         </main>
     </div>
 
-    <!-- Floating Live Support Chat Button -->
-    <button type="button" onclick="toggleChatWidget()" class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-slate-950 p-4 rounded-full shadow-2xl shadow-emerald-500/40 transition-all duration-300 transform hover:scale-105 flex items-center justify-center cursor-pointer group">
-        <i class="fa-solid fa-headset text-xl group-hover:rotate-12 transition-transform"></i>
-        <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-400 border-2 border-slate-900"></span>
-        </span>
-    </button>
-
-    <!-- Support Chat Window Popup -->
-    <div id="chatWidget" class="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-brand-card border border-brand-border rounded-3xl shadow-2xl overflow-hidden hidden flex-col transition-all duration-300">
-        <div class="bg-slate-900 p-4 border-b border-brand-border flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="relative">
-                    <div class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-bold">
-                        <i class="fa-solid fa-user-shield"></i>
-                    </div>
-                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border-2 border-slate-900 rounded-full"></span>
-                </div>
-                <div>
-                    <h4 class="text-sm font-bold text-white">Ciphron Concierge</h4>
-                    <p class="text-[10px] text-emerald-400 font-medium">Online | VIP USD Desk</p>
-                </div>
+  <!-- MODAL: Institutional Deposit Vault -->
+<div id="depositModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-brand-card border border-brand-border rounded-2xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <div>
+                <h3 class="text-lg font-bold text-white">Deposit to CIPHRON Vault</h3>
+                <p class="text-xs text-emerald-400 font-medium">Institutional Treasury Vault</p>
             </div>
-            <button type="button" onclick="toggleChatWidget()" class="text-slate-400 hover:text-white transition p-1">
-                <i class="fa-solid fa-xmark text-lg"></i>
+            <button type="button" onclick="closeModal('depositModal')" class="text-slate-400 hover:text-white text-xl p-1">
+                <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
-        <div id="chatMessages" class="p-4 h-72 overflow-y-auto space-y-3 text-xs bg-slate-950/60">
-            <div class="flex items-start space-x-2">
-                <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] shrink-0 mt-0.5">
-                    <i class="fa-solid fa-robot"></i>
-                </div>
-                <div class="bg-slate-800 border border-brand-border p-3 rounded-2xl rounded-tl-none text-slate-200 max-w-[85%] leading-relaxed">
-                    Hello <strong>Oluwaseun</strong>! Welcome to Ciphron VIP Support. How can we assist with your USD investments today?
-                </div>
+        <form onsubmit="handleDepositSubmit(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs text-slate-300 font-medium mb-1.5">Deposit Amount ($ USD)</label>
+                <input type="number" id="depositAmountInput" min="100" placeholder="1000" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
             </div>
-        </div>
 
-        <div class="p-2 bg-slate-900/80 border-t border-brand-border/60 flex gap-1.5 overflow-x-auto text-[10px]">
-            <button type="button" onclick="sendQuickMessage('How do daily yields work?')" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-brand-border hover:bg-emerald-500 hover:text-slate-950 transition whitespace-nowrap">Yield Info</button>
-            <button type="button" onclick="sendQuickMessage('What is the minimum card deposit?')" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-brand-border hover:bg-emerald-500 hover:text-slate-950 transition whitespace-nowrap">Min Deposit</button>
-            <button type="button" onclick="sendQuickMessage('How long are funds locked?')" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-brand-border hover:bg-emerald-500 hover:text-slate-950 transition whitespace-nowrap">Lock-Up Policy</button>
-        </div>
+            <div>
+                <label class="block text-xs text-slate-300 font-medium mb-1.5">Select Plan Tier</label>
+                <select id="depositPlanSelect" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    <option value="Starter Tier|1.2">Starter Tier (1.2% Daily • 30 Days)</option>
+                    <option value="Growth Tier|1.8" selected>Growth Tier (1.8% Daily • 60 Days)</option>
+                    <option value="Institutional Tier|2.5">Institutional Tier (2.5% Daily • 90 Days)</option>
+                </select>
+            </div>
 
-        <form onsubmit="handleChatMessageSubmit(event)" class="p-3 bg-slate-900 border-t border-brand-border flex items-center space-x-2">
-            <input type="text" id="chatInput" placeholder="Type a message..." required class="flex-1 bg-slate-950 border border-brand-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
-            <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 p-2 rounded-xl transition cursor-pointer shrink-0">
-                <i class="fa-solid fa-paper-plane text-xs"></i>
+            <!-- Payment Method Selector (Wire Removed) -->
+            <div>
+                <label class="block text-xs text-slate-300 font-medium mb-1.5">Payment Method / Channel</label>
+                <select id="paymentChannelSelect" onchange="window.switchPaymentChannel(this.value)" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    <option value="trc20" selected>USDT (TRON / TRC-20) — Fast & Low Fee</option>
+                    <option value="erc20">Ethereum / USDT (ERC-20)</option>
+                    <option value="btc">Bitcoin (BTC) Vault</option>
+                </select>
+            </div>
+
+            <!-- DYNAMIC PAYMENT BOX CONTAINER -->
+            <div id="paymentBoxContainer" class="bg-slate-950 border border-brand-border rounded-xl p-4 space-y-3">
+                <!-- Content injected via JavaScript -->
+            </div>
+
+            <div>
+                <label class="block text-xs text-slate-300 font-medium mb-1.5">Transaction Ref / TxID / Sender Name</label>
+                <input type="text" id="depositTxRef" placeholder="Paste your transfer reference, TxID, or sender name" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+            </div>
+
+            <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm cursor-pointer">
+                Submit Deposit For Treasury Verification
             </button>
         </form>
     </div>
+</div>
 
-    <!-- MODAL 1: ROI Yield Calculator Modal -->
-    <div id="calculatorModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-brand-card border border-brand-border rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h3 class="text-xl font-bold text-white flex items-center space-x-2">
-                        <i class="fa-solid fa-calculator text-emerald-400"></i>
-                        <span>Yield Calculator</span>
-                    </h3>
-                    <p class="text-xs text-slate-400 mt-0.5">Estimate your daily and total returns before investing.</p>
-                </div>
-                <button type="button" onclick="closeModal('calculatorModal')" class="text-slate-400 hover:text-white text-xl p-1">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <div class="space-y-6">
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-xs font-semibold text-slate-300">Deposit Amount ($ USD)</label>
-                        <span id="sliderValue" class="text-lg font-bold text-emerald-400">$2,500</span>
-                    </div>
-                    <input type="range" id="roiAmountSlider" min="100" max="50000" step="100" value="2500" class="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-emerald-500">
-                    <div class="flex justify-between text-[10px] text-slate-500 mt-1 font-medium">
-                        <span>$100</span>
-                        <span>$25,000</span>
-                        <span>$50,000</span>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-2">Select Duration Tier</label>
-                    <div class="grid grid-cols-3 gap-3">
-                        <button type="button" onclick="selectCalcPlan(1.2, 30, this)" class="plan-btn bg-slate-800 text-slate-300 border border-brand-border py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer text-center">
-                            30 Days
-                            <span class="block text-[10px] text-emerald-400 font-bold mt-0.5">1.2% / Day</span>
-                        </button>
-                        <button type="button" onclick="selectCalcPlan(1.8, 60, this)" class="plan-btn bg-emerald-500 text-slate-950 font-bold border border-emerald-400 py-2.5 rounded-xl text-xs transition cursor-pointer text-center shadow-lg shadow-emerald-500/20">
-                            60 Days
-                            <span class="block text-[10px] text-slate-900 font-extrabold mt-0.5">1.8% / Day</span>
-                        </button>
-                        <button type="button" onclick="selectCalcPlan(2.5, 90, this)" class="plan-btn bg-slate-800 text-slate-300 border border-brand-border py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer text-center">
-                            90 Days
-                            <span class="block text-[10px] text-emerald-400 font-bold mt-0.5">2.5% / Day</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="bg-slate-950 border border-brand-border rounded-2xl p-4 grid grid-cols-3 gap-3 text-center">
-                    <div>
-                        <p class="text-[10px] text-slate-400">Daily Return</p>
-                        <p id="calcDailyReturn" class="text-base font-bold text-white mt-1">$45.00</p>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-slate-400">Total Net Profit</p>
-                        <p id="calcTotalProfit" class="text-base font-bold text-emerald-400 mt-1">+$2,700.00</p>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-slate-400">Final Payout</p>
-                        <p id="calcFinalBalance" class="text-base font-bold text-white mt-1">$5,200.00</p>
-                    </div>
-                </div>
-
-                <button type="button" onclick="closeModal('calculatorModal'); openModal('depositModal');" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-xs flex items-center justify-center space-x-2 cursor-pointer">
-                    <span>Proceed to Deposit</span>
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL 2: Deposit Modal with Direct Card Deduction -->
-    <div id="depositModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-brand-card border border-brand-border rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold text-white">Deposit USD Funds</h3>
-                <button type="button" onclick="closeModal('depositModal')" class="text-slate-400 hover:text-white text-xl p-1"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <p class="text-xs text-slate-400 mb-6">Enter deposit amount and select direct bank card deduction or crypto.</p>
-            
-            <form onsubmit="handleLiveDepositSubmit(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Deposit Amount ($ USD)</label>
-                    <input type="number" id="depositAmountInput" min="100" placeholder="500" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
-                </div>
-                <div>
-                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Gateway / Payment Method</label>
-                    <select id="paymentGatewaySelect" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
-                        <option value="card_direct">Direct Bank Card Deduction (Visa / Mastercard USD)</option>
-                        <option value="usdt_crypto">USDT / USDC Digital Dollar (TRC-20 / ERC-20)</option>
-                        <option value="bank_wire">Direct Wire Bank Transfer (USD)</option>
-                    </select>
-                </div>
-                
-                <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center space-x-2 text-[11px] text-emerald-400">
-                    <i class="fa-solid fa-shield-check text-sm"></i>
-                    <span>Money will be debited directly from your card via 256-Bit SSL encrypted checkout.</span>
-                </div>
-
-                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm cursor-pointer flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-lock"></i>
-                    <span>Confirm & Pay USD</span>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL 3: Smart Cashout/Withdrawal Modal -->
+    <!-- Withdrawal Modal -->
     <div id="withdrawModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-brand-card border border-brand-border rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+        <div class="bg-brand-card border border-brand-border rounded-2xl max-w-md w-full p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold text-white">Cash Out Available Funds</h3>
-                <button type="button" onclick="closeModal('withdrawModal')" class="text-slate-400 hover:text-white text-xl p-1"><i class="fa-solid fa-xmark"></i></button>
+                <h3 class="text-lg font-bold text-white">Cash Out Yields</h3>
+                <button onclick="closeModal('withdrawModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 mb-4 flex items-start space-x-3">
-                <i class="fa-solid fa-lock text-amber-400 mt-0.5 text-sm shrink-0"></i>
-                <p class="text-xs text-amber-300 leading-relaxed">
-                    <strong>Lock-Up Notice:</strong> Staked principal capital is locked until maturity. Withdrawals are restricted to matured unlocked yields.
-                </p>
-            </div>
-            
             <form onsubmit="handleWithdrawalSubmit(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Withdrawal Amount ($ USD)</label>
-                    <input type="number" id="withdrawAmount" placeholder="Enter amount to cash out" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
-                    <span class="text-[11px] text-slate-400 mt-1 block">Available Matured Yield: <strong id="modalAvailableYield" class="text-emerald-400">$0.00 USD</strong></span>
+                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Amount ($ USD)</label>
+                    <input type="number" id="withdrawAmountInput" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white">
                 </div>
                 <div>
-                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Payout Wallet / Bank Details</label>
-                    <input type="text" placeholder="Enter USDT address or USD Bank Account" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    <label class="block text-xs text-slate-300 font-medium mb-1.5">USDT Address or Bank AC</label>
+                    <input type="text" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white">
                 </div>
-                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm cursor-pointer">
-                    Request Cash Out
-                </button>
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl transition text-sm">Request Withdrawal</button>
             </form>
         </div>
     </div>
 
-    <!-- JavaScript Controllers -->
     <script>
-        // ACCOUNT STATE VARIABLES (Defaults to $0 for new uninvested user)
-        let userState = {
-            totalInvested: 0.00,        // Staked capital
-            unlockedBalance: 0.00,      // Matured earnings available for cashout
-            totalProfit: 0.00,          // Accumulating returns
-            totalCashouts: 0.00,        // Executed withdrawals
-            activePlansCount: 0,        // Running investment tiers
-            daysActive: 0,              // Elapsed days
-            requiredLockDays: 30,       // Lock-up duration required
-            selectedPlanDays: 30
+        // Get active logged-in user
+        let currentUser = JSON.parse(localStorage.getItem('ciphron_active_user')) || {
+            name: "Anderson",
+            email: "investor@ciphron.com",
+            stakedCapital: 0,
+            unlockedBalance: 0,
+            totalProfit: 0,
+            totalCashouts: 0,
+            planName: "None",
+            dailyRate: 0
         };
 
-        function syncDashboardUI() {
-            const balanceElem = document.getElementById('userBalance');
-            const stakedElem = document.getElementById('stakedCapitalDisplay');
-            const profitElem = document.getElementById('totalProfitDisplay');
-            const cashoutElem = document.getElementById('totalCashoutsDisplay');
-            const modalYieldElem = document.getElementById('modalAvailableYield');
+        function updateUI() {
+            document.getElementById('userNameDisplay').textContent = currentUser.name;
+            document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('userBalance').textContent = '$' + currentUser.unlockedBalance.toFixed(2);
+            document.getElementById('stakedCapitalDisplay').textContent = '$' + currentUser.stakedCapital.toFixed(2);
+            document.getElementById('totalProfitDisplay').textContent = '+$' + currentUser.totalProfit.toFixed(2);
+            document.getElementById('totalCashoutsDisplay').textContent = '$' + currentUser.totalCashouts.toFixed(2);
 
-            if (balanceElem) balanceElem.textContent = '$' + userState.unlockedBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            if (stakedElem) stakedElem.textContent = '$' + userState.totalInvested.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            if (profitElem) profitElem.textContent = '+$' + userState.totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            if (cashoutElem) cashoutElem.textContent = '$' + userState.totalCashouts.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            if (modalYieldElem) modalYieldElem.textContent = '$' + userState.unlockedBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USD';
-        }
-
-        function openModal(id) {
-            syncDashboardUI();
-            const modal = document.getElementById(id);
-            if (modal) {
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
+            if (currentUser.stakedCapital > 0) {
+                document.getElementById('stakedStatusText').textContent = currentUser.planName + ' (' + currentUser.dailyRate + '% Daily)';
+                document.getElementById('stakedStatusText').className = 'text-[11px] text-emerald-400 mt-3 font-semibold';
+            } else {
+                document.getElementById('stakedStatusText').textContent = 'No Active Investment';
+                document.getElementById('stakedStatusText').className = 'text-[11px] text-slate-500 mt-3';
             }
         }
 
-        function closeModal(id) {
-            const modal = document.getElementById(id);
-            if (modal) {
-                modal.classList.remove('flex');
-                modal.classList.add('hidden');
-            }
-        }
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('flex'); document.getElementById(id).classList.add('hidden'); }
 
-        function toggleMobileMenu() {
-            const sidebar = document.getElementById('sidebar');
-            const backdrop = document.getElementById('mobileBackdrop');
-            if (sidebar && backdrop) {
-                sidebar.classList.toggle('-translate-x-full');
-                backdrop.classList.toggle('hidden');
-            }
-        }
-
-        function openPlanModal(planName, roi, min, max, durationDays) {
-            userState.selectedPlanDays = durationDays;
+        function selectPlanAndOpenModal(planName, rate, min) {
             document.getElementById('depositAmountInput').value = min;
+            document.getElementById('depositPlanSelect').value = planName + '|' + rate;
             openModal('depositModal');
         }
 
-        function copyReferralLink() {
-            const linkInput = document.getElementById('referralLinkInput');
-            const copyBtn = document.getElementById('copyBtn');
-            
-            if (linkInput) {
-                linkInput.select();
-                navigator.clipboard.writeText(linkInput.value);
-                
-                copyBtn.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied!</span>';
-                copyBtn.classList.remove('bg-emerald-500', 'hover:bg-emerald-600');
-                copyBtn.classList.add('bg-emerald-600');
-                
-                setTimeout(() => {
-                    copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i><span>Copy Link</span>';
-                    copyBtn.classList.remove('bg-emerald-600');
-                    copyBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600');
-                }, 2000);
-            }
-        }
-
-        // CHART.JS INITIALIZATION
-        let growthChart;
-        const chartDataSets = {
-            '7D': {
-                labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-                values: [0, 0, 0, 0, 0, 0, 0]
-            },
-            '30D': {
-                labels: ['Oct 01', 'Oct 05', 'Oct 10', 'Oct 15', 'Oct 20', 'Oct 25', 'Oct 30'],
-                values: [0, 0, 0, 0, 0, 0, 0]
-            },
-            '90D': {
-                labels: ['Month 1', 'Month 2', 'Month 3'],
-                values: [0, 0, 0]
-            }
-        };
-
-        function initPortfolioChart() {
-            const ctx = document.getElementById('portfolioChart');
-            if (!ctx) return;
-
-            const chartCtx = ctx.getContext('2d');
-            const gradient = chartCtx.createLinearGradient(0, 0, 0, 300);
-            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.35)');
-            gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
-
-            growthChart = new Chart(chartCtx, {
-                type: 'line',
-                data: {
-                    labels: chartDataSets['30D'].labels,
-                    datasets: [{
-                        label: 'Portfolio Value ($ USD)',
-                        data: chartDataSets['30D'].values,
-                        borderColor: '#10b981',
-                        borderWidth: 3,
-                        backgroundColor: gradient,
-                        fill: true,
-                        tension: 0.4,
-                        pointBackgroundColor: '#10b981',
-                        pointBorderColor: '#0f172a',
-                        pointBorderWidth: 2,
-                        pointRadius: 5,
-                        pointHoverRadius: 7
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: '#1e293b',
-                            titleColor: '#94a3b8',
-                            bodyColor: '#10b981',
-                            bodyFont: { weight: 'bold', size: 14 },
-                            borderColor: '#334155',
-                            borderWidth: 1,
-                            padding: 12,
-                            displayColors: false,
-                            callbacks: {
-                                label: function(context) {
-                                    return ' Balance: $' + context.parsed.y.toLocaleString('en-US', {minimumFractionDigits: 2});
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: { color: 'rgba(51, 65, 85, 0.3)', drawBorder: false },
-                            ticks: { color: '#94a3b8', font: { size: 11 } }
-                        },
-                        y: {
-                            grid: { color: 'rgba(51, 65, 85, 0.3)', drawBorder: false },
-                            ticks: { 
-                                color: '#94a3b8', 
-                                font: { size: 11 },
-                                callback: function(value) { return '$' + value.toLocaleString(); }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function updateChartTimeframe(timeframe) {
-            if (!growthChart) return;
-
-            ['7D', '30D', '90D'].forEach(tf => {
-                const btn = document.getElementById('btn-' + tf);
-                if (tf === timeframe) {
-                    btn.className = 'px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold shadow transition';
-                } else {
-                    btn.className = 'px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition';
-                }
-            });
-
-            growthChart.data.labels = chartDataSets[timeframe].labels;
-            growthChart.data.datasets[0].data = chartDataSets[timeframe].values;
-            growthChart.update();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initPortfolioChart();
-            syncDashboardUI();
-        });
-
-        // CALCULATOR LOGIC
-        let activeDailyRate = 1.8;
-        let activeDays = 60;
-
-        const slider = document.getElementById('roiAmountSlider');
-        const sliderValueDisplay = document.getElementById('sliderValue');
-        const dailyReturnDisplay = document.getElementById('calcDailyReturn');
-        const totalProfitDisplay = document.getElementById('calcTotalProfit');
-        const finalBalanceDisplay = document.getElementById('calcFinalBalance');
-
-        function updateROICalculation() {
-            if (!slider) return;
-            const principal = parseFloat(slider.value);
-            const dailyEarnings = principal * (activeDailyRate / 100);
-            const totalProfit = dailyEarnings * activeDays;
-            const finalBalance = principal + totalProfit;
-
-            sliderValueDisplay.textContent = '$' + principal.toLocaleString();
-            dailyReturnDisplay.textContent = '$' + dailyEarnings.toFixed(2);
-            totalProfitDisplay.textContent = '+$' + totalProfit.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            finalBalanceDisplay.textContent = '$' + finalBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        }
-
-        function selectCalcPlan(rate, days, btnElement) {
-            activeDailyRate = rate;
-            activeDays = days;
-
-            document.querySelectorAll('.plan-btn').forEach(btn => {
-                btn.className = 'plan-btn bg-slate-800 text-slate-300 border border-brand-border py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer text-center';
-            });
-
-            btnElement.className = 'plan-btn bg-emerald-500 text-slate-950 font-bold border border-emerald-400 py-2.5 rounded-xl text-xs transition cursor-pointer text-center shadow-lg shadow-emerald-500/20';
-            
-            updateROICalculation();
-        }
-
-        if (slider) {
-            slider.addEventListener('input', updateROICalculation);
-            updateROICalculation();
-        }
-
-        // LIVE SUPPORT CHAT LOGIC
-        function toggleChatWidget() {
-            const chatWidget = document.getElementById('chatWidget');
-            if (chatWidget) {
-                if (chatWidget.classList.contains('hidden')) {
-                    chatWidget.classList.remove('hidden');
-                    chatWidget.classList.add('flex');
-                } else {
-                    chatWidget.classList.remove('flex');
-                    chatWidget.classList.add('hidden');
-                }
-            }
-        }
-
-        function appendUserMessage(text) {
-            const chatMessages = document.getElementById('chatMessages');
-            const userHtml = `
-                <div class="flex items-start justify-end space-x-2">
-                    <div class="bg-emerald-500 text-slate-950 font-medium p-3 rounded-2xl rounded-tr-none max-w-[85%] leading-relaxed">
-                        ${text}
-                    </div>
-                </div>
-            `;
-            chatMessages.insertAdjacentHTML('beforeend', userHtml);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function appendAgentReply(text) {
-            const chatMessages = document.getElementById('chatMessages');
-            const agentHtml = `
-                <div class="flex items-start space-x-2">
-                    <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] shrink-0 mt-0.5">
-                        <i class="fa-solid fa-robot"></i>
-                    </div>
-                    <div class="bg-slate-800 border border-brand-border p-3 rounded-2xl rounded-tl-none text-slate-200 max-w-[85%] leading-relaxed">
-                        ${text}
-                    </div>
-                </div>
-            `;
-            chatMessages.insertAdjacentHTML('beforeend', agentHtml);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function sendQuickMessage(text) {
-            appendUserMessage(text);
-            setTimeout(() => {
-                if (text.includes('Yield')) {
-                    appendAgentReply('Daily yields (1.2% to 2.5%) are automatically credited to your unlocked balance every 24 hours based on your active tier.');
-                } else if (text.includes('Deposit')) {
-                    appendAgentReply('The minimum direct card deposit is $100 USD via Visa, Mastercard, or corporate crypto transfer.');
-                } else {
-                    appendAgentReply('Principal deposits are locked for 30, 60, or 90 days depending on your selected tier to guarantee yield stability.');
-                }
-            }, 600);
-        }
-
-        function handleChatMessageSubmit(e) {
-            e.preventDefault();
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            if (!text) return;
-
-            appendUserMessage(text);
-            input.value = '';
-
-            setTimeout(() => {
-                appendAgentReply("Thank you for reaching out! A CIPHRON financial concierge has received your request and will respond shortly.");
-            }, 1000);
-        }
-
-        // CARD DEPOSIT & STATE SYNC LOGIC
-        function handleLiveDepositSubmit(e) {
+        // SUBMIT DEPOSIT TO ADMIN QUEUE
+        function handleDepositSubmit(e) {
             e.preventDefault();
             const amount = parseFloat(document.getElementById('depositAmountInput').value);
-            const gateway = document.getElementById('paymentGatewaySelect').value;
+            const planVal = document.getElementById('depositPlanSelect').value.split('|');
+            const planName = planVal[0];
+            const dailyRate = parseFloat(planVal[1]);
 
-            if (gateway === 'card_direct') {
-                closeModal('depositModal');
-                setTimeout(() => {
-                    const cardNo = prompt("CIPHRON SECURE CARD DEDUCTION\n\nEnter your 16-digit Bank Card Number:");
-                    if (cardNo) {
-                        const otp = prompt("BANK 3D-SECURE VERIFICATION\n\nEnter the OTP PIN sent to your phone:");
-                        if (otp) {
-                            userState.totalInvested += amount;
-                            userState.activePlansCount += 1;
-                            userState.requiredLockDays = userState.selectedPlanDays || 30;
-                            
-                            // Simulate initial yield growth
-                            userState.totalProfit = amount * 0.18;
-                            userState.unlockedBalance = userState.totalProfit;
+            let pendingQueue = JSON.parse(localStorage.getItem('ciphron_pending_deposits')) || [];
+            pendingQueue.push({
+                id: 'DEP_' + Math.floor(1000 + Math.random() * 9000),
+                userEmail: currentUser.email,
+                userName: currentUser.name,
+                amount: amount,
+                planName: planName,
+                dailyRate: dailyRate,
+                status: 'Pending Admin Verification'
+            });
 
-                            // Update Chart Values
-                            chartDataSets['30D'].values = [
-                                amount, 
-                                amount * 1.05, 
-                                amount * 1.10, 
-                                amount * 1.18
-                            ];
-                            if (growthChart) {
-                                growthChart.data.datasets[0].data = chartDataSets['30D'].values;
-                                growthChart.update();
-                            }
-
-                            syncDashboardUI();
-
-                            alert('🎉 SUCCESS: $' + amount.toLocaleString() + ' USD was debited directly from card ending in ' + cardNo.slice(-4) + '!\n\nYour active staked capital is now$' + userState.totalInvested.toLocaleString() + ' USD.\n\nTransaction Ref: CPH_' + Math.floor(Math.random() * 1000000000));
-                        }
-                    }
-                }, 300);
-            } else if (gateway === 'usdt_crypto') {
-                alert('USDT Deposit Instructions:\n\nPlease transfer $' + amount + ' USDT (TRC-20) to corporate wallet address:\n\n0x84f9328a9b1c900e31ab9021');
-                closeModal('depositModal');
-            } else {
-                alert('Wire Transfer Instructions:\n\nTransfer $' + amount + ' USD to Ciphron Bank AC: 9980123412 (Chase USD)');
-                closeModal('depositModal');
-            }
+            localStorage.setItem('ciphron_pending_deposits', JSON.stringify(pendingQueue));
+            closeModal('depositModal');
+            alert('📩 Deposit Submitted!\n\nYour deposit of $' + amount + ' USD has been sent to the Admin Treasury Desk for verification. It will reflect on your dashboard upon Admin approval.');
         }
 
-        // STRICT CASHOUT VALIDATION ENGINE
+        // CASHOUT SUBMIT
         function handleWithdrawalSubmit(e) {
             e.preventDefault();
-            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const amount = parseFloat(document.getElementById('withdrawAmountInput').value);
 
-            // RULE 1: Must have an active investment
-            if (userState.totalInvested <= 0 || userState.activePlansCount <= 0) {
-                alert("🚫 Withdrawal Restricted!\n\nYou have no active investment plan. You must deposit and fund a tier (Starter, Growth, or Institutional) to begin earning withdrawable yield.");
-                closeModal('withdrawModal');
+            if (currentUser.stakedCapital <= 0) {
+                alert('🚫 Withdrawal Restricted!\n\nYou must have an active investment plan to withdraw yields.');
+                return;
+            }
+            if (amount > currentUser.unlockedBalance) {
+                alert('🚫 Insufficient Balance!\n\nYou can only withdraw up to $' + currentUser.unlockedBalance.toFixed(2) + ' USD.');
                 return;
             }
 
-            // RULE 2: Lock-up duration check for principal capital
-            if (userState.daysActive < userState.requiredLockDays) {
-                if (amount > userState.unlockedBalance) {
-                    alert(`🔒 Capital Lock-Up Active!\n\nYour principal capital of $${userState.totalInvested.toLocaleString()} USD is locked until plan maturity (${userState.daysActive}/${userState.requiredLockDays} Days Completed).\n\nYou can only withdraw available, matured profits up to $${userState.unlockedBalance.toLocaleString()} USD.`);
-                    return;
-                }
-            }
-
-            // RULE 3: Cannot exceed available unlocked balance
-            if (amount > userState.unlockedBalance) {
-                alert(`🚫 Insufficient Unlocked Balance!\n\nRequested: $${amount.toLocaleString()} USD\nAvailable Yield: $${userState.unlockedBalance.toLocaleString()} USD\n\nPlease wait for daily yield distribution or for your active plan maturity date.`);
-                return;
-            }
-
-            // SUCCESS: Route to admin for approval
-            userState.unlockedBalance -= amount;
-            userState.totalCashouts += amount;
-            syncDashboardUI();
-
-            alert(`✅ Cashout Request Submitted!\n\nYour withdrawal request for $${amount.toLocaleString()} USD has been queued for admin verification and cold vault payout processing.`);
+            currentUser.unlockedBalance -= amount;
+            currentUser.totalCashouts += amount;
+            localStorage.setItem('ciphron_active_user', JSON.stringify(currentUser));
+            updateUI();
             closeModal('withdrawModal');
+            alert('✅ Cashout Submitted to Admin for Settlement!');
         }
+
+        // AUTOMATED DAILY INCREMENT SIMULATOR (Grows yield every 10 seconds if active)
+        setInterval(() => {
+            // Reload user state to sync with Admin approvals
+            let savedUsers = JSON.parse(localStorage.getItem('ciphron_users_db')) || {};
+            if (savedUsers[currentUser.email]) {
+                currentUser = savedUsers[currentUser.email];
+            }
+
+            if (currentUser.stakedCapital > 0) {
+                // Calculate incremental yield (Daily rate divided into micro increments)
+                let increment = (currentUser.stakedCapital * (currentUser.dailyRate / 100)) / 100;
+                currentUser.totalProfit += increment;
+                currentUser.unlockedBalance += increment;
+
+                // Save updated growth
+                savedUsers[currentUser.email] = currentUser;
+                localStorage.setItem('ciphron_users_db', JSON.stringify(savedUsers));
+                localStorage.setItem('ciphron_active_user', JSON.stringify(currentUser));
+
+                updateUI();
+            }
+        }, 10000); // Ticks every 10 seconds
+
+        document.addEventListener('DOMContentLoaded', updateUI);
     </script>
+    <script>
+    // Explicit global object containing layout templates
+    window.paymentChannelsData = {
+        trc20: `
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                    <i class="fa-solid fa-vault"></i> CIPHRON USDT Vault (TRC-20)
+                </span>
+                <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">TRON Network</span>
+            </div>
+            <div class="p-3 bg-slate-900 border border-brand-border/60 rounded-lg text-center">
+                <p class="text-[10px] text-slate-400 mb-1">Transfer USDT (TRC-20) to corporate wallet address:</p>
+                <p class="font-mono text-[11px] text-emerald-400 font-bold break-all select-all tracking-tight">
+                    TGfKHFFAmCvvXJJpjrhfvppP9qrbruMqgE
+                </p>
+            </div>
+            <p class="text-[10px] text-emerald-400/90 leading-tight mt-2">
+                <i class="fa-solid fa-shield-halved mr-1"></i> Send USDT via TRON (TRC-20) network for instant low-cost settlement.
+            </p>
+        `,
+        erc20: `
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                    <i class="fa-brands fa-ethereum"></i> CIPHRON Ethereum Vault (ERC-20)
+                </span>
+                <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">Ethereum Network</span>
+            </div>
+            <div class="p-3 bg-slate-900 border border-brand-border/60 rounded-lg text-center">
+                <p class="text-[10px] text-slate-400 mb-1">Transfer ETH or USDT (ERC-20) to corporate wallet address:</p>
+                <p class="font-mono text-[11px] text-emerald-400 font-bold break-all select-all tracking-tight">
+                    0xD534c7ACf1A078D9e8D86DDd660B722d9513f8A2
+                </p>
+            </div>
+            <p class="text-[10px] text-amber-400/90 leading-tight mt-2">
+                <i class="fa-solid fa-triangle-exclamation mr-1"></i> Send only Ethereum (ERC-20) network assets to this address.
+            </p>
+        `,
+        btc: `
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                    <i class="fa-brands fa-bitcoin"></i> CIPHRON Bitcoin Vault
+                </span>
+                <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">BTC Network</span>
+            </div>
+            <div class="p-3 bg-slate-900 border border-brand-border/60 rounded-lg text-center">
+                <p class="text-[10px] text-slate-400 mb-1">Transfer Bitcoin (BTC) to corporate vault address:</p>
+                <p class="font-mono text-[11px] text-emerald-400 font-bold break-all select-all tracking-tight">
+                    bc1q9dcpka73q0dgyaltaf5ld3c3k2a5wtt20y8mzz
+                </p>
+            </div>
+            <p class="text-[10px] text-slate-400 leading-tight mt-2">
+                <i class="fa-solid fa-circle-info mr-1"></i> Requires standard Bitcoin network confirmations.
+            </p>
+        `
+    };
+
+    // Attach switcher function directly to window scope
+    window.switchPaymentChannel = function(channelKey) {
+        const container = document.getElementById('paymentBoxContainer');
+        if (container && window.paymentChannelsData[channelKey]) {
+            container.innerHTML = window.paymentChannelsData[channelKey];
+        }
+    };
+
+    // Initialize content as soon as DOM loads
+    document.addEventListener('DOMContentLoaded', function() {
+        const select = document.getElementById('paymentChannelSelect');
+        const initialVal = select ? select.value : 'trc20';
+        window.switchPaymentChannel(initialVal);
+    });
+</script>
 </body>
 </html>

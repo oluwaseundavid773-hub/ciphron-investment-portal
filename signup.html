@@ -93,7 +93,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                             <i class="fa-solid fa-user text-xs"></i>
                         </div>
-                        <input type="text" id="fullName" placeholder="e.g. Anderson" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition">
+                        <input type="text" id="fullName" placeholder="e.g. Oluwaseun" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition">
                     </div>
                 </div>
 
@@ -144,7 +144,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                             <i class="fa-solid fa-link text-xs"></i>
                         </div>
-                        <input type="text" id="referralCode" placeholder="e.g. Anderson" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition font-mono">
+                        <input type="text" id="referralCode" placeholder="e.g. oluwaseun" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition font-mono">
                     </div>
                 </div>
 
@@ -188,7 +188,7 @@
                 </div>
                 <span class="font-bold text-slate-300">CIPHRON INVESTMENT & FINANCE</span>
             </div>
-            <p>&copy; 2026 Ciphron Finance Inc.</p>
+            <p>&copy; 2026 Ciphron Finance Inc. All rights reserved.</p>
             <div class="flex space-x-4">
                 <a href="about.html" class="hover:text-slate-300 transition">About Us</a>
                 <a href="kyc.html" class="hover:text-slate-300 transition">Privacy & KYC</a>
@@ -196,8 +196,8 @@
         </div>
     </footer>
 
-    <!-- Form JavaScript Logic -->
     <script>
+    <!-- Form JavaScript Logic -->
         function togglePasswordVisibility(inputId, iconId) {
             const input = document.getElementById(inputId);
             const icon = document.getElementById(iconId);
@@ -215,9 +215,12 @@
             }
         }
 
+        // PASTE / REPLACE THIS FUNCTION HERE:
         function handleSignupSubmit(e) {
             e.preventDefault();
             
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('emailInput').value;
             const password = document.getElementById('passwordInput').value;
             const confirmPassword = document.getElementById('confirmPasswordInput').value;
             
@@ -226,12 +229,29 @@
                 return;
             }
 
-            const fullName = document.getElementById('fullName').value;
+            let newUser = {
+                name: fullName,
+                email: email,
+                stakedCapital: 0.00,
+                unlockedBalance: 0.00,
+                totalProfit: 0.00,
+                totalCashouts: 0.00,
+                planName: "None",
+                dailyRate: 0.00
+            };
+
+            // Save user profile to shared database
+            let savedUsers = JSON.parse(localStorage.getItem('ciphron_users_db')) || {};
+            savedUsers[email] = newUser;
+            localStorage.setItem('ciphron_users_db', JSON.stringify(savedUsers));
+
+            // Set active session for dashboard.html
+            localStorage.setItem('ciphron_active_user', JSON.stringify(newUser));
+
             alert(`🎉 Account Created Successfully!\n\nWelcome to Ciphron Investment & Finance, ${fullName}. Redirecting to your investor dashboard...`);
-            
-            // Route seamlessly to investor dashboard
             window.location.href = 'dashboard.html';
         }
     </script>
 </body>
 </html>
+
