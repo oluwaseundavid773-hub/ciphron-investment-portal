@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Treasury & Payout Management | Ciphron Investment & Finance</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-100 flex h-screen overflow-hidden">
+
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="mobileBackdrop" onclick="toggleMobileMenu()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-30 hidden md:hidden"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="w-64 bg-slate-900 border-r border-brand-border flex flex-col fixed md:relative h-full z-40 transition-transform duration-300 -translate-x-full md:translate-x-0">
+        <!-- Logo Header -->
+        <div class="p-6 flex items-center justify-between border-b border-brand-border">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-user-shield text-slate-950 text-xl font-bold"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wider text-white">CIPHRON</h1>
+                    <p class="text-xs text-amber-400 font-bold tracking-widest uppercase">Admin Desk</p>
+                </div>
+            </div>
+            <button onclick="toggleMobileMenu()" class="md:hidden text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto text-xs font-semibold">
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <i class="fa-solid fa-vault w-5"></i>
+                <span>Treasury & Payouts</span>
+            </a>
+            <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+                <i class="fa-solid fa-chart-pie w-5"></i>
+                <span>Investor Portal</span>
+            </a>
+            <a href="kyc.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+                <i class="fa-solid fa-address-card w-5"></i>
+                <span>KYC Verifications</span>
+            </a>
+        </nav>
+
+        <!-- Admin Profile -->
+        <div class="p-4 border-t border-brand-border flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center font-bold text-amber-400 text-xs">
+                    ADM
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-white">Master Admin</p>
+                    <p class="text-[10px] text-amber-400 font-bold">Cold Vault Access</p>
+                </div>
+            </div>
+            <a href="signin.html" class="text-slate-400 hover:text-red-400 transition" title="Sign Out">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col h-screen overflow-y-auto w-full">
+        
+        <!-- Header -->
+        <header class="h-20 bg-slate-900/80 backdrop-blur border-b border-brand-border px-4 md:px-8 flex items-center justify-between sticky top-0 z-20">
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h2 class="text-lg md:text-xl font-bold text-white">Custodial Payout & Treasury Control</h2>
+                    <p class="text-xs text-slate-400 hidden sm:block">Manage client cashout requests, incoming sweeps, and hardware vault balances.</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <span class="px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs font-bold flex items-center space-x-1.5">
+                    <i class="fa-solid fa-lock"></i>
+                    <span>Cold Vault Sweep Active</span>
+                </span>
+            </div>
+        </header>
+
+        <!-- Body Content -->
+        <main class="p-4 md:p-8 space-y-8 max-w-7xl mx-auto w-full box-border">
+
+            <!-- Summary Metrics -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Pending Client Cashouts</p>
+                            <h3 class="text-2xl font-bold text-amber-400 mt-1" id="pendingCount">$1,200.00</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-amber-400 mt-3 font-medium">Requires Admin Manual Authorization</p>
+                </div>
+
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Offline Cold Storage Reserve</p>
+                            <h3 class="text-2xl font-bold text-emerald-400 mt-1">$438,500.00</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                            <i class="fa-solid fa-vault"></i>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-emerald-400 mt-3 font-medium">Swept from Card / USDT Gateway</p>
+                </div>
+
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Hot Operational Reserve</p>
+                            <h3 class="text-2xl font-bold text-white mt-1">$11,500.00</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-3">Used for instant daily payouts</p>
+                </div>
+
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Total Payouts Approved</p>
+                            <h3 class="text-2xl font-bold text-white mt-1">$142,800.00</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                            <i class="fa-solid fa-check-double"></i>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-3">Verified on Blockchain / Wire</p>
+                </div>
+            </div>
+
+            <!-- Manual Payout Authorization Table -->
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 space-y-6 shadow-sm">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-brand-border/60 pb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i>
+                            <span>Pending Withdrawal Approval Queue</span>
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Inspect destination addresses and authorize payouts from your external wallet or bank.</p>
+                    </div>
+                    <span class="px-3 py-1 bg-amber-500/10 text-amber-400 text-xs font-bold rounded-lg border border-amber-500/20">
+                        2 Action Required
+                    </span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider font-bold border-b border-brand-border">
+                            <tr>
+                                <th class="p-3.5">Investor Name</th>
+                                <th class="p-3.5">Amount ($ USD)</th>
+                                <th class="p-3.5">Payout Method & Details</th>
+                                <th class="p-3.5">KYC Status</th>
+                                <th class="p-3.5">Lock-Up Check</th>
+                                <th class="p-3.5 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-brand-border/60" id="payoutTableBody">
+                            
+                            <!-- Request 1 -->
+                            <tr id="row-101" class="hover:bg-slate-800/40 transition">
+                                <td class="p-3.5 font-semibold text-white">
+                                    Oluwaseun
+                                    <span class="block text-[10px] text-slate-400 font-normal">ID: CPH_INV_8832</span>
+                                </td>
+                                <td class="p-3.5 font-bold text-emerald-400">$850.00 USD</td>
+                                <td class="p-3.5 font-mono text-[11px] text-slate-200">
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-sans text-[10px] mr-1">USDT TRC20</span>
+                                    0x71C...b49E
+                                </td>
+                                <td class="p-3.5">
+                                    <span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 font-bold rounded-lg border border-emerald-500/20 text-[10px]">
+                                        <i class="fa-solid fa-check mr-1"></i>Verified
+                                    </span>
+                                </td>
+                                <td class="p-3.5">
+                                    <span class="text-emerald-400 font-semibold text-[11px]">Unlocked Profit</span>
+                                </td>
+                                <td class="p-3.5 text-right space-x-2">
+                                    <button onclick="approvePayout('row-101', 850)" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-[11px] transition cursor-pointer">
+                                        Approve Payout
+                                    </button>
+                                    <button onclick="rejectPayout('row-101')" class="bg-slate-800 hover:bg-red-500/20 text-slate-400 hover:text-red-400 border border-brand-border px-3 py-1.5 rounded-lg text-[11px] transition cursor-pointer">
+                                        Reject
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Request 2 -->
+                            <tr id="row-102" class="hover:bg-slate-800/40 transition">
+                                <td class="p-3.5 font-semibold text-white">
+                                    Sarah Carter
+                                    <span class="block text-[10px] text-slate-400 font-normal">ID: CPH_INV_1042</span>
+                                </td>
+                                <td class="p-3.5 font-bold text-emerald-400">$350.00 USD</td>
+                                <td class="p-3.5 font-mono text-[11px] text-slate-200">
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-sans text-[10px] mr-1">USD Wire</span>
+                                    Chase AC: ****8821
+                                </td>
+                                <td class="p-3.5">
+                                    <span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 font-bold rounded-lg border border-emerald-500/20 text-[10px]">
+                                        <i class="fa-solid fa-check mr-1"></i>Verified
+                                    </span>
+                                </td>
+                                <td class="p-3.5">
+                                    <span class="text-emerald-400 font-semibold text-[11px]">Plan Matured</span>
+                                </td>
+                                <td class="p-3.5 text-right space-x-2">
+                                    <button onclick="approvePayout('row-102', 350)" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-[11px] transition cursor-pointer">
+                                        Approve Payout
+                                    </button>
+                                    <button onclick="rejectPayout('row-102')" class="bg-slate-800 hover:bg-red-500/20 text-slate-400 hover:text-red-400 border border-brand-border px-3 py-1.5 rounded-lg text-[11px] transition cursor-pointer">
+                                        Reject
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Custodial Workflow Instructions Card -->
+            <div class="bg-slate-900/60 border border-brand-border rounded-2xl p-6 space-y-3 text-xs text-slate-300">
+                <h4 class="font-bold text-white text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-shield-cat text-amber-400"></i>
+                    <span>Custodial Fund Management Protocol</span>
+                </h4>
+                <ul class="space-y-2 text-slate-400 list-disc pl-5 leading-relaxed">
+                    <li>All card deposits processed through Paystack/Flutterwave are automatically swept into your corporate bank account every 24 hours.</li>
+                    <li>All crypto deposits go directly to your operational wallet and should be transferred to your <strong>Ledger / Cold Hardware Vault</strong> for long-term storage.</li>
+                    <li>When a client requests a withdrawal, click <strong>Approve Payout</strong> above after sending the funds from your hot wallet or bank account.</li>
+                </ul>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JavaScript Handlers -->
+    <script>
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('mobileBackdrop');
+            if (sidebar && backdrop) {
+                sidebar.classList.toggle('-translate-x-full');
+                backdrop.classList.toggle('hidden');
+            }
+        }
+
+        function approvePayout(rowId, amount) {
+            const txHash = prompt("ENTER PAYOUT VERIFICATION REF / TRANSACTION HASH:\n\nPlease enter the blockchain TX Hash or Bank Wire Ref after transferring $" + amount + " USD:");
+            if (txHash) {
+                const row = document.getElementById(rowId);
+                if (row) {
+                    row.innerHTML = `
+                        <td colspan="5" class="p-3.5 text-emerald-400 font-bold">
+                            <i class="fa-solid fa-circle-check mr-2"></i> Payout of $${amount}.00 USD Approved & Settled (Ref: ${txHash})
+                        </td>
+                        <td class="p-3.5 text-right font-mono text-[10px] text-slate-500">SETTLED</td>
+                    `;
+                }
+                alert('✅ PAYOUT CONFIRMED: User dashboard balance updated.');
+            }
+        }
+
+        function rejectPayout(rowId) {
+            const reason = prompt("REJECTION REASON:\n\nEnter reason for declining this cashout (e.g., Active Capital Lock-Up / Invalid Wallet Address):");
+            if (reason) {
+                const row = document.getElementById(rowId);
+                if (row) {
+                    row.innerHTML = `
+                        <td colspan="5" class="p-3.5 text-red-400 font-semibold">
+                            <i class="fa-solid fa-circle-xmark mr-2"></i> Cashout Declined: ${reason}
+                        </td>
+                        <td class="p-3.5 text-right font-mono text-[10px] text-slate-500">DECLINED</td>
+                    `;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Ciphron Investment & Finance</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#10b981',
+                            600: '#059669',
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen flex items-center justify-center p-4 selection:bg-emerald-500 selection:text-slate-950">
+
+    <div class="max-w-md w-full bg-brand-card border border-brand-border rounded-3xl p-8 shadow-2xl relative">
+        
+        <!-- Brand Header -->
+        <div class="text-center mb-8">
+            <a href="index.html" class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 text-2xl font-bold shadow-lg shadow-emerald-500/20 mb-4">
+                <i class="fa-solid fa-shield-halved"></i>
+            </a>
+            <h1 class="text-2xl font-extrabold text-white">Welcome Back</h1>
+            <p class="text-xs text-slate-400 mt-1">Sign in to your Ciphron USD investment portal</p>
+        </div>
+
+        <!-- Sign In Form -->
+        <form onsubmit="handleSignIn(event)" class="space-y-5">
+            <div>
+                <label class="block text-xs text-slate-300 font-medium mb-2">Email Address</label>
+                <input type="email" id="signinEmail" placeholder="investor@example.com" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+            </div>
+
+            <div>
+                <label class="block text-xs text-slate-300 font-medium mb-2">Password</label>
+                <input type="password" id="signinPassword" placeholder="••••••••" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+            </div>
+
+            <div class="flex items-center justify-between text-xs">
+                <label class="flex items-center text-slate-400 cursor-pointer">
+                    <input type="checkbox" class="rounded bg-slate-950 border-brand-border text-emerald-500 focus:ring-0 mr-2"> Remember me
+                </label>
+                <a href="#" class="text-emerald-400 hover:underline">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm cursor-pointer">
+                Sign In to Dashboard
+            </button>
+        </form>
+
+        <!-- Footer Redirect -->
+        <p class="text-center text-xs text-slate-400 mt-6">
+            Don't have an account? <a href="signup.html" class="text-emerald-400 font-semibold hover:underline">Register Now</a>
+        </p>
+
+    </div>
+
+    <script>
+        function handleSignIn(e) {
+            e.preventDefault();
+            // Direct redirect to dashboard upon successful login
+            window.location.href = "dashboard.html";
+        }
+    </script>
+</body>
+</html>

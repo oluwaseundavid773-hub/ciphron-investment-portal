@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciphron Investment & Finance | Secure High-Yield USD Investments</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#10b981',
+                            600: '#059669',
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-slate-950">
+<!-- Live Withdrawal Ticker Banner (Top of Screen) -->
+<div class="w-full bg-slate-950 border-b border-emerald-500/20 py-2.5 px-4 overflow-hidden relative z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-xs">
+        
+        <!-- Animated Live Pulse Badge -->
+        <div class="flex items-center space-x-2 shrink-0 pr-4 border-r border-brand-border">
+            <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span class="font-bold text-emerald-400 tracking-wider uppercase text-[11px]">LIVE CASHOUTS</span>
+        </div>
+
+        <!-- Changing Notification Display -->
+        <div class="flex-1 px-4 overflow-hidden text-center sm:text-left">
+            <p id="payoutTicker" class="text-slate-300 font-medium transition-all duration-500 transform translate-y-0 opacity-100">
+                <span class="text-white font-semibold" id="payoutUser">Julius M.</span> just withdrew 
+                <strong class="text-emerald-400 font-bold" id="payoutAmount">$45,000 USD</strong> 
+                via <span class="text-slate-400" id="payoutMethod">USDT (TRC20)</span> 
+                <span class="text-[10px] text-slate-500 ml-2" id="payoutTime">2 mins ago</span>
+            </p>
+        </div>
+
+        <!-- Trust Icon -->
+        <div class="hidden md:flex items-center space-x-2 shrink-0 text-slate-400 text-[11px] pl-4 border-l border-brand-border">
+            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+            <span>Verified Payouts</span>
+        </div>
+
+    </div>
+</div>
+
+    <!-- Top Home Navigation Bar -->
+    <header class="w-full bg-slate-900/80 backdrop-blur-md border-b border-brand-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-shield-halved text-slate-950 text-xl font-bold"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wider text-white">CIPHRON</h1>
+                    <p class="text-[10px] text-emerald-400 font-medium tracking-widest uppercase">Investment & Finance</p>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="about.html" class="hover:text-slate-300 transition">About</a>
+                <a href="kyc.html" class="hover:text-slate-300 transition">KYC</a>
+            </nav>
+
+           <!-- Auth Buttons -->
+<div class="flex items-center space-x-3">
+    <a href="signin.html" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-white px-3 sm:px-4 py-2.5 transition">
+        Sign In
+    </a>
+    <a href="signup.html" class="bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-slate-950 font-bold px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400">
+        Get Started
+    </a>
+</div>
+    </header>
+
+    <!-- Main Landing Page Content -->
+    <main class="flex-1">
+
+        <!-- Hero Section -->
+        <section class="relative py-20 md:py-32 overflow-hidden border-b border-brand-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                
+                <!-- Badge -->
+                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Institutional Grade USD Wealth Growth</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight max-w-4xl mx-auto">
+                    Automated USD Investments with Guaranteed Daily Yields
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="mt-6 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                    Stake your funds securely in structured USD portfolios. Enjoy real-time daily returns, capital protection lock-up periods, and direct bank card deposits.
+                </p>
+
+                <!-- Hero CTA Buttons -->
+                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="signup.html" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-sm shadow-xl shadow-emerald-500/20 transition flex items-center justify-center space-x-2">
+                        <span>Start Investing Today</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#plans" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm border border-brand-border transition flex items-center justify-center space-x-2">
+                        <span>View Investment Plans</span>
+                    </a>
+                </div>
+
+                <!-- Key Metrics Strip -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto pt-10 border-t border-brand-border/60">
+                    <div>
+                        <p class="text-2xl sm:text-3xl font-extrabold text-white">$1.4M+</p>
+                        <p class="text-xs text-slate-400 mt-1">Total Assets Staked</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl sm:text-3xl font-extrabold text-emerald-400">up to 2.5%</p>
+                        <p class="text-xs text-slate-400 mt-1">Daily ROI Yield</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl sm:text-3xl font-extrabold text-white">100% USD</p>
+                        <p class="text-xs text-slate-400 mt-1">Currency Standard</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl sm:text-3xl font-extrabold text-emerald-400">256-Bit</p>
+                        <p class="text-xs text-slate-400 mt-1">Bank Grade Encryption</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Plans Highlights Section -->
+        <section id="plans" class="py-20 bg-slate-900/40 border-b border-brand-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <h2 class="text-2xl sm:text-4xl font-bold text-white">Structured Investment Tiers</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-3">Choose a fixed lock-up duration and earn automated compounding returns.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Starter Tier -->
+                    <div class="bg-brand-card border border-brand-border rounded-2xl p-8 flex flex-col justify-between hover:border-emerald-500/50 transition">
+                        <div>
+                            <span class="text-xs font-semibold px-3 py-1 bg-slate-800 text-slate-300 rounded-lg">30 Days Duration</span>
+                            <h3 class="text-2xl font-bold text-white mt-4">Starter Tier</h3>
+                            <div class="mt-4 flex items-baseline">
+                                <span class="text-4xl font-extrabold text-emerald-400">1.2%</span>
+                                <span class="text-xs text-slate-400 ml-1">/ Daily Returns</span>
+                            </div>
+                            <ul class="mt-6 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Min Deposit: $100 USD</li>
+                                <li class="flex items-center"><i class="fa-solid fa-lock text-amber-400 mr-2"></i> Capital Locked for 30 Days</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Daily Automated ROI</li>
+                            </ul>
+                        </div>
+                        <a href="signup.html" class="mt-8 w-full bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 border border-brand-border text-white text-center font-bold py-3 rounded-xl transition text-xs">
+                            Select Starter Plan
+                        </a>
+                    </div>
+
+                    <!-- Growth Tier -->
+                    <div class="bg-brand-card border-2 border-emerald-500 rounded-2xl p-8 flex flex-col justify-between relative shadow-xl shadow-emerald-500/10">
+                        <span class="absolute -top-3.5 right-6 bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Popular Choice</span>
+                        <div>
+                            <span class="text-xs font-semibold px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg">60 Days Duration</span>
+                            <h3 class="text-2xl font-bold text-white mt-4">Growth Tier</h3>
+                            <div class="mt-4 flex items-baseline">
+                                <span class="text-4xl font-extrabold text-emerald-400">1.8%</span>
+                                <span class="text-xs text-slate-400 ml-1">/ Daily Returns</span>
+                            </div>
+                            <ul class="mt-6 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Min Deposit: $1,000 USD</li>
+                                <li class="flex items-center"><i class="fa-solid fa-lock text-amber-400 mr-2"></i> Capital Locked for 60 Days</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Direct Card / Crypto Funding</li>
+                            </ul>
+                        </div>
+                        <a href="signup.html" class="mt-8 w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-center font-bold py-3 rounded-xl transition text-xs shadow-lg shadow-emerald-500/20">
+                            Select Growth Plan
+                        </a>
+                    </div>
+
+                    <!-- Institutional Tier -->
+                    <div class="bg-brand-card border border-brand-border rounded-2xl p-8 flex flex-col justify-between hover:border-emerald-500/50 transition">
+                        <div>
+                            <span class="text-xs font-semibold px-3 py-1 bg-slate-800 text-slate-300 rounded-lg">90 Days Duration</span>
+                            <h3 class="text-2xl font-bold text-white mt-4">Institutional Tier</h3>
+                            <div class="mt-4 flex items-baseline">
+                                <span class="text-4xl font-extrabold text-emerald-400">2.5%</span>
+                                <span class="text-xs text-slate-400 ml-1">/ Daily Returns</span>
+                            </div>
+                            <ul class="mt-6 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Min Deposit: $5,000 USD</li>
+                                <li class="flex items-center"><i class="fa-solid fa-lock text-amber-400 mr-2"></i> Capital Locked for 90 Days</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Priority Payout Execution</li>
+                            </ul>
+                        </div>
+                        <a href="signup.html" class="mt-8 w-full bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 border border-brand-border text-white text-center font-bold py-3 rounded-xl transition text-xs">
+                            Select Institutional Plan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Live Ticker Animation Script -->
+<script>
+    const payoutsList = [
+        { name: "Julius M.", amount: "$45,000", method: "USDT (TRC20)", time: "Just now" },
+        { name: "Kathy R.", amount: "$20,000", method: "Bank Wire", time: "1 min ago" },
+        { name: "Marcus V.", amount: "$12,500", method: "Direct USD Card", time: "2 mins ago" },
+        { name: "Elena S.", amount: "$38,000", method: "USDC", time: "3 mins ago" },
+        { name: "David K.", amount: "$15,200", method: "USDT (TRC20)", time: "4 mins ago" },
+        { name: "Sarah B.", amount: "$50,000", method: "Bank Wire", time: "5 mins ago" },
+        { name: "Alexandre P.", amount: "$8,400", method: "USDT (ERC20)", time: "6 mins ago" },
+        { name: "Nikos G.", amount: "$27,900", method: "Direct USD Card", time: "7 mins ago" },
+        { name: "Chloe T.", amount: "$19,500", method: "USDT (TRC20)", time: "8 mins ago" },
+        { name: "Liam W.", amount: "$33,000", method: "Bank Wire", time: "10 mins ago" },
+        { name: "Steve M.", amount: "$14,000", method: "USDC", time: "11 mins ago" },
+        { name: "Sven H.", amount: "$62,000", method: "USDT (TRC20)", time: "12 mins ago" },
+        { name: "Carlos R.", amount: "$22,100", method: "Direct USD Card", time: "14 mins ago" },
+        { name: "Hannah L.", amount: "$9,800", method: "USDT (TRC20)", time: "15 mins ago" },
+        { name: "Rico B.", amount: "$41,500", method: "Bank Wire", time: "16 mins ago" },
+        { name: "Mei Ling C.", amount: "$29,000", method: "USDC", time: "18 mins ago" },
+        { name: "philip A.", amount: "$18,750", method: "USDT (TRC20)", time: "20 mins ago" }
+    ];
+
+    let currentPayoutIndex = 0;
+
+    function cyclePayouts() {
+        const tickerElement = document.getElementById('payoutTicker');
+        const userEl = document.getElementById('payoutUser');
+        const amountEl = document.getElementById('payoutAmount');
+        const methodEl = document.getElementById('payoutMethod');
+        const timeEl = document.getElementById('payoutTime');
+
+        if (!tickerElement) return;
+
+        // Fade out transition
+        tickerElement.style.opacity = '0';
+        tickerElement.style.transform = 'translateY(-6px)';
+
+        setTimeout(() => {
+            // Update to next person in array
+            currentPayoutIndex = (currentPayoutIndex + 1) % payoutsList.length;
+            const current = payoutsList[currentPayoutIndex];
+
+            userEl.textContent = current.name;
+            amountEl.textContent = current.amount + " USD";
+            methodEl.textContent = current.method;
+            timeEl.textContent = current.time;
+
+            // Fade in transition
+            tickerElement.style.opacity = '1';
+            tickerElement.style.transform = 'translateY(0)';
+        }, 400);
+    }
+
+    // Change person every 3.5 seconds
+    setInterval(cyclePayouts, 3500);
+</script>
+
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-brand-border py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                <span>&copy; 2026 Ciphron Investment & Finance.</span>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="signin.html" class="hover:text-white transition">Investor Login</a>
+                <a href="signup.html" class="hover:text-white transition">Register Account</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

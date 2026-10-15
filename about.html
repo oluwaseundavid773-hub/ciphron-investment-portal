@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Ciphron Investment & Finance</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-slate-950">
+
+    <!-- Navigation Header -->
+    <header class="bg-slate-900/80 backdrop-blur-md border-b border-brand-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-shield-halved text-slate-950 text-xl font-bold"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wider text-white">CIPHRON</h1>
+                    <p class="text-[10px] text-emerald-400 font-medium tracking-widest uppercase">Investment & Finance</p>
+                </div>
+            </div>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="about.html" class="text-emerald-400 font-semibold">About Us</a>
+                <a href="dashboard.html" class="hover:text-emerald-400 transition">Portal</a>
+                <a href="kyc.html" class="hover:text-emerald-400 transition">Security & KYC</a>
+            </nav>
+
+            <!-- Auth Buttons -->
+            <div class="flex items-center space-x-3">
+                <a href="signin.html" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-white px-4 py-2.5 transition">Sign In</a>
+                <a href="signup.html" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 transition text-xs sm:text-sm">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 space-y-20 pb-20">
+
+        <!-- Hero Section -->
+        <section class="relative pt-20 pb-16 overflow-hidden border-b border-brand-border bg-gradient-to-b from-slate-900/60 to-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+                <span class="px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20 uppercase tracking-widest">
+                    Institutional Heritage
+                </span>
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                    Architecting the Future of <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Automated Yields</span>
+                </h1>
+                <p class="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                    Ciphron Investment & Finance bridges traditional institutional asset management with high-performance digital liquidity, delivering consistent, secure USD returns for global investors.
+                </p>
+            </div>
+        </section>
+
+        <!-- Key Financial Statistics -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl text-center space-y-2">
+                    <p class="text-3xl sm:text-4xl font-extrabold text-emerald-400">$450M+</p>
+                    <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Assets Under Management</p>
+                </div>
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl text-center space-y-2">
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">38,400+</p>
+                    <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Verified Global Investors</p>
+                </div>
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl text-center space-y-2">
+                    <p class="text-3xl sm:text-4xl font-extrabold text-emerald-400">99.98%</p>
+                    <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Execution Uptime</p>
+                </div>
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl text-center space-y-2">
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">12+ Years</p>
+                    <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Combined Leadership Exp.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Core Pillars -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div class="text-center max-w-xl mx-auto space-y-3">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white">Our Core Institutional Pillars</h2>
+                <p class="text-xs sm:text-sm text-slate-400">Built on uncompromising standards of transparency, security, and algorithmic precision.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Pillar 1 -->
+                <div class="bg-brand-card border border-brand-border p-8 rounded-3xl space-y-4 hover:border-emerald-500/50 transition">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Institutional Security</h3>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                        Every transaction and stake is protected by multi-signature cold storage vaults, 256-Bit SSL encryption, and strict PCI-DSS compliance frameworks.
+                    </p>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="bg-brand-card border border-brand-border p-8 rounded-3xl space-y-4 hover:border-emerald-500/50 transition">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Algorithmic Yield Generation</h3>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                        Our proprietary automated hedging models execute fixed daily arbitrage across premier liquidity pools, ensuring stable 1.2% to 2.5% daily returns.
+                    </p>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="bg-brand-card border border-brand-border p-8 rounded-3xl space-y-4 hover:border-emerald-500/50 transition">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Regulatory Compliance</h3>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                        Fully aligned with global AML/KYC protocols. We maintain absolute transparency with our registered investors while safeguarding privacy.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Executive Leadership Board -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div class="text-center max-w-xl mx-auto space-y-3">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white">Executive Leadership</h2>
+                <p class="text-xs sm:text-sm text-slate-400">Guiding CIPHRON with decades of expertise in quantitative finance and blockchain security.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Leader 1 -->
+                <div class="bg-brand-card border border-brand-border rounded-3xl overflow-hidden p-6 text-center space-y-4">
+                    <div class="w-24 h-24 rounded-full bg-emerald-600/20 border-2 border-emerald-500/40 mx-auto flex items-center justify-center text-emerald-400 text-2xl font-bold">
+                        AR
+                    </div>
+                    <div>
+                        <h4 class="text-base font-bold text-white">Arthur Sterling</h4>
+                        <p class="text-xs text-emerald-400 font-medium">Chief Executive Officer</p>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Former Director of Institutional Portfolio Management at Goldman Sachs, with over 18 years in private equity and quantitative trading.
+                    </p>
+                </div>
+
+                <!-- Leader 2 -->
+                <div class="bg-brand-card border border-brand-border rounded-3xl overflow-hidden p-6 text-center space-y-4">
+                    <div class="w-24 h-24 rounded-full bg-emerald-600/20 border-2 border-emerald-500/40 mx-auto flex items-center justify-center text-emerald-400 text-2xl font-bold">
+                        EV
+                    </div>
+                    <div>
+                        <h4 class="text-base font-bold text-white">Elena Vance</h4>
+                        <p class="text-xs text-emerald-400 font-medium">Chief Compliance Officer</p>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Specializes in international financial regulations, AML compliance, and institutional risk mitigation across global jurisdictions.
+                    </p>
+                </div>
+
+                <!-- Leader 3 -->
+                <div class="bg-brand-card border border-brand-border rounded-3xl overflow-hidden p-6 text-center space-y-4">
+                    <div class="w-24 h-24 rounded-full bg-emerald-600/20 border-2 border-emerald-500/40 mx-auto flex items-center justify-center text-emerald-400 text-2xl font-bold">
+                        MK
+                    </div>
+                    <div>
+                        <h4 class="text-base font-bold text-white">Marcus Vance</h4>
+                        <p class="text-xs text-emerald-400 font-medium">Head of Quantitative Trading</p>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Pioneer in automated arbitrage systems and algorithmic crypto-fiat liquidity hedging engines.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Trust Badges Banner -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-slate-900/40 border border-brand-border rounded-3xl p-8">
+                <div class="text-center max-w-xl mx-auto mb-8">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider">Certified Institutional Safety</h4>
+                    <p class="text-xs text-slate-400 mt-1">Operating under strict cryptographic standards and enterprise data protection.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div class="bg-brand-card border border-brand-border p-4 rounded-2xl flex flex-col items-center justify-center space-y-2">
+                        <i class="fa-solid fa-lock text-emerald-400 text-xl"></i>
+                        <span class="text-xs font-bold text-white">256-Bit SSL</span>
+                        <span class="text-[10px] text-slate-400">Bank-Grade Encryption</span>
+                    </div>
+                    <div class="bg-brand-card border border-brand-border p-4 rounded-2xl flex flex-col items-center justify-center space-y-2">
+                        <i class="fa-solid fa-shield-halved text-emerald-400 text-xl"></i>
+                        <span class="text-xs font-bold text-white">PCI-DSS Level 1</span>
+                        <span class="text-[10px] text-slate-400">Secure Card Processing</span>
+                    </div>
+                    <div class="bg-brand-card border border-brand-border p-4 rounded-2xl flex flex-col items-center justify-center space-y-2">
+                        <i class="fa-solid fa-cloud-shield text-emerald-400 text-xl"></i>
+                        <span class="text-xs font-bold text-white">Cloudflare Secured</span>
+                        <span class="text-[10px] text-slate-400">DDoS & Firewall Shield</span>
+                    </div>
+                    <div class="bg-brand-card border border-brand-border p-4 rounded-2xl flex flex-col items-center justify-center space-y-2">
+                        <i class="fa-solid fa-vault text-amber-400 text-xl"></i>
+                        <span class="text-xs font-bold text-white">Cold Storage Vault</span>
+                        <span class="text-[10px] text-slate-400">Offline Capital Reserve</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-brand-border py-8 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-2">
+                <div class="w-6 h-6 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 font-bold text-xs">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <span class="font-bold text-slate-300">CIPHRON INVESTMENT & FINANCE</span>
+            </div>
+            <p>&copy; 2026 Ciphron Finance Inc.</p>
+            <div class="flex space-x-4">
+                <a href="about.html" class="hover:text-slate-300 transition">About</a>
+                <a href="kyc.html" class="hover:text-slate-300 transition">Privacy & KYC</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

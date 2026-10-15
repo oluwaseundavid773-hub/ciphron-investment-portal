@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Investor Account | Ciphron Investment & Finance</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-slate-950">
+
+    <!-- Header Navigation Bar -->
+    <header class="bg-slate-900/80 backdrop-blur-md border-b border-brand-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-shield-halved text-slate-950 text-xl font-bold"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wider text-white">CIPHRON</h1>
+                    <p class="text-[10px] text-emerald-400 font-medium tracking-widest uppercase">Investment & Finance</p>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="about.html" class="hover:text-emerald-400 transition">About Us</a>
+                <a href="dashboard.html" class="hover:text-emerald-400 transition">Portal</a>
+                <a href="kyc.html" class="hover:text-emerald-400 transition">Security & KYC</a>
+            </nav>
+
+            <!-- Auth Link -->
+            <div class="flex items-center space-x-3">
+                <span class="text-xs text-slate-400 hidden sm:inline">Already have an account?</span>
+                <a href="signin.html" class="text-xs sm:text-sm font-semibold text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 px-4 py-2 rounded-xl transition">
+                    Sign In
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8 my-8">
+        <div class="max-w-xl w-full bg-brand-card border border-brand-border rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+            
+            <!-- Glow Accent Header -->
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-600"></div>
+
+            <!-- Title & Subtitle -->
+            <div class="text-center space-y-2 mb-8">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold uppercase tracking-wider mb-1">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Investor Onboarding</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Open Institutional Account</h2>
+                <p class="text-xs sm:text-sm text-slate-400">Join over 38,000+ investors earning daily compounding USD returns.</p>
+            </div>
+
+            <!-- Signup Form -->
+            <form onsubmit="handleSignupSubmit(event)" class="space-y-5">
+                
+                <!-- Full Name -->
+                <div>
+                    <label class="block text-xs text-slate-300 font-semibold mb-1.5">Full Legal Name</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                            <i class="fa-solid fa-user text-xs"></i>
+                        </div>
+                        <input type="text" id="fullName" placeholder="e.g. Anderson" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition">
+                    </div>
+                </div>
+
+                <!-- Email Address -->
+                <div>
+                    <label class="block text-xs text-slate-300 font-semibold mb-1.5">Email Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                            <i class="fa-solid fa-envelope text-xs"></i>
+                        </div>
+                        <input type="email" id="emailInput" placeholder="investor@example.com" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition">
+                    </div>
+                </div>
+
+                <!-- Password and Confirm Password Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-slate-300 font-semibold mb-1.5">Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                                <i class="fa-solid fa-lock text-xs"></i>
+                            </div>
+                            <input type="password" id="passwordInput" placeholder="••••••••" required minlength="8" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-10 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition">
+                            <button type="button" onclick="togglePasswordVisibility('passwordInput', 'eyeIcon1')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
+                                <i id="eyeIcon1" class="fa-solid fa-eye text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-slate-300 font-semibold mb-1.5">Confirm Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                                <i class="fa-solid fa-shield-check text-xs"></i>
+                            </div>
+                            <input type="password" id="confirmPasswordInput" placeholder="••••••••" required minlength="8" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-10 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition">
+                            <button type="button" onclick="togglePasswordVisibility('confirmPasswordInput', 'eyeIcon2')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
+                                <i id="eyeIcon2" class="fa-solid fa-eye text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Referral Code (Optional) -->
+                <div>
+                    <label class="block text-xs text-slate-300 font-semibold mb-1.5">Affiliate / Sponsor Code <span class="text-slate-500 font-normal">(Optional)</span></label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                            <i class="fa-solid fa-link text-xs"></i>
+                        </div>
+                        <input type="text" id="referralCode" placeholder="e.g. Anderson" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition font-mono">
+                    </div>
+                </div>
+
+                <!-- Terms and Conditions Checkbox -->
+                <div class="flex items-start space-x-2.5 pt-1">
+                    <input type="checkbox" id="termsCheckbox" required class="mt-1 h-4 w-4 rounded bg-slate-950 border-brand-border text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900 cursor-pointer">
+                    <label for="termsCheckbox" class="text-xs text-slate-400 leading-relaxed cursor-pointer">
+                        I certify that I am at least 18 years old and agree to the <a href="kyc.html" class="text-emerald-400 hover:underline">Terms of Service</a>, <a href="kyc.html" class="text-emerald-400 hover:underline">Privacy Policy</a>, and <a href="kyc.html" class="text-emerald-400 hover:underline">AML/KYC Compliance Policies</a>.
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm cursor-pointer flex items-center justify-center space-x-2 mt-4 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                    <i class="fa-solid fa-user-check text-xs"></i>
+                    <span>Complete Registration</span>
+                </button>
+            </form>
+
+            <!-- SSL Encryption Security Badge -->
+            <div class="mt-8 pt-6 border-t border-brand-border/60 flex items-center justify-center space-x-4 text-slate-400 text-xs">
+                <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-lock text-emerald-400"></i>
+                    <span>256-Bit SSL Encryption</span>
+                </div>
+                <span class="text-slate-600">•</span>
+                <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                    <span>PCI-DSS Compliant</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-brand-border py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-2">
+                <div class="w-6 h-6 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 font-bold text-xs">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <span class="font-bold text-slate-300">CIPHRON INVESTMENT & FINANCE</span>
+            </div>
+            <p>&copy; 2026 Ciphron Finance Inc.</p>
+            <div class="flex space-x-4">
+                <a href="about.html" class="hover:text-slate-300 transition">About Us</a>
+                <a href="kyc.html" class="hover:text-slate-300 transition">Privacy & KYC</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Form JavaScript Logic -->
+    <script>
+        function togglePasswordVisibility(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            
+            if (input && icon) {
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+        }
+
+        function handleSignupSubmit(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('passwordInput').value;
+            const confirmPassword = document.getElementById('confirmPasswordInput').value;
+            
+            if (password !== confirmPassword) {
+                alert('🚫 Password Mismatch!\n\nPlease make sure your password and confirm password fields match.');
+                return;
+            }
+
+            const fullName = document.getElementById('fullName').value;
+            alert(`🎉 Account Created Successfully!\n\nWelcome to Ciphron Investment & Finance, ${fullName}. Redirecting to your investor dashboard...`);
+            
+            // Route seamlessly to investor dashboard
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>
