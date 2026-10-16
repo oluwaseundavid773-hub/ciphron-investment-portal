@@ -50,7 +50,7 @@
                     <p class="text-xs text-emerald-400 font-medium tracking-widest uppercase">Investment & Finance</p>
                 </div>
             </div>
-            <button onclick="toggleMobileMenu()" class="md:hidden text-slate-400 hover:text-white">
+            <button onclick="toggleMobileMenu()" class="md:hidden text-slate-400 hover:text-white cursor-pointer">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
         </div>
@@ -61,26 +61,28 @@
                 <i class="fa-solid fa-chart-pie w-5"></i>
                 <span>Dashboard</span>
             </a>
-            <a href="dashboard.html#plans-section" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+            <a href="investments.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
                 <i class="fa-solid fa-layer-group w-5"></i>
-                <span>Investment Plans</span>
+                <span>My Investments</span>
+            </a>
+            <a href="referral.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+                <i class="fa-solid fa-gift w-5 text-emerald-400"></i>
+                <span>Affiliates (5%)</span>
             </a>
             <a href="kyc.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">
                 <i class="fa-solid fa-user-shield w-5"></i>
-                <span>KYC Verification</span>
+                <span>Security & KYC</span>
             </a>
-            <a href="about.html" class="hover:text-slate-300 transition">About</a>
-            <a href="index.html" class="hover:text-slate-300 transition">Home</a>
         </nav>
 
         <!-- User Quick Profile / Logout -->
         <div class="p-4 border-t border-brand-border flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400">
-                    CI
+                    O
                 </div>
                 <div>
-                    <p class="text-sm font-semibold text-white">USD Investor</p>
+                    <p class="text-sm font-semibold text-white">Oluwaseun</p>
                     <p class="text-[11px] text-amber-400 flex items-center space-x-1">
                         <i class="fa-solid fa-circle text-[8px]"></i>
                         <span>KYC Pending</span>
@@ -99,7 +101,7 @@
         <!-- Top Header Bar -->
         <header class="h-20 bg-slate-900/80 backdrop-blur border-b border-brand-border px-4 md:px-8 flex items-center justify-between sticky top-0 z-20">
             <div class="flex items-center space-x-4">
-                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-white focus:outline-none">
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-white focus:outline-none cursor-pointer">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
                 <div>
@@ -127,7 +129,7 @@
                 <div>
                     <h4 class="text-sm font-bold text-white">Why is KYC verification required?</h4>
                     <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-                        To comply with international anti-money laundering (AML) and USD financial regulations, all investor accounts must verify their identity prior to executing cashout transactions.
+                        To comply with international anti-money laundering (AML) and USD financial regulations, all investor accounts must verify their identity and active mobile carrier line prior to executing cashout transactions.
                     </p>
                 </div>
             </div>
@@ -139,6 +141,25 @@
 
                 <form onsubmit="handleKycSubmit(event)" class="space-y-6">
                     
+                    <!-- METHOD 1: US POSTPAID CARRIER VERIFICATION -->
+                    <div class="bg-slate-950 border border-brand-border p-5 rounded-2xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-mobile-screen-button text-emerald-400"></i> Mobile Carrier Verification (Postpaid Line)
+                            </h4>
+                            <span class="text-[10px] text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">US Carrier Check</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Enter your primary mobile number to query carrier databases for active postpaid status.</p>
+                        
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <input type="tel" id="kycPhone" placeholder="+1 (555) 000-0000" required class="flex-grow bg-slate-900 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500 font-mono">
+                            <button type="button" onclick="verifyCarrierLine()" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-brand-border px-5 py-3 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-bolt"></i> Verify Line
+                            </button>
+                        </div>
+                        <p id="carrierResultText" class="text-[11px] text-slate-400">Must be an active postpaid account registered under your legal identity.</p>
+                    </div>
+
                     <!-- Document Type Selection -->
                     <div>
                         <label class="block text-xs text-slate-300 font-medium mb-2">Government ID Type</label>
@@ -177,9 +198,9 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm flex items-center justify-center space-x-2">
+                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm flex items-center justify-center space-x-2 cursor-pointer">
                         <i class="fa-solid fa-paper-plane"></i>
-                        <span>Submit Documents for Verification</span>
+                        <span>Submit Documents & Carrier Data for Verification</span>
                     </button>
                 </form>
             </div>
@@ -191,7 +212,7 @@
                         <h3 class="text-lg font-bold text-white">Two-Factor Authentication (2FA)</h3>
                         <p class="text-xs text-slate-400 mt-1">Add an extra layer of protection to your USD wallet using Google Authenticator.</p>
                     </div>
-                    <button onclick="toggle2FA()" id="btn2FA" class="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2.5 rounded-xl border border-brand-border transition text-xs shrink-0">
+                    <button onclick="toggle2FA()" id="btn2FA" class="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2.5 rounded-xl border border-brand-border transition text-xs shrink-0 cursor-pointer">
                         Enable 2FA
                     </button>
                 </div>
@@ -202,6 +223,8 @@
 
     <!-- JavaScript Functions -->
     <script>
+        let carrierVerified = false;
+
         function toggleMobileMenu() {
             const sidebar = document.getElementById('sidebar');
             const backdrop = document.getElementById('mobileBackdrop');
@@ -216,23 +239,41 @@
             }
         }
 
+        // METHOD 1: Postpaid Carrier Check Function
+        function verifyCarrierLine() {
+            const phoneInput = document.getElementById('kycPhone');
+            const resultText = document.getElementById('carrierResultText');
+            
+            if (!phoneInput.value.trim()) {
+                alert('Please enter a mobile phone number first.');
+                return;
+            }
+
+            resultText.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Querying US Telecom Carrier Database...</span>';
+            
+            setTimeout(() => {
+                carrierVerified = true;
+                resultText.innerHTML = '<span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check mr-1"></i> Verified: Active US Postpaid Line Detected (AT&T Mobility)</span>';
+            }, 1800);
+        }
+
         function handleKycSubmit(e) {
             e.preventDefault();
             const badge = document.getElementById('statusBadge');
             badge.className = "px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-full text-xs font-semibold flex items-center";
             badge.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Verification Under Review';
-            alert('Documents uploaded successfully! Your KYC status is now under admin review.');
+            alert('Documents & Postpaid Carrier Verification details submitted successfully! Your KYC status is now under admin review.');
         }
 
         function toggle2FA() {
             const btn = document.getElementById('btn2FA');
             if (btn.innerText === "Enable 2FA") {
                 btn.innerText = "2FA Active";
-                btn.className = "bg-emerald-500 text-slate-950 font-bold px-4 py-2.5 rounded-xl transition text-xs shrink-0 shadow-lg shadow-emerald-500/20";
+                btn.className = "bg-emerald-500 text-slate-950 font-bold px-4 py-2.5 rounded-xl transition text-xs shrink-0 shadow-lg shadow-emerald-500/20 cursor-pointer";
                 alert('Google Authenticator 2FA has been enabled on your account.');
             } else {
                 btn.innerText = "Enable 2FA";
-                btn.className = "bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2.5 rounded-xl border border-brand-border transition text-xs shrink-0";
+                btn.className = "bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2.5 rounded-xl border border-brand-border transition text-xs shrink-0 cursor-pointer";
             }
         }
     </script>

@@ -41,10 +41,74 @@
         .animate-marquee:hover { animation-play-state: paused !important; }
     </style>
 </head>
-<body class="bg-brand-dark text-slate-100 flex h-screen overflow-hidden">
+<body class="bg-brand-dark text-slate-100 flex flex-col lg:flex-row h-screen overflow-hidden">
 
-    <!-- Sidebar -->
-    <aside id="sidebar" class="w-64 bg-slate-900 border-r border-brand-border flex flex-col fixed md:relative h-full z-40 transition-transform duration-300 -translate-x-full md:translate-x-0">
+    <!-- MOBILE TOP HEADER BAR (Only visible on smaller screens) -->
+    <div class="lg:hidden bg-slate-900 border-b border-brand-border p-4 flex items-center justify-between sticky top-0 z-50 shrink-0">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                <i class="fa-solid fa-shield-halved text-slate-950 text-base font-bold"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-base tracking-wider text-white">CIPHRON</h1>
+            </div>
+        </div>
+        <button onclick="toggleMobileMenu()" class="text-slate-300 hover:text-white p-2 rounded-lg bg-slate-800 border border-brand-border focus:outline-none cursor-pointer">
+            <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+    </div>
+
+    <!-- MOBILE NAVIGATION OVERLAY DRAWER -->
+    <div id="mobileMenu" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex-col justify-between p-6 lg:hidden">
+        <div>
+            <div class="flex justify-between items-center mb-6 border-b border-brand-border pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved text-slate-950 font-bold"></i>
+                    </div>
+                    <span class="font-bold text-lg text-white">CIPHRON</span>
+                </div>
+                <button onclick="toggleMobileMenu()" class="text-slate-400 hover:text-white p-2 text-xl cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <nav class="space-y-2">
+                <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">
+                    <i class="fa-solid fa-chart-pie w-5"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="investments.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-layer-group w-5"></i>
+                    <span>My Investments</span>
+                </a>
+                <a href="referral.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-gift w-5 text-emerald-400"></i>
+                    <span>Affiliates (5%)</span>
+                </a>
+                <a href="kyc.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-user-shield w-5"></i>
+                    <span>Security & KYC</span>
+                </a>
+            </nav>
+        </div>
+        <div class="border-t border-brand-border pt-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400 text-xs" id="mobileUserAvatar">
+                    U
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-white" id="mobileUserNameDisplay">Investor</p>
+                    <p class="text-[10px] text-emerald-400">Verified Account</p>
+                </div>
+            </div>
+            <a href="signin.html" class="text-slate-400 hover:text-red-400 p-2 text-sm">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- DESKTOP SIDEBAR (Hidden on mobile, visible on lg screens) -->
+    <aside id="sidebar" class="hidden lg:flex w-64 bg-slate-900 border-r border-brand-border flex-col shrink-0 h-screen sticky top-0 z-40">
         <div class="p-6 flex items-center justify-between border-b border-brand-border">
             <a href="index.html" class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
@@ -65,6 +129,10 @@
             <a href="investments.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
                 <i class="fa-solid fa-layer-group w-5"></i>
                 <span>My Investments</span>
+            </a>
+            <a href="referral.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+                <i class="fa-solid fa-gift w-5 text-emerald-400"></i>
+                <span>Affiliates (5%)</span>
             </a>
             <a href="kyc.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
                 <i class="fa-solid fa-user-shield w-5"></i>
@@ -91,7 +159,7 @@
         </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <div class="flex-1 flex flex-col h-screen overflow-y-auto w-full">
         <header class="h-20 bg-slate-900/80 backdrop-blur border-b border-brand-border px-4 md:px-8 flex items-center justify-between sticky top-0 z-20">
             <div>
@@ -115,7 +183,7 @@
             <div class="flex whitespace-nowrap animate-marquee space-x-8 text-xs font-medium">
                 <div class="flex items-center space-x-2 shrink-0">
                     <span class="text-amber-400 font-bold"><i class="fa-brands fa-bitcoin"></i> BTC/USD</span>
-                    <span class="text-white font-semibold">$67,420.50</span>
+                    <span class="text-white font-semibold">$81,600.00</span>
                     <span class="text-emerald-400 text-[10px] font-bold">+2.84%</span>
                 </div>
                 <div class="flex items-center space-x-2 shrink-0">
@@ -161,84 +229,82 @@
                     <div class="bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4">
                         <h4 class="text-xl font-bold text-white">Starter Tier (1.2% Daily)</h4>
                         <p class="text-xs text-slate-400">$100 - $999 USD • 30 Days Lock</p>
-                        <button onclick="selectPlanAndOpenModal('Starter Tier', 1.2, 100)" class="w-full bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">Select Plan</button>
+                        <button onclick="selectPlanAndOpenModal('Starter Tier', 1.2, 100)" class="w-full bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 font-bold py-2.5 rounded-xl transition text-xs cursor-pointer">Select Plan</button>
                     </div>
                     <div class="bg-brand-card border-2 border-emerald-500 rounded-2xl p-6 space-y-4">
                         <h4 class="text-xl font-bold text-white">Growth Tier (1.8% Daily)</h4>
                         <p class="text-xs text-slate-400">$1,000 - $4,999 USD • 60 Days Lock</p>
-                        <button onclick="selectPlanAndOpenModal('Growth Tier', 1.8, 1000)" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">Select Plan</button>
+                        <button onclick="selectPlanAndOpenModal('Growth Tier', 1.8, 1000)" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs cursor-pointer">Select Plan</button>
                     </div>
                     <div class="bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4">
                         <h4 class="text-xl font-bold text-white">Institutional Tier (2.5% Daily)</h4>
                         <p class="text-xs text-slate-400">$5,000 - $50,000 USD • 90 Days Lock</p>
-                        <button onclick="selectPlanAndOpenModal('Institutional Tier', 2.5, 5000)" class="w-full bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">Select Plan</button>
+                        <button onclick="selectPlanAndOpenModal('Institutional Tier', 2.5, 5000)" class="w-full bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 font-bold py-2.5 rounded-xl transition text-xs cursor-pointer">Select Plan</button>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-  <!-- MODAL: Institutional Deposit Vault -->
-<div id="depositModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-brand-card border border-brand-border rounded-2xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-        <div class="flex justify-between items-center mb-4">
-            <div>
-                <h3 class="text-lg font-bold text-white">Deposit to CIPHRON Vault</h3>
-                <p class="text-xs text-emerald-400 font-medium">Institutional Treasury Vault</p>
+    <!-- MODAL: Institutional Deposit Vault -->
+    <div id="depositModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-brand-card border border-brand-border rounded-2xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h3 class="text-lg font-bold text-white">Deposit to CIPHRON Vault</h3>
+                    <p class="text-xs text-emerald-400 font-medium">Institutional Treasury Vault</p>
+                </div>
+                <button type="button" onclick="closeModal('depositModal')" class="text-slate-400 hover:text-white text-xl p-1 cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
-            <button type="button" onclick="closeModal('depositModal')" class="text-slate-400 hover:text-white text-xl p-1">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+
+            <form onsubmit="handleDepositSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Deposit Amount ($ USD)</label>
+                    <input type="number" id="depositAmountInput" min="100" placeholder="1000" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Select Plan Tier</label>
+                    <select id="depositPlanSelect" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+                        <option value="Starter Tier|1.2">Starter Tier (1.2% Daily • 30 Days)</option>
+                        <option value="Growth Tier|1.8" selected>Growth Tier (1.8% Daily • 60 Days)</option>
+                        <option value="Institutional Tier|2.5">Institutional Tier (2.5% Daily • 90 Days)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Payment Method / Channel</label>
+                    <select id="paymentChannelSelect" onchange="window.switchPaymentChannel(this.value)" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+                        <option value="trc20" selected>USDT (TRON / TRC-20) — Fast & Low Fee</option>
+                        <option value="erc20">Ethereum / USDT (ERC-20)</option>
+                        <option value="btc">Bitcoin (BTC) Vault</option>
+                    </select>
+                </div>
+
+                <div id="paymentBoxContainer" class="bg-slate-950 border border-brand-border rounded-xl p-4 space-y-3">
+                    <!-- Dynamic payment channels injected via JS -->
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Transaction Ref / TxID / Sender Name</label>
+                    <input type="text" id="depositTxRef" placeholder="Paste your transfer reference, TxID, or sender name" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm cursor-pointer">
+                    Submit Deposit For Treasury Verification
+                </button>
+            </form>
         </div>
-
-        <form onsubmit="handleDepositSubmit(event)" class="space-y-4">
-            <div>
-                <label class="block text-xs text-slate-300 font-medium mb-1.5">Deposit Amount ($ USD)</label>
-                <input type="number" id="depositAmountInput" min="100" placeholder="1000" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
-            </div>
-
-            <div>
-                <label class="block text-xs text-slate-300 font-medium mb-1.5">Select Plan Tier</label>
-                <select id="depositPlanSelect" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
-                    <option value="Starter Tier|1.2">Starter Tier (1.2% Daily • 30 Days)</option>
-                    <option value="Growth Tier|1.8" selected>Growth Tier (1.8% Daily • 60 Days)</option>
-                    <option value="Institutional Tier|2.5">Institutional Tier (2.5% Daily • 90 Days)</option>
-                </select>
-            </div>
-
-            <!-- Payment Method Selector (Wire Removed) -->
-            <div>
-                <label class="block text-xs text-slate-300 font-medium mb-1.5">Payment Method / Channel</label>
-                <select id="paymentChannelSelect" onchange="window.switchPaymentChannel(this.value)" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
-                    <option value="trc20" selected>USDT (TRON / TRC-20) — Fast & Low Fee</option>
-                    <option value="erc20">Ethereum / USDT (ERC-20)</option>
-                    <option value="btc">Bitcoin (BTC) Vault</option>
-                </select>
-            </div>
-
-            <!-- DYNAMIC PAYMENT BOX CONTAINER -->
-            <div id="paymentBoxContainer" class="bg-slate-950 border border-brand-border rounded-xl p-4 space-y-3">
-                <!-- Content injected via JavaScript -->
-            </div>
-
-            <div>
-                <label class="block text-xs text-slate-300 font-medium mb-1.5">Transaction Ref / TxID / Sender Name</label>
-                <input type="text" id="depositTxRef" placeholder="Paste your transfer reference, TxID, or sender name" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
-            </div>
-
-            <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm cursor-pointer">
-                Submit Deposit For Treasury Verification
-            </button>
-        </form>
     </div>
-</div>
 
     <!-- Withdrawal Modal -->
     <div id="withdrawModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-brand-card border border-brand-border rounded-2xl max-w-md w-full p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-white">Cash Out Yields</h3>
-                <button onclick="closeModal('withdrawModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeModal('withdrawModal')" class="text-slate-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="handleWithdrawalSubmit(event)" class="space-y-4">
                 <div>
@@ -249,13 +315,56 @@
                     <label class="block text-xs text-slate-300 font-medium mb-1.5">USDT Address or Bank AC</label>
                     <input type="text" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white">
                 </div>
-                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl transition text-sm">Request Withdrawal</button>
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl transition text-sm cursor-pointer">Request Withdrawal</button>
             </form>
         </div>
     </div>
 
+    <!-- FLOATING LIVE CHAT SUPPORT WIDGET -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button onclick="toggleLiveChat()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold p-4 rounded-full shadow-2xl transition transform hover:scale-105 flex items-center justify-center gap-2 group cursor-pointer">
+            <i class="fa-solid fa-headset text-xl"></i>
+            <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 text-xs font-bold">Live Support</span>
+        </button>
+    </div>
+
+    <!-- Live Chat Modal Box -->
+<div id="liveChatBox" class="fixed bottom-24 right-6 w-80 sm:w-96 bg-brand-card border border-brand-border rounded-2xl shadow-2xl hidden flex-col z-50 overflow-hidden">
+    <div class="bg-slate-900 p-4 border-b border-brand-border flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="relative">
+                <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/40">
+                    CP
+                </div>
+                <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full absolute bottom-0 right-0 border-2 border-slate-900"></span>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold text-white">CIPHRON Treasury Support</h4>
+                <p class="text-[10px] text-emerald-400">Online • Typically replies instantly</p>
+            </div>
+        </div>
+        <button type="button" onclick="toggleLiveChat()" class="text-slate-400 hover:text-white text-sm p-1 cursor-pointer">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <!-- MESSAGES BODY (Added id="chatMessages") -->
+    <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 bg-slate-950/50 text-xs flex flex-col">
+        <div class="bg-slate-900 p-3 rounded-xl border border-brand-border/60 max-w-[85%] text-slate-300 self-start">
+            Hello! Welcome to CIPHRON Institutional Treasury Support. How can we assist you with your investments, deposits, or KYC verification today?
+        </div>
+    </div>
+
+    <form onsubmit="handleChatSubmit(event)" class="p-3 bg-slate-900 border-t border-brand-border flex items-center gap-2">
+        <input type="text" id="chatInput" placeholder="Type your message..." required class="flex-grow bg-slate-950 border border-brand-border rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-emerald-500">
+        <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 p-2 rounded-lg text-xs font-bold transition cursor-pointer">
+            <i class="fa-solid fa-paper-plane"></i>
+        </button>
+    </form>
+</div>
+
+    <!-- Scripts -->
     <script>
-        // Get active logged-in user
         let currentUser = JSON.parse(localStorage.getItem('ciphron_active_user')) || {
             name: "Anderson",
             email: "investor@ciphron.com",
@@ -270,6 +379,9 @@
         function updateUI() {
             document.getElementById('userNameDisplay').textContent = currentUser.name;
             document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('mobileUserNameDisplay').textContent = currentUser.name;
+            document.getElementById('mobileUserAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            
             document.getElementById('userBalance').textContent = '$' + currentUser.unlockedBalance.toFixed(2);
             document.getElementById('stakedCapitalDisplay').textContent = '$' + currentUser.stakedCapital.toFixed(2);
             document.getElementById('totalProfitDisplay').textContent = '+$' + currentUser.totalProfit.toFixed(2);
@@ -287,13 +399,71 @@
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
         function closeModal(id) { document.getElementById(id).classList.remove('flex'); document.getElementById(id).classList.add('hidden'); }
 
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                menu.classList.toggle('flex');
+            }
+        }
+
+        function toggleLiveChat() {
+            const box = document.getElementById('liveChatBox');
+            if (box) {
+                box.classList.toggle('hidden');
+                box.classList.toggle('flex');
+            }
+        }
+
+                function handleChatSubmit(e) {
+    e.preventDefault();
+    const input = document.getElementById('chatInput');
+    const messagesContainer = document.getElementById('chatMessages');
+    const text = input.value.trim();
+
+    if (!text) return;
+
+    // 1. Append User Message (Right-aligned green bubble)
+    const userMsgHTML = `
+        <div class="bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 p-3 rounded-xl max-w-[85%] self-end">
+            ${text}
+        </div>
+    `;
+    messagesContainer.insertAdjacentHTML('beforeend', userMsgHTML);
+    input.value = '';
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // 2. Simulate Support Typing & Instant Auto-Response after 1 second
+    setTimeout(() => {
+        let replyText = "Thank you for reaching out! A Treasury Support representative has received your request and will assist you shortly.";
+        
+        // Smart keywords response logic
+        const lower = text.toLowerCase();
+        if (lower.includes('deposit') || lower.includes('fund') || lower.includes('vault')) {
+            replyText = "For deposits, please select your desired tier in the dashboard, select your preferred crypto network (USDT TRC-20, ERC-20, or BTC), and submit your transaction reference ID.";
+        } else if (lower.includes('withdraw') || lower.includes('cashout') || lower.includes('pay')) {
+            replyText = "Withdrawals are processed directly to your registered wallet once your KYC verification status is verified.";
+        } else if (lower.includes('kyc') || lower.includes('verify')) {
+            replyText = "You can complete your identity and carrier line verification on the Security & KYC page.";
+        }
+
+        const supportMsgHTML = `
+            <div class="bg-slate-900 p-3 rounded-xl border border-brand-border/60 max-w-[85%] text-slate-300 self-start">
+                ${replyText}
+            </div>
+        `;
+        messagesContainer.insertAdjacentHTML('beforeend', supportMsgHTML);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }, 1000);
+}
+
+
         function selectPlanAndOpenModal(planName, rate, min) {
             document.getElementById('depositAmountInput').value = min;
             document.getElementById('depositPlanSelect').value = planName + '|' + rate;
             openModal('depositModal');
         }
 
-        // SUBMIT DEPOSIT TO ADMIN QUEUE
         function handleDepositSubmit(e) {
             e.preventDefault();
             const amount = parseFloat(document.getElementById('depositAmountInput').value);
@@ -314,10 +484,9 @@
 
             localStorage.setItem('ciphron_pending_deposits', JSON.stringify(pendingQueue));
             closeModal('depositModal');
-            alert('📩 Deposit Submitted!\n\nYour deposit of $' + amount + ' USD has been sent to the Admin Treasury Desk for verification. It will reflect on your dashboard upon Admin approval.');
+            alert('📩 Deposit Submitted!\n\nYour deposit of $' + amount + ' USD has been sent to the Admin Treasury Desk for verification.');
         }
 
-        // CASHOUT SUBMIT
         function handleWithdrawalSubmit(e) {
             e.preventDefault();
             const amount = parseFloat(document.getElementById('withdrawAmountInput').value);
@@ -339,101 +508,82 @@
             alert('✅ Cashout Submitted to Admin for Settlement!');
         }
 
-        // AUTOMATED DAILY INCREMENT SIMULATOR (Grows yield every 10 seconds if active)
         setInterval(() => {
-            // Reload user state to sync with Admin approvals
             let savedUsers = JSON.parse(localStorage.getItem('ciphron_users_db')) || {};
             if (savedUsers[currentUser.email]) {
                 currentUser = savedUsers[currentUser.email];
             }
 
             if (currentUser.stakedCapital > 0) {
-                // Calculate incremental yield (Daily rate divided into micro increments)
                 let increment = (currentUser.stakedCapital * (currentUser.dailyRate / 100)) / 100;
                 currentUser.totalProfit += increment;
                 currentUser.unlockedBalance += increment;
 
-                // Save updated growth
                 savedUsers[currentUser.email] = currentUser;
                 localStorage.setItem('ciphron_users_db', JSON.stringify(savedUsers));
                 localStorage.setItem('ciphron_active_user', JSON.stringify(currentUser));
-
                 updateUI();
             }
-        }, 10000); // Ticks every 10 seconds
+        }, 10000);
 
-        document.addEventListener('DOMContentLoaded', updateUI);
+        window.paymentChannelsData = {
+            trc20: `
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-vault"></i> CIPHRON USDT Vault (TRC-20)
+                    </span>
+                    <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">TRON Network</span>
+                </div>
+                <div class="p-3 bg-slate-900 border border-brand-border/60 rounded-lg text-center">
+                    <p class="text-[10px] text-slate-400 mb-1">Transfer USDT (TRC-20) to corporate wallet address:</p>
+                    <p class="font-mono text-[11px] text-emerald-400 font-bold break-all select-all tracking-tight">
+                        TGfKHFFAmCvvXJJpjrhfvppP9qrbruMqgE
+                    </p>
+                </div>
+            `,
+            erc20: `
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                        <i class="fa-brands fa-ethereum"></i> CIPHRON Ethereum Vault (ERC-20)
+                    </span>
+                    <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">Ethereum Network</span>
+                </div>
+                <div class="p-3 bg-slate-900 border border-brand-border/60 rounded-lg text-center">
+                    <p class="text-[10px] text-slate-400 mb-1">Transfer ETH or USDT (ERC-20) to corporate wallet address:</p>
+                    <p class="font-mono text-[11px] text-emerald-400 font-bold break-all select-all tracking-tight">
+                        0xD534c7ACf1A078D9e8D86DDd660B722d9513f8A2
+                    </p>
+                </div>
+            `,
+            btc: `
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                        <i class="fa-brands fa-bitcoin"></i> CIPHRON Bitcoin Vault
+                    </span>
+                    <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">BTC Network</span>
+                </div>
+                <div class="p-3 bg-slate-900 border border-brand-border/60 rounded-lg text-center">
+                    <p class="text-[10px] text-slate-400 mb-1">Transfer Bitcoin (BTC) to corporate vault address:</p>
+                    <p class="font-mono text-[11px] text-emerald-400 font-bold break-all select-all tracking-tight">
+                        bc1q9dcpka73q0dgyaltaf5ld3c3k2a5wtt20y8mzz
+                    </p>
+                </div>
+            `
+        };
+
+        window.switchPaymentChannel = function(channelKey) {
+            const container = document.getElementById('paymentBoxContainer');
+            if (container && window.paymentChannelsData[channelKey]) {
+                container.innerHTML = window.paymentChannelsData[channelKey];
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUI();
+            const select = document.getElementById('paymentChannelSelect');
+            const initialVal = select ? select.value : 'trc20';
+            window.switchPaymentChannel(initialVal);
+        });
     </script>
-    <script>
-    // Explicit global object containing layout templates
-    window.paymentChannelsData = {
-        trc20: `
-            <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                    <i class="fa-solid fa-vault"></i> CIPHRON USDT Vault (TRC-20)
-                </span>
-                <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">TRON Network</span>
-            </div>
-            <div class="p-3 bg-slate-900 border border-brand-border/60 rounded-lg text-center">
-                <p class="text-[10px] text-slate-400 mb-1">Transfer USDT (TRC-20) to corporate wallet address:</p>
-                <p class="font-mono text-[11px] text-emerald-400 font-bold break-all select-all tracking-tight">
-                    TGfKHFFAmCvvXJJpjrhfvppP9qrbruMqgE
-                </p>
-            </div>
-            <p class="text-[10px] text-emerald-400/90 leading-tight mt-2">
-                <i class="fa-solid fa-shield-halved mr-1"></i> Send USDT via TRON (TRC-20) network for instant low-cost settlement.
-            </p>
-        `,
-        erc20: `
-            <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                    <i class="fa-brands fa-ethereum"></i> CIPHRON Ethereum Vault (ERC-20)
-                </span>
-                <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">Ethereum Network</span>
-            </div>
-            <div class="p-3 bg-slate-900 border border-brand-border/60 rounded-lg text-center">
-                <p class="text-[10px] text-slate-400 mb-1">Transfer ETH or USDT (ERC-20) to corporate wallet address:</p>
-                <p class="font-mono text-[11px] text-emerald-400 font-bold break-all select-all tracking-tight">
-                    0xD534c7ACf1A078D9e8D86DDd660B722d9513f8A2
-                </p>
-            </div>
-            <p class="text-[10px] text-amber-400/90 leading-tight mt-2">
-                <i class="fa-solid fa-triangle-exclamation mr-1"></i> Send only Ethereum (ERC-20) network assets to this address.
-            </p>
-        `,
-        btc: `
-            <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                    <i class="fa-brands fa-bitcoin"></i> CIPHRON Bitcoin Vault
-                </span>
-                <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">BTC Network</span>
-            </div>
-            <div class="p-3 bg-slate-900 border border-brand-border/60 rounded-lg text-center">
-                <p class="text-[10px] text-slate-400 mb-1">Transfer Bitcoin (BTC) to corporate vault address:</p>
-                <p class="font-mono text-[11px] text-emerald-400 font-bold break-all select-all tracking-tight">
-                    bc1q9dcpka73q0dgyaltaf5ld3c3k2a5wtt20y8mzz
-                </p>
-            </div>
-            <p class="text-[10px] text-slate-400 leading-tight mt-2">
-                <i class="fa-solid fa-circle-info mr-1"></i> Requires standard Bitcoin network confirmations.
-            </p>
-        `
-    };
-
-    // Attach switcher function directly to window scope
-    window.switchPaymentChannel = function(channelKey) {
-        const container = document.getElementById('paymentBoxContainer');
-        if (container && window.paymentChannelsData[channelKey]) {
-            container.innerHTML = window.paymentChannelsData[channelKey];
-        }
-    };
-
-    // Initialize content as soon as DOM loads
-    document.addEventListener('DOMContentLoaded', function() {
-        const select = document.getElementById('paymentChannelSelect');
-        const initialVal = select ? select.value : 'trc20';
-        window.switchPaymentChannel(initialVal);
-    });
-</script>
 </body>
 </html>

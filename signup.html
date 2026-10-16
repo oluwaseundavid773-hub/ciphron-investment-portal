@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Investor Account | Ciphron Investment & Finance</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Create Investor Account | CIPHRON</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,7 +12,6 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#ecfdf5',
                             500: '#10b981',
                             600: '#059669',
                             dark: '#0f172a',
@@ -25,233 +23,167 @@
             }
         }
     </script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+    <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
-<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-slate-950">
+<body class="bg-brand-dark text-slate-100 min-h-screen flex items-center justify-center p-4">
 
-    <!-- Header Navigation Bar -->
-    <header class="bg-slate-900/80 backdrop-blur-md border-b border-brand-border sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="index.html" class="flex items-center space-x-3">
+    <div class="max-w-md w-full bg-brand-card border border-brand-border rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
+        
+        <!-- Header / Logo -->
+        <div class="text-center space-y-2">
+            <a href="index.html" class="inline-flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
                     <i class="fa-solid fa-shield-halved text-slate-950 text-xl font-bold"></i>
                 </div>
-                <div>
-                    <h1 class="font-bold text-lg tracking-wider text-white">CIPHRON</h1>
-                    <p class="text-[10px] text-emerald-400 font-medium tracking-widest uppercase">Investment & Finance</p>
-                </div>
+                <span class="font-bold text-xl tracking-wider text-white">CIPHRON</span>
             </a>
-
-            <!-- Navigation Links -->
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
-                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
-                <a href="about.html" class="hover:text-emerald-400 transition">About Us</a>
-                <a href="dashboard.html" class="hover:text-emerald-400 transition">Portal</a>
-                <a href="kyc.html" class="hover:text-emerald-400 transition">Security & KYC</a>
-            </nav>
-
-            <!-- Auth Link -->
-            <div class="flex items-center space-x-3">
-                <span class="text-xs text-slate-400 hidden sm:inline">Already have an account?</span>
-                <a href="signin.html" class="text-xs sm:text-sm font-semibold text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 px-4 py-2 rounded-xl transition">
-                    Sign In
-                </a>
-            </div>
+            <h2 class="text-xl font-bold text-white pt-2">Create Treasury Account</h2>
+            <p class="text-xs text-slate-400">Institutional-grade yield & asset management</p>
         </div>
-    </header>
 
-    <!-- Main Content Container -->
-    <main class="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8 my-8">
-        <div class="max-w-xl w-full bg-brand-card border border-brand-border rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
-            
-            <!-- Glow Accent Header -->
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-600"></div>
-
-            <!-- Title & Subtitle -->
-            <div class="text-center space-y-2 mb-8">
-                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold uppercase tracking-wider mb-1">
-                    <i class="fa-solid fa-user-plus"></i>
-                    <span>Investor Onboarding</span>
-                </div>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Open Institutional Account</h2>
-                <p class="text-xs sm:text-sm text-slate-400">Join over 38,000+ investors earning daily compounding USD returns.</p>
+        <!-- Registration Form -->
+        <form onsubmit="handleSignup(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs text-slate-300 font-medium mb-1.5">Full Legal Name</label>
+                <input type="text" id="signupName" required placeholder="John Doe" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
             </div>
 
-            <!-- Signup Form -->
-            <form onsubmit="handleSignupSubmit(event)" class="space-y-5">
-                
-                <!-- Full Name -->
-                <div>
-                    <label class="block text-xs text-slate-300 font-semibold mb-1.5">Full Legal Name</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                            <i class="fa-solid fa-user text-xs"></i>
-                        </div>
-                        <input type="text" id="fullName" placeholder="e.g. Anderson" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition">
-                    </div>
-                </div>
+            <div>
+                <label class="block text-xs text-slate-300 font-medium mb-1.5">Email Address</label>
+                <input type="email" id="signupEmail" required placeholder="investor@example.com" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+            </div>
 
-                <!-- Email Address -->
-                <div>
-                    <label class="block text-xs text-slate-300 font-semibold mb-1.5">Email Address</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                            <i class="fa-solid fa-envelope text-xs"></i>
-                        </div>
-                        <input type="email" id="emailInput" placeholder="investor@example.com" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition">
-                    </div>
-                </div>
+            <div>
+                <label class="block text-xs text-slate-300 font-medium mb-1.5">Password</label>
+                <input type="password" id="signupPassword" required placeholder="••••••••••••" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
+            </div>
 
-                <!-- Password and Confirm Password Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs text-slate-300 font-semibold mb-1.5">Password</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                                <i class="fa-solid fa-lock text-xs"></i>
-                            </div>
-                            <input type="password" id="passwordInput" placeholder="••••••••" required minlength="8" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-10 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition">
-                            <button type="button" onclick="togglePasswordVisibility('passwordInput', 'eyeIcon1')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
-                                <i id="eyeIcon1" class="fa-solid fa-eye text-xs"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs text-slate-300 font-semibold mb-1.5">Confirm Password</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                                <i class="fa-solid fa-shield-check text-xs"></i>
-                            </div>
-                            <input type="password" id="confirmPasswordInput" placeholder="••••••••" required minlength="8" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-10 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition">
-                            <button type="button" onclick="togglePasswordVisibility('confirmPasswordInput', 'eyeIcon2')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
-                                <i id="eyeIcon2" class="fa-solid fa-eye text-xs"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Referral Code (Optional) -->
-                <div>
-                    <label class="block text-xs text-slate-300 font-semibold mb-1.5">Affiliate / Sponsor Code <span class="text-slate-500 font-normal">(Optional)</span></label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                            <i class="fa-solid fa-link text-xs"></i>
-                        </div>
-                        <input type="text" id="referralCode" placeholder="e.g. Anderson" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition font-mono">
-                    </div>
-                </div>
-
-                <!-- Terms and Conditions Checkbox -->
-                <div class="flex items-start space-x-2.5 pt-1">
-                    <input type="checkbox" id="termsCheckbox" required class="mt-1 h-4 w-4 rounded bg-slate-950 border-brand-border text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900 cursor-pointer">
-                    <label for="termsCheckbox" class="text-xs text-slate-400 leading-relaxed cursor-pointer">
-                        I certify that I am at least 18 years old and agree to the <a href="kyc.html" class="text-emerald-400 hover:underline">Terms of Service</a>, <a href="kyc.html" class="text-emerald-400 hover:underline">Privacy Policy</a>, and <a href="kyc.html" class="text-emerald-400 hover:underline">AML/KYC Compliance Policies</a>.
+            <!-- FACE VERIFICATION / BIOMETRIC LIVENESS BLOCK -->
+            <div class="bg-slate-950 border border-brand-border p-4 rounded-xl space-y-3">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-face-smile text-emerald-400"></i> Face Verification (Liveness Check)
                     </label>
+                    <span id="faceStatusBadge" class="text-[10px] font-semibold bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/20">Action Required</span>
+                </div>
+                <p class="text-[11px] text-slate-400">Required for multi-factor security and fast-track withdrawal approval.</p>
+                
+                <div id="facePreviewContainer" class="hidden relative w-full h-40 bg-slate-900 rounded-lg overflow-hidden border border-brand-border items-center justify-center">
+                    <video id="webcamVideo" autoplay playsinline class="w-full h-full object-cover"></video>
+                    <div id="scanOverlay" class="absolute inset-0 border-2 border-dashed border-emerald-400/70 rounded-lg pointer-events-none flex items-center justify-center">
+                        <span class="text-[10px] bg-slate-950/80 text-emerald-400 px-2 py-1 rounded">Align Face In Frame</span>
+                    </div>
                 </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm cursor-pointer flex items-center justify-center space-x-2 mt-4 focus:outline-none focus:ring-2 focus:ring-emerald-400">
-                    <i class="fa-solid fa-user-check text-xs"></i>
-                    <span>Complete Registration</span>
+                <button type="button" id="btnScanFace" onclick="startFaceVerification()" class="w-full bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-brand-border py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-camera"></i>
+                    <span id="scanBtnText">Scan Live Face ID</span>
                 </button>
-            </form>
-
-            <!-- SSL Encryption Security Badge -->
-            <div class="mt-8 pt-6 border-t border-brand-border/60 flex items-center justify-center space-x-4 text-slate-400 text-xs">
-                <div class="flex items-center space-x-1.5">
-                    <i class="fa-solid fa-lock text-emerald-400"></i>
-                    <span>256-Bit SSL Encryption</span>
-                </div>
-                <span class="text-slate-600">•</span>
-                <div class="flex items-center space-x-1.5">
-                    <i class="fa-solid fa-shield-halved text-emerald-400"></i>
-                    <span>PCI-DSS Compliant</span>
-                </div>
             </div>
 
+            <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm cursor-pointer mt-2">
+                Create Account & Proceed
+            </button>
+        </form>
+
+        <div class="text-center text-xs text-slate-400 pt-2 border-t border-brand-border/60">
+            Already have an investor account? 
+            <a href="signin.html" class="text-emerald-400 hover:underline font-semibold ml-1">Sign In</a>
         </div>
-    </main>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-brand-border py-6 text-center text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center space-x-2">
-                <div class="w-6 h-6 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 font-bold text-xs">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <span class="font-bold text-slate-300">CIPHRON INVESTMENT & FINANCE</span>
-            </div>
-            <p>&copy; 2026 Ciphron Finance Inc. All rights reserved.</p>
-            <div class="flex space-x-4">
-                <a href="about.html" class="hover:text-slate-300 transition">About Us</a>
-                <a href="kyc.html" class="hover:text-slate-300 transition">Privacy & KYC</a>
-            </div>
-        </div>
-    </footer>
-
+    <!-- JavaScript logic -->
     <script>
-    <!-- Form JavaScript Logic -->
-        function togglePasswordVisibility(inputId, iconId) {
-            const input = document.getElementById(inputId);
-            const icon = document.getElementById(iconId);
-            
-            if (input && icon) {
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    input.type = 'password';
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
-                }
-            }
-        }
+        let faceVerified = false;
+        let videoStream = null;
 
-        // PASTE / REPLACE THIS FUNCTION HERE:
-        function handleSignupSubmit(e) {
-            e.preventDefault();
-            
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('emailInput').value;
-            const password = document.getElementById('passwordInput').value;
-            const confirmPassword = document.getElementById('confirmPasswordInput').value;
-            
-            if (password !== confirmPassword) {
-                alert('🚫 Password Mismatch!\n\nPlease make sure your password and confirm password fields match.');
+        async function startFaceVerification() {
+            const container = document.getElementById('facePreviewContainer');
+            const video = document.getElementById('webcamVideo');
+            const badge = document.getElementById('faceStatusBadge');
+            const btnText = document.getElementById('scanBtnText');
+
+            if (faceVerified) {
+                alert('Face verification has already been successfully verified!');
                 return;
             }
 
-            let newUser = {
-                name: fullName,
+            try {
+                // Request live camera access
+                videoStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                video.srcObject = videoStream;
+                container.classList.remove('hidden');
+                container.classList.add('flex');
+                
+                btnText.textContent = "Analyzing Biometrics...";
+                badge.className = "text-[10px] font-semibold bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded border border-blue-500/20";
+                badge.textContent = "Scanning...";
+
+                // Simulate liveness scan analysis (3 seconds)
+                setTimeout(() => {
+                    faceVerified = true;
+                    stopWebcam();
+                    container.classList.add('hidden');
+                    container.classList.remove('flex');
+
+                    badge.className = "text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20";
+                    badge.textContent = "Face ID Verified";
+                    btnText.textContent = "Verification Complete ✓";
+                    document.getElementById('btnScanFace').classList.add('opacity-70');
+                }, 3500);
+
+            } catch (err) {
+                alert('Camera access denied or unavailable. Fallback: Automated simulation running.');
+                // Fallback simulation if no physical camera exists
+                setTimeout(() => {
+                    faceVerified = true;
+                    badge.className = "text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20";
+                    badge.textContent = "Face ID Verified";
+                    btnText.textContent = "Verification Complete ✓";
+                }, 1500);
+            }
+        }
+
+        function stopWebcam() {
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+            }
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            
+            if (!faceVerified) {
+                alert('⚠️ Biometric Face Verification Required!\n\nPlease complete the live face scan before creating your account.');
+                return;
+            }
+
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+
+            // Create active user record
+            const newUser = {
+                name: name,
                 email: email,
-                stakedCapital: 0.00,
-                unlockedBalance: 0.00,
-                totalProfit: 0.00,
-                totalCashouts: 0.00,
+                stakedCapital: 0,
+                unlockedBalance: 0,
+                totalProfit: 0,
+                totalCashouts: 0,
                 planName: "None",
-                dailyRate: 0.00
+                dailyRate: 0,
+                faceVerified: true
             };
 
-            // Save user profile to shared database
-            let savedUsers = JSON.parse(localStorage.getItem('ciphron_users_db')) || {};
-            savedUsers[email] = newUser;
-            localStorage.setItem('ciphron_users_db', JSON.stringify(savedUsers));
-
-            // Set active session for dashboard.html
+            let usersDb = JSON.parse(localStorage.getItem('ciphron_users_db')) || {};
+            usersDb[email] = newUser;
+            localStorage.setItem('ciphron_users_db', JSON.stringify(usersDb));
             localStorage.setItem('ciphron_active_user', JSON.stringify(newUser));
 
-            alert(`🎉 Account Created Successfully!\n\nWelcome to Ciphron Investment & Finance, ${fullName}. Redirecting to your investor dashboard...`);
+            alert('🎉 Account Created Successfully!\n\nWelcome to CIPHRON. Directing you to your investor dashboard.');
             window.location.href = 'dashboard.html';
         }
     </script>
 </body>
 </html>
-
