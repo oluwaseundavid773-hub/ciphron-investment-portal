@@ -68,34 +68,40 @@
             </div>
         </div>
 
-        <!-- Metric Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="bg-brand-card border border-brand-border rounded-xl p-5 shadow-lg">
-                <div class="text-xs text-slate-400 font-medium mb-1">Total Invited Partners</div>
-                <div class="text-2xl font-extrabold text-white" id="totalReferrals">12</div>
-                <div class="text-[11px] text-emerald-400 mt-1"><i class="fa-solid fa-user-plus mr-1"></i> +3 this week</div>
-            </div>
+        <!-- METRICS SUMMARY CARDS -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    
+    <!-- 1. Invited Partners -->
+    <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+        <p class="text-xs text-slate-400 font-medium">Total Invited Partners</p>
+        <h3 id="referralCount" class="text-3xl font-bold text-white mt-1">0</h3>
+        <p id="referralWeeklyBadge" class="text-[11px] text-slate-500 mt-2">+0 this week</p>
+    </div>
 
-            <div class="bg-brand-card border border-brand-border rounded-xl p-5 shadow-lg">
-                <div class="text-xs text-slate-400 font-medium mb-1">Total Partner Deposits</div>
-                <div class="text-2xl font-extrabold text-white">$24,500.00</div>
-                <div class="text-[11px] text-slate-400 mt-1">Across all tiers</div>
-            </div>
+    <!-- 2. Partner Deposits -->
+    <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+        <p class="text-xs text-slate-400 font-medium">Total Partner Deposits</p>
+        <h3 id="referralDeposits" class="text-3xl font-bold text-white mt-1">$0.00</h3>
+        <p class="text-[11px] text-slate-400 mt-2">Across all tiers</p>
+    </div>
 
-            <div class="bg-brand-card border border-brand-border rounded-xl p-5 shadow-lg">
-                <div class="text-xs text-slate-400 font-medium mb-1">Total Earned (5%)</div>
-                <div class="text-2xl font-extrabold text-emerald-400">$1,225.00</div>
-                <div class="text-[11px] text-emerald-400 mt-1"><i class="fa-solid fa-check-circle mr-1"></i> Lifetime commission</div>
-            </div>
+    <!-- 3. Total Earned (5%) -->
+    <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+        <p class="text-xs text-slate-400 font-medium">Total Earned (5%)</p>
+        <h3 id="referralEarned" class="text-3xl font-bold text-emerald-400 mt-1">$0.00</h3>
+        <p class="text-[11px] text-emerald-400 font-medium mt-2"><i class="fa-solid fa-circle-check"></i> Lifetime commission</p>
+    </div>
 
-            <div class="bg-brand-card border border-emerald-500/30 bg-emerald-500/5 rounded-xl p-5 shadow-lg">
-                <div class="text-xs text-emerald-400 font-medium mb-1">Withdrawable Balance</div>
-                <div class="text-2xl font-extrabold text-white" id="availableAffiliateBalance">$350.00</div>
-                <button onclick="openWithdrawModal()" class="mt-3 w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 rounded-lg transition text-xs flex items-center justify-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-bolt"></i> Withdraw Instantly
-                </button>
-            </div>
-        </div>
+    <!-- 4. Withdrawable Commission Balance -->
+    <div class="bg-brand-card border border-emerald-500/30 p-6 rounded-2xl shadow-sm relative overflow-hidden">
+        <p class="text-xs text-slate-400 font-medium">Withdrawable Balance</p>
+        <h3 id="referralWithdrawable" class="text-3xl font-bold text-white mt-1">$0.00</h3>
+        <button onclick="withdrawReferralCommission()" class="w-full mt-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs flex items-center justify-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-bolt"></i> Withdraw Instantly
+        </button>
+    </div>
+
+</div>
 
         <!-- Affiliate Link & Share Box -->
         <div class="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-xl space-y-4">
@@ -268,5 +274,55 @@
             closeModal('affiliateWithdrawModal');
         }
     </script>
+    <script>
+    // Retrieve logged-in user or initialize dynamic default state
+    let currentUser = JSON.parse(localStorage.getItem('ciphron_active_user')) || {
+        name: "Investor",
+        email: "investor@ciphron.com",
+        referralCount: 0,
+        referralDeposits: 0,
+        referralEarned: 0,
+        referralWithdrawable: 0
+    };
+
+    function updateReferralUI() {
+        // Fallback to 0 if metrics don't exist yet for new accounts
+        const count = currentUser.referralCount || 0;
+        const deposits = currentUser.referralDeposits || 0;
+        const earned = currentUser.referralEarned || 0;
+        const withdrawable = currentUser.referralWithdrawable || 0;
+
+        document.getElementById('referralCount').textContent = count;
+        document.getElementById('referralDeposits').textContent = '$' + deposits.toFixed(2);
+        document.getElementById('referralEarned').textContent = '$' + earned.toFixed(2);
+        document.getElementById('referralWithdrawable').textContent = '$' + withdrawable.toFixed(2);
+
+        if (count > 0) {
+            document.getElementById('referralWeeklyBadge').textContent = '+' + count + ' this week';
+            document.getElementById('referralWeeklyBadge').className = 'text-[11px] text-emerald-400 mt-2 font-semibold';
+        } else {
+            document.getElementById('referralWeeklyBadge').textContent = 'No referrals yet';
+            document.getElementById('referralWeeklyBadge').className = 'text-[11px] text-slate-500 mt-2';
+        }
+    }
+
+    function withdrawReferralCommission() {
+        const withdrawable = currentUser.referralWithdrawable || 0;
+        if (withdrawable <= 0) {
+            alert('🚫 No Commission Available!\n\nYou currently have $0.00 withdrawable referral earnings.');
+            return;
+        }
+
+        // Transfer earnings to main unlocked balance
+        currentUser.unlockedBalance = (currentUser.unlockedBalance || 0) + withdrawable;
+        currentUser.referralWithdrawable = 0;
+        
+        localStorage.setItem('ciphron_active_user', JSON.stringify(currentUser));
+        updateReferralUI();
+        alert('✅ $' + withdrawable.toFixed(2) + ' USD has been transferred to your Main Available Balance for cashout!');
+    }
+
+    document.addEventListener('DOMContentLoaded', updateReferralUI);
+</script>
 </body>
 </html>
