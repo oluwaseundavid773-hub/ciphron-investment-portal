@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const serverless = require('serverless-http');
 require('dotenv').config();
 
 const connectDB = require('./db'); // Import database connection
@@ -43,7 +44,7 @@ const investmentsRoutes = require('./routes/investments');
 const walletRoutes = require('./routes/wallet');
 const kycRoutes = require('./routes/kyc');         
 const adminRoutes = require('./routes/admin');     
-const referralRoutes = require('./routes/referral'); // <-- Added Referral Route
+const referralRoutes = require('./routes/referral'); 
 
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', authMiddleware, dashboardRoutes);
@@ -51,10 +52,16 @@ app.use('/api/investments', authMiddleware, investmentsRoutes);
 app.use('/api/wallet', authMiddleware, walletRoutes);
 app.use('/api/kyc', authMiddleware, kycRoutes);     
 app.use('/api/admin', authMiddleware, adminRoutes); 
-app.use('/api/referral', authMiddleware, referralRoutes); // <-- Mounted Referral Route
+app.use('/api/referral', authMiddleware, referralRoutes); 
 
-// ----- Start server (keep this last) -----
+// ----- Start server locally (ignored on Vercel) -----
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`🚀 CIPHRON Server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`🚀 CIPHRON Server running on port ${PORT}`);
+    });
+}
+
+// Export for Vercel serverless execution
+module.exports = app;
+module.exports.handler = serverless(app);
