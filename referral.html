@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Affiliate & Referral Portal | CIPHRON Finance</title>
+    <title>Affiliate Program & Rewards | Ciphron Investment & Finance</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -15,314 +13,288 @@
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#030712',
-                            card: '#0B0F19',
-                            border: '#1E293B',
-                            accent: '#10B981'
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
                         }
                     }
                 }
             }
         }
     </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
-<body class="bg-brand-dark text-slate-100 font-sans min-h-screen flex flex-col antialiased">
+<body class="bg-brand-dark text-slate-100 flex flex-col min-h-screen">
+    <!-- Mobile Navigation Backdrop -->
+    <div id="mobileBackdrop" onclick="toggleMobileMenu()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-30 hidden md:hidden"></div>
 
-    <!-- Header Navigation -->
-    <header class="bg-slate-900/80 backdrop-blur-md border-b border-brand-border sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="dashboard.html" class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-xl">
-                    C
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="w-64 bg-slate-900 border-r border-brand-border flex flex-col fixed md:relative h-full z-40 transition-transform duration-300 -translate-x-full md:translate-x-0">
+        <!-- Logo Header -->
+        <div class="p-6 flex items-center justify-between border-b border-brand-border">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-shield-halved text-slate-950 text-xl font-bold"></i>
                 </div>
-                <span class="text-xl font-bold tracking-wider text-white">CIPHRON</span>
-            </a>
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
-                <a href="dashboard.html" class="hover:text-emerald-400 transition">Dashboard</a>
-                <a href="investments.html" class="hover:text-emerald-400 transition">Investments</a>
-                <a href="referral.html" class="text-emerald-400 font-semibold border-b-2 border-emerald-400 pb-1">Affiliates (5%)</a>
-                <a href="kyc.html" class="hover:text-emerald-400 transition">Security & KYC</a>
-            </nav>
-            <div class="flex items-center space-x-4">
-                <a href="signin.html" class="text-xs bg-slate-800 hover:bg-slate-700 text-white font-medium px-4 py-2 rounded-lg transition border border-brand-border">Sign Out</a>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wider text-white">CIPHRON</h1>
+                    <p class="text-xs text-emerald-400 font-medium tracking-widest uppercase">Investment & Finance</p>
+                </div>
             </div>
+            <button onclick="toggleMobileMenu()" class="md:hidden text-slate-400 hover:text-white cursor-pointer">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
         </div>
-    </header>
+
+        <!-- Navigation Links -->
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+                <i class="fa-solid fa-chart-pie w-5"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="investments.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+                <i class="fa-solid fa-layer-group w-5"></i>
+                <span>My Investments</span>
+            </a>
+            <a href="referral.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">
+                <i class="fa-solid fa-gift w-5 text-emerald-400"></i>
+                <span>Affiliates (5%)</span>
+            </a>
+            <a href="kyc.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+                <i class="fa-solid fa-user-shield w-5"></i>
+                <span>Security & KYC</span>
+            </a>
+        </nav>
+
+        <!-- User Quick Profile / Logout -->
+        <div class="p-4 border-t border-brand-border flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div id="userAvatar" class="w-10 h-10 rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400">
+                    U
+                </div>
+                <div>
+                    <p id="userNameDisplay" class="text-sm font-semibold text-white">USD Investor</p>
+                    <p class="text-[11px] text-emerald-400 flex items-center space-x-1">
+                        <i class="fa-solid fa-circle text-[8px]"></i>
+                        <span>Verified Account</span>
+                    </p>
+                </div>
+            </div>
+            <button onclick="logout()" class="text-slate-400 hover:text-red-400 transition cursor-pointer" title="Sign Out">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </div>
+    </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div class="flex-1 flex flex-col h-screen overflow-y-auto">
         
-        <!-- Hero & Overview Header -->
-        <div class="bg-gradient-to-r from-slate-900 via-brand-card to-slate-900 border border-brand-border rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-2xl">
-            <div class="max-w-3xl space-y-3 relative z-10">
-                <div class="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3 py-1 rounded-full text-xs font-semibold">
-                    <i class="fa-solid fa-gift"></i>
-                    <span>5% Instant Referral Bonus</span>
-                </div>
-                <h1 class="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
-                    Invite Investors & Earn <span class="text-emerald-400">5% Instantly</span>
-                </h1>
-                <p class="text-slate-400 text-sm md:text-base leading-relaxed">
-                    Share your unique CIPHRON affiliate code or link with your network. Whenever your invited partners make an institutional vault deposit, <strong class="text-white">5% of their total investment</strong> is immediately credited to your affiliate wallet and available for instant withdrawal.
-                </p>
-            </div>
-        </div>
-
-        <!-- METRICS SUMMARY CARDS -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-    
-    <!-- 1. Invited Partners -->
-    <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
-        <p class="text-xs text-slate-400 font-medium">Total Invited Partners</p>
-        <h3 id="referralCount" class="text-3xl font-bold text-white mt-1">0</h3>
-        <p id="referralWeeklyBadge" class="text-[11px] text-slate-500 mt-2">+0 this week</p>
-    </div>
-
-    <!-- 2. Partner Deposits -->
-    <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
-        <p class="text-xs text-slate-400 font-medium">Total Partner Deposits</p>
-        <h3 id="referralDeposits" class="text-3xl font-bold text-white mt-1">$0.00</h3>
-        <p class="text-[11px] text-slate-400 mt-2">Across all tiers</p>
-    </div>
-
-    <!-- 3. Total Earned (5%) -->
-    <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
-        <p class="text-xs text-slate-400 font-medium">Total Earned (5%)</p>
-        <h3 id="referralEarned" class="text-3xl font-bold text-emerald-400 mt-1">$0.00</h3>
-        <p class="text-[11px] text-emerald-400 font-medium mt-2"><i class="fa-solid fa-circle-check"></i> Lifetime commission</p>
-    </div>
-
-    <!-- 4. Withdrawable Commission Balance -->
-    <div class="bg-brand-card border border-emerald-500/30 p-6 rounded-2xl shadow-sm relative overflow-hidden">
-        <p class="text-xs text-slate-400 font-medium">Withdrawable Balance</p>
-        <h3 id="referralWithdrawable" class="text-3xl font-bold text-white mt-1">$0.00</h3>
-        <button onclick="withdrawReferralCommission()" class="w-full mt-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs flex items-center justify-center gap-2 cursor-pointer">
-            <i class="fa-solid fa-bolt"></i> Withdraw Instantly
-        </button>
-    </div>
-
-</div>
-
-        <!-- Affiliate Link & Share Box -->
-        <div class="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-xl space-y-4">
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                <i class="fa-solid fa-link text-emerald-400"></i> Your Unique Affiliate Link
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="md:col-span-2 space-y-1.5">
-                    <label class="block text-xs text-slate-400 font-medium">Affiliate Invite URL</label>
-                    <div class="flex items-center gap-2 bg-slate-950 border border-brand-border rounded-xl p-2.5">
-                        <input type="text" id="referralUrlInput" readonly value="https://ciphron-investment-portal.vercel.app/signup.html?ref=Anderson" class="bg-transparent text-xs font-mono text-emerald-400 w-full focus:outline-none select-all">
-                        <button onclick="copyReferralLink()" class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-4 py-2 rounded-lg transition flex items-center gap-1.5 shrink-0">
-                            <i class="fa-solid fa-copy"></i> Copy Link
-                        </button>
-                    </div>
-                </div>
-
-                <div class="space-y-1.5">
-                    <label class="block text-xs text-slate-400 font-medium">Affiliate Code</label>
-                    <div class="flex items-center justify-between bg-slate-950 border border-brand-border rounded-xl p-2.5">
-                        <span class="font-mono text-sm font-bold text-white px-2">Anderson</span>
-                        <button onclick="copyCode('Anderson')" class="text-xs text-slate-400 hover:text-white transition">
-                            <i class="fa-solid fa-copy mr-1"></i> Copy Code
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Referral Activity & History Table -->
-        <div class="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-xl space-y-4">
-            <div class="flex justify-between items-center">
-                <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-users text-emerald-400"></i> Active Referrals & Earnings
-                </h2>
-                <span class="text-xs text-slate-400">Real-time vault verification</span>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm">
-                    <thead>
-                        <tr class="border-b border-brand-border text-xs text-slate-400 uppercase tracking-wider">
-                            <th class="py-3 px-4">Partner</th>
-                            <th class="py-3 px-4">Date Joined</th>
-                            <th class="py-3 px-4">Investment Vault</th>
-                            <th class="py-3 px-4">Deposit Amount</th>
-                            <th class="py-3 px-4">Your 5% Commission</th>
-                            <th class="py-3 px-4 text-right">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-brand-border text-slate-300">
-                        <tr class="hover:bg-slate-900/50 transition">
-                            <td class="py-3.5 px-4 font-semibold text-white flex items-center gap-2">
-                                <div class="w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-emerald-400">JD</div>
-                                john.d***@gmail.com
-                            </td>
-                            <td class="py-3.5 px-4 text-xs text-slate-400">Oct 14, 2026</td>
-                            <td class="py-3.5 px-4 text-xs"><span class="bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded font-medium">Growth Tier</span></td>
-                            <td class="py-3.5 px-4 font-mono font-medium">$5,000.00</td>
-                            <td class="py-3.5 px-4 font-mono font-bold text-emerald-400">+$250.00</td>
-                            <td class="py-3.5 px-4 text-right"><span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2.5 py-1 rounded-full">Credited</span></td>
-                        </tr>
-                        <tr class="hover:bg-slate-900/50 transition">
-                            <td class="py-3.5 px-4 font-semibold text-white flex items-center gap-2">
-                                <div class="w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-amber-400">SK</div>
-                                sarah.k***@outlook.com
-                            </td>
-                            <td class="py-3.5 px-4 text-xs text-slate-400">Oct 12, 2026</td>
-                            <td class="py-3.5 px-4 text-xs"><span class="bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-medium">Starter Tier</span></td>
-                            <td class="py-3.5 px-4 font-mono font-medium">$2,000.00</td>
-                            <td class="py-3.5 px-4 font-mono font-bold text-emerald-400">+$100.00</td>
-                            <td class="py-3.5 px-4 text-right"><span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2.5 py-1 rounded-full">Credited</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- MODAL: Instant Affiliate Commission Withdrawal -->
-    <div id="affiliateWithdrawModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-brand-card border border-brand-border rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <div class="flex justify-between items-center mb-4">
-                <div>
-                    <h3 class="text-lg font-bold text-white">Instant Commission Withdrawal</h3>
-                    <p class="text-xs text-emerald-400 font-medium">5% Affiliate Earnings Vault</p>
-                </div>
-                <button type="button" onclick="closeModal('affiliateWithdrawModal')" class="text-slate-400 hover:text-white text-xl p-1">
-                    <i class="fa-solid fa-xmark"></i>
+        <!-- Top Header Bar -->
+        <header class="h-20 bg-slate-900/80 backdrop-blur border-b border-brand-border px-4 md:px-8 flex items-center justify-between sticky top-0 z-20">
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-white focus:outline-none cursor-pointer">
+                    <i class="fa-solid fa-bars text-xl"></i>
                 </button>
+                <div>
+                    <h2 class="text-lg md:text-xl font-bold text-white">Affiliate & Referral Rewards</h2>
+                    <p class="text-xs text-slate-400 hidden sm:block">Earn an instant 5% commission on direct institutional stakings.</p>
+                </div>
             </div>
 
-            <form onsubmit="handleWithdrawSubmit(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Available Balance</label>
-                    <input type="text" value="$350.00 USD" readonly class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-emerald-400 font-mono font-bold focus:outline-none">
+            <div class="flex items-center space-x-2">
+                <span class="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-full text-xs font-semibold flex items-center">
+                    <i class="fa-solid fa-percent mr-1.5"></i> 5% Commission Active
+                </span>
+            </div>
+        </header>
+
+        <!-- Main Body Content -->
+        <main class="p-4 md:p-8 pb-32 space-y-8 max-w-7xl mx-auto w-full flex-grow">
+            
+            <!-- Referral Link Generator Box -->
+            <div class="bg-gradient-to-br from-brand-card to-slate-900 border border-brand-border rounded-3xl p-6 md:p-8 shadow-xl space-y-6">
+                <div class="max-w-xl space-y-2">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-link"></i>
+                        <span>Your Exclusive Invitation Link</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-white">Invite Investors & Earn Yield</h3>
+                    <p class="text-xs sm:text-sm text-slate-400">
+                        Share your unique referral link with institutional peers or colleagues. Whenever they stake capital into any tier, you automatically receive a 5% commission credited directly to your unlocked wallet balance.
+                    </p>
                 </div>
 
-                <div>
-                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Withdrawal Amount ($ USD)</label>
-                    <input type="number" id="withdrawAmount" max="350" min="10" value="350" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500 font-mono">
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <div class="flex-grow bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm font-mono text-emerald-400 flex items-center justify-between select-all overflow-x-auto">
+                        <span id="referralLinkText">https://ciphron-investment.com/signup.html?ref=CIPHRON_USER</span>
+                    </div>
+                    <button onclick="copyReferralLink()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-3 rounded-xl transition shadow-lg shadow-emerald-500/20 text-xs flex items-center justify-center space-x-2 shrink-0 cursor-pointer">
+                        <i class="fa-solid fa-copy"></i>
+                        <span>Copy Link</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Metrics Summary Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+                    <p class="text-xs text-slate-400 font-medium">Total Referrals</p>
+                    <h3 id="totalReferralsCount" class="text-2xl font-bold text-white mt-1">0</h3>
+                    <p class="text-[11px] text-emerald-400 font-medium mt-3">Registered Downline</p>
                 </div>
 
-                <div>
-                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Destination Crypto Network</label>
-                    <select id="withdrawNetwork" class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500">
-                        <option value="USDT TRC-20">USDT (TRON / TRC-20) — Instant</option>
-                        <option value="USDT ERC-20">USDT (Ethereum / ERC-20)</option>
-                        <option value="BTC">Bitcoin (BTC Vault)</option>
-                    </select>
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+                    <p class="text-xs text-slate-400 font-medium">Active Staked Downline</p>
+                    <h3 id="activeDownlineCapital" class="text-2xl font-bold text-white mt-1">$0.00</h3>
+                    <p class="text-[11px] text-slate-500 mt-3">Generating Yield</p>
                 </div>
 
-                <div>
-                    <label class="block text-xs text-slate-300 font-medium mb-1.5">Your Payout Wallet Address</label>
-                    <input type="text" id="payoutAddress" placeholder="Paste your USDT or BTC wallet address" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white font-mono focus:outline-none focus:border-emerald-500">
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+                    <p class="text-xs text-slate-400 font-medium">Total Commission Earned</p>
+                    <h3 id="totalCommissionEarned" class="text-2xl font-bold text-emerald-400 mt-1">+$0.00</h3>
+                    <p class="text-[11px] text-emerald-400 font-medium mt-3">5% Instant Payout</p>
                 </div>
 
-                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm cursor-pointer flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-paper-plane"></i> Confirm Instant Payout Request
-                </button>
-            </form>
-        </div>
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
+                    <p class="text-xs text-slate-400 font-medium">Available Unlocked Commission</p>
+                    <h3 id="unlockedCommission" class="text-2xl font-bold text-white mt-1">$0.00</h3>
+                    <p class="text-[11px] text-slate-400 mt-3">Ready to Cash Out</p>
+                </div>
+            </div>
+
+            <!-- Referral Network Table -->
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4">
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-users text-emerald-400"></i>
+                    <span>Referral Downline Network Log</span>
+                </h3>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider font-bold border-b border-brand-border">
+                            <tr>
+                                <th class="p-3.5">Referred Investor</th>
+                                <th class="p-3.5">Staked Capital</th>
+                                <th class="p-3.5">Commission Earned (5%)</th>
+                                <th class="p-3.5">Status</th>
+                                <th class="p-3.5 text-right">Date Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody id="referralTableBody">
+                            <tr>
+                                <td colspan="5" class="p-8 text-center text-slate-500 font-medium">
+                                    No referrals recorded yet. Share your link to start earning!
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
     </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-emerald-500 text-slate-950 px-4 py-3 rounded-xl font-bold text-xs shadow-2xl transition transform translate-y-20 opacity-0 z-50 flex items-center gap-2">
-        <i class="fa-solid fa-circle-check"></i>
-        <span id="toastMessage">Copied to clipboard!</span>
-    </div>
-
+    <!-- Scripts -->
     <script>
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('mobileBackdrop');
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+
+        function logout() {
+            localStorage.removeItem('ciphron_token');
+            window.location.href = 'signin.html';
+        }
+
         function copyReferralLink() {
-            const input = document.getElementById('referralUrlInput');
-            navigator.clipboard.writeText(input.value);
-            showToast("Affiliate link copied to clipboard!");
+            const linkText = document.getElementById('referralLinkText').textContent;
+            navigator.clipboard.writeText(linkText).then(() => {
+                alert('📋 Referral link copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy link:', err);
+            });
         }
 
-        function copyCode(code) {
-            navigator.clipboard.writeText(code);
-            showToast(`Sponsor code "${code}" copied!`);
-        }
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('ciphron_token');
 
-        function openWithdrawModal() {
-            document.getElementById('affiliateWithdrawModal').classList.remove('hidden');
-            document.getElementById('affiliateWithdrawModal').classList.add('flex');
-        }
+            if (!token) {
+                window.location.href = 'signin.html';
+                return;
+            }
 
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-            document.getElementById(id).classList.remove('flex');
-        }
+            try {
+                const response = await fetch('http://localhost:5000/api/referrals', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMessage').innerText = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
+                const result = await response.json();
 
-        function handleWithdrawSubmit(e) {
-            e.preventDefault();
-            const amt = document.getElementById('withdrawAmount').value;
-            const net = document.getElementById('withdrawNetwork').value;
-            const addr = document.getElementById('payoutAddress').value;
+                if (response.ok && result.success) {
+                    const data = result.data;
+                    
+                    if (document.getElementById('userNameDisplay')) {
+                        document.getElementById('userNameDisplay').textContent = data.user.name || 'Investor';
+                        document.getElementById('userAvatar').textContent = (data.user.name || 'I').charAt(0).toUpperCase();
+                    }
 
-            alert(`🚀 Withdrawal Submitted!\n\nAmount: $${amt} USD\nNetwork: ${net}\nDestination: ${addr}\n\nStatus: Processing for instant automated release.`);
-            closeModal('affiliateWithdrawModal');
+                    if (data.referralCode) {
+                        const link = `https://ciphron-investment.com/signup.html?ref=${data.referralCode}`;
+                        document.getElementById('referralLinkText').textContent = link;
+                    }
+
+                    document.getElementById('totalReferralsCount').textContent = data.totalReferrals || 0;
+                    document.getElementById('activeDownlineCapital').textContent = `$${(data.activeDownlineCapital || 0).toFixed(2)}`;
+                    document.getElementById('totalCommissionEarned').textContent = `+$${(data.totalCommissionEarned || 0).toFixed(2)}`;
+                    document.getElementById('unlockedCommission').textContent = `$${(data.unlockedCommission || 0).toFixed(2)}`;
+
+                    renderReferrals(data.referralsList || []);
+                }
+            } catch (err) {
+                console.error('Error fetching referral data:', err);
+                // Fallback simulation for local offline testing if needed
+                const activeUser = JSON.parse(localStorage.getItem('ciphron_active_user'));
+                if (activeUser) {
+                    document.getElementById('userNameDisplay').textContent = activeUser.name;
+                    document.getElementById('userAvatar').textContent = activeUser.name.charAt(0).toUpperCase();
+                    document.getElementById('referralLinkText').textContent = `https://ciphron-investment.com/signup.html?ref=${activeUser.name.toUpperCase().replace(/\s+/g, '_')}`;
+                }
+            }
+        });
+
+        function renderReferrals(referrals) {
+            const tbody = document.getElementById('referralTableBody');
+            if (!referrals || referrals.length === 0) return;
+
+            tbody.innerHTML = referrals.map(ref => `
+                <tr class="border-b border-brand-border/40 hover:bg-slate-900/50 transition">
+                    <td class="p-3.5 font-bold text-white">${ref.name}</td>
+                    <td class="p-3.5 font-semibold text-slate-200">$${(ref.stakedCapital || 0).toFixed(2)}</td>
+                    <td class="p-3.5 font-bold text-emerald-400">+$${((ref.stakedCapital || 0) * 0.05).toFixed(2)}</td>
+                    <td class="p-3.5">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${ref.stakedCapital > 0 ? 'bg-emerald-500/10 text-emerald-400' : 'bg-slate-800 text-slate-400'}">
+                            ${ref.stakedCapital > 0 ? 'Active' : 'Registered'}
+                        </span>
+                    </td>
+                    <td class="p-3.5 text-right text-slate-400">${new Date(ref.createdAt || Date.now()).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
         }
     </script>
-    <script>
-    // Retrieve logged-in user or initialize dynamic default state
-    let currentUser = JSON.parse(localStorage.getItem('ciphron_active_user')) || {
-        name: "Investor",
-        email: "investor@ciphron.com",
-        referralCount: 0,
-        referralDeposits: 0,
-        referralEarned: 0,
-        referralWithdrawable: 0
-    };
-
-    function updateReferralUI() {
-        // Fallback to 0 if metrics don't exist yet for new accounts
-        const count = currentUser.referralCount || 0;
-        const deposits = currentUser.referralDeposits || 0;
-        const earned = currentUser.referralEarned || 0;
-        const withdrawable = currentUser.referralWithdrawable || 0;
-
-        document.getElementById('referralCount').textContent = count;
-        document.getElementById('referralDeposits').textContent = '$' + deposits.toFixed(2);
-        document.getElementById('referralEarned').textContent = '$' + earned.toFixed(2);
-        document.getElementById('referralWithdrawable').textContent = '$' + withdrawable.toFixed(2);
-
-        if (count > 0) {
-            document.getElementById('referralWeeklyBadge').textContent = '+' + count + ' this week';
-            document.getElementById('referralWeeklyBadge').className = 'text-[11px] text-emerald-400 mt-2 font-semibold';
-        } else {
-            document.getElementById('referralWeeklyBadge').textContent = 'No referrals yet';
-            document.getElementById('referralWeeklyBadge').className = 'text-[11px] text-slate-500 mt-2';
-        }
-    }
-
-    function withdrawReferralCommission() {
-        const withdrawable = currentUser.referralWithdrawable || 0;
-        if (withdrawable <= 0) {
-            alert('🚫 No Commission Available!\n\nYou currently have $0.00 withdrawable referral earnings.');
-            return;
-        }
-
-        // Transfer earnings to main unlocked balance
-        currentUser.unlockedBalance = (currentUser.unlockedBalance || 0) + withdrawable;
-        currentUser.referralWithdrawable = 0;
-        
-        localStorage.setItem('ciphron_active_user', JSON.stringify(currentUser));
-        updateReferralUI();
-        alert('✅ $' + withdrawable.toFixed(2) + ' USD has been transferred to your Main Available Balance for cashout!');
-    }
-
-    document.addEventListener('DOMContentLoaded', updateReferralUI);
-</script>
 </body>
 </html>

@@ -84,7 +84,7 @@
             </div>
 
             <!-- Sign In Form -->
-            <form onsubmit="handleSigninSubmit(event)" class="space-y-5">
+            <form id="signinForm" class="space-y-5">
                 
                 <!-- Email Address -->
                 <div>
@@ -178,10 +178,39 @@
             }
         }
 
-        function handleSigninSubmit(e) {
-            e.preventDefault();
-            alert('🎉 Sign In Successful!\n\nRedirecting to your investor dashboard...');
-            window.location.href = 'dashboard.html';
+        // Unified Signin Handler connected to Node.js backend
+        const signinForm = document.getElementById('signinForm');
+
+        if (signinForm) {
+            signinForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const email = document.getElementById('signinEmail').value;
+                const password = document.getElementById('signinPassword').value;
+
+                try {
+                    const response = await fetch('http://localhost:5000/api/auth/signin', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password }),
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.token) {
+                        // Save JWT token & redirect to dashboard
+                        localStorage.setItem('ciphron_token', data.token);
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        alert(data.error || 'Invalid credentials.');
+                    }
+                } catch (err) {
+                    console.error('Signin error:', err);
+                    alert('Server unreachable. Make sure backend is running on port 5000.');
+                }
+            });
         }
     </script>
 </body>

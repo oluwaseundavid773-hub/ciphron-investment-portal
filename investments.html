@@ -74,20 +74,20 @@
         <!-- User Quick Profile / Logout -->
         <div class="p-4 border-t border-brand-border flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400">
+                <div id="userAvatar" class="w-10 h-10 rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400">
                     CI
                 </div>
                 <div>
-                    <p class="text-sm font-semibold text-white">USD Investor</p>
+                    <p id="userNameDisplay" class="text-sm font-semibold text-white">USD Investor</p>
                     <p class="text-[11px] text-emerald-400 flex items-center space-x-1">
                         <i class="fa-solid fa-circle text-[8px]"></i>
                         <span>Verified Account</span>
                     </p>
                 </div>
             </div>
-            <a href="signin.html" class="text-slate-400 hover:text-red-400 transition" title="Sign Out">
+            <button onclick="logout()" class="text-slate-400 hover:text-red-400 transition" title="Sign Out">
                 <i class="fa-solid fa-right-from-bracket"></i>
-            </a>
+            </button>
         </div>
     </aside>
 
@@ -113,9 +113,22 @@
         </header>
 
         <!-- Main Body Container -->
-<main class="p-4 md:p-8 pb-32 space-y-8 max-w-7xl mx-auto w-full box-border flex-grow">
-            <!-- ZERO INVESTMENTS EMPTY STATE -->
-            <div class="bg-brand-card border border-brand-border rounded-3xl p-10 text-center space-y-6 shadow-sm">
+        <main class="p-4 md:p-8 pb-32 space-y-8 max-w-7xl mx-auto w-full box-border flex-grow">
+            
+            <!-- DYNAMIC ACTIVE INVESTMENTS SECTION -->
+            <div id="activeInvestmentsSection" class="space-y-4">
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-layer-group text-emerald-400"></i>
+                    <span>Active Investment Plans</span>
+                </h3>
+
+                <div id="investmentsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <!-- Dynamic investment cards rendered via JavaScript -->
+                </div>
+            </div>
+
+            <!-- ZERO INVESTMENTS EMPTY STATE (Hidden by default, displayed if investments array is empty) -->
+            <div id="emptyState" class="hidden bg-brand-card border border-brand-border rounded-3xl p-10 text-center space-y-6 shadow-sm">
                 <div class="w-16 h-16 rounded-2xl bg-slate-800 border border-brand-border text-slate-500 flex items-center justify-center mx-auto text-2xl">
                     <i class="fa-solid fa-folder-open"></i>
                 </div>
@@ -151,10 +164,10 @@
                                 <th class="p-3.5 text-right">Accrued Profit</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="investmentsTableBody">
                             <tr>
                                 <td colspan="5" class="p-8 text-center text-slate-500 font-medium">
-                                    No transaction history recorded yet.
+                                    Loading portfolio records...
                                 </td>
                             </tr>
                         </tbody>
@@ -165,7 +178,7 @@
         </main>
     </div>
 
-    <!-- Mobile Menu Script -->
+    <!-- Scripts -->
     <script>
         function toggleMobileMenu() {
             const sidebar = document.getElementById('sidebar');
@@ -174,6 +187,111 @@
                 sidebar.classList.toggle('-translate-x-full');
                 backdrop.classList.toggle('hidden');
             }
+        }
+
+        function logout() {
+            localStorage.removeItem('ciphron_token');
+            window.location.href = 'signin.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('ciphron_token');
+
+            if (!token) {
+                window.location.href = 'signin.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/investments', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const investments = result.data.investments || [];
+                    renderInvestments(investments);
+                } else {
+                    console.error('Failed to load investments:', result.error);
+                    renderInvestments([]);
+                }
+            } catch (err) {
+                console.error('Network error fetching investments:', err);
+                renderInvestments([]);
+            }
+        });
+
+        function renderInvestments(investments) {
+            const container = document.getElementById('investmentsContainer');
+            const emptyState = document.getElementById('emptyState');
+            const tableBody = document.getElementById('investmentsTableBody');
+
+            if (!investments || investments.length === 0) {
+                emptyState.classList.remove('hidden');
+                document.getElementById('activeInvestmentsSection').classList.add('hidden');
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="p-8 text-center text-slate-500 font-medium">
+                            No transaction history recorded yet.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            document.getElementById('activeInvestmentsSection').classList.remove('hidden');
+
+            // Render Cards
+            container.innerHTML = investments.map(inv => `
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4 shadow-sm">
+                    <div class="flex justify-between items-center border-b border-brand-border/60 pb-3">
+                        <div>
+                            <h4 class="text-base font-bold text-white">${inv.packageName}</h4>
+                            <p class="text-[11px] text-emerald-400 font-semibold">${inv.dailyRoiPercent}% Daily Yield</p>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${inv.status === 'Active' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-800 text-slate-400'}">
+                            ${inv.status}
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <p class="text-slate-400">Capital Staked</p>
+                            <p class="text-white font-bold text-sm mt-0.5">$${inv.amount.toFixed(2)}</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400">Total Yield Earned</p>
+                            <p class="text-emerald-400 font-bold text-sm mt-0.5">+$${(inv.totalEarned || 0).toFixed(2)}</p>
+                        </div>
+                    </div>
+
+                    <div class="text-[11px] text-slate-500 pt-2 border-t border-brand-border/40 flex justify-between">
+                        <span>Duration: ${inv.durationDays} Days</span>
+                        <span>Created: ${new Date(inv.createdAt).toLocaleDateString()}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Table Rows
+            tableBody.innerHTML = investments.map(inv => `
+                <tr class="border-b border-brand-border/40 hover:bg-slate-900/50 transition">
+                    <td class="p-3.5 font-bold text-white">${inv.packageName}</td>
+                    <td class="p-3.5 font-semibold text-slate-200">$${inv.amount.toFixed(2)}</td>
+                    <td class="p-3.5 text-emerald-400 font-semibold">${inv.dailyRoiPercent}%</td>
+                    <td class="p-3.5">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${inv.status === 'Active' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-slate-800 text-slate-400'}">
+                            ${inv.status}
+                        </span>
+                    </td>
+                    <td class="p-3.5 text-right font-bold text-emerald-400">+$${(inv.totalEarned || 0).toFixed(2)}</td>
+                </tr>
+            `).join('');
         }
     </script>
 </body>

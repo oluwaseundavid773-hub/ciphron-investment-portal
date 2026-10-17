@@ -42,7 +42,7 @@
     </style>
 </head>
 <body class="bg-brand-dark text-slate-100 flex flex-col min-h-screen">
-    <!-- MOBILE TOP HEADER BAR (Only visible on smaller screens) -->
+    <!-- MOBILE TOP HEADER BAR -->
     <div class="lg:hidden bg-slate-900 border-b border-brand-border p-4 flex items-center justify-between sticky top-0 z-50 shrink-0">
         <div class="flex items-center space-x-3">
             <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
@@ -106,7 +106,7 @@
         </div>
     </div>
 
-    <!-- DESKTOP SIDEBAR (Hidden on mobile, visible on lg screens) -->
+    <!-- DESKTOP SIDEBAR -->
     <aside id="sidebar" class="hidden lg:flex w-64 bg-slate-900 border-r border-brand-border flex-col shrink-0 h-screen sticky top-0 z-40">
         <div class="p-6 flex items-center justify-between border-b border-brand-border">
             <a href="index.html" class="flex items-center space-x-3">
@@ -193,12 +193,12 @@
             </div>
         </div>
 
-<main class="p-4 md:p-8 pb-32 space-y-8 max-w-7xl mx-auto w-full box-border flex-grow">
-        <!-- Metrics Summary Grid -->
+        <main class="p-4 md:p-8 pb-32 space-y-8 max-w-7xl mx-auto w-full box-border flex-grow">
+            <!-- Metrics Summary Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
                     <p class="text-xs text-slate-400 font-medium">Available Unlocked Balance</p>
-                    <h3 id="userBalance" class="text-2xl font-bold text-white mt-1">$0.00</h3>
+                    <h3 id="walletBalance" class="text-2xl font-bold text-white mt-1">$0.00</h3>
                     <p class="text-[11px] text-emerald-400 font-medium mt-3">Ready for Withdrawal</p>
                 </div>
 
@@ -210,14 +210,14 @@
 
                 <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
                     <p class="text-xs text-slate-400 font-medium">Total Profit Earned</p>
-                    <h3 id="totalProfitDisplay" class="text-2xl font-bold text-emerald-400 mt-1">+$0.00</h3>
+                    <h3 id="totalEarnings" class="text-2xl font-bold text-emerald-400 mt-1">+$0.00</h3>
                     <p id="growthRateBadge" class="text-[11px] text-emerald-400 font-medium mt-3">Daily Incremental Yield Active</p>
                 </div>
 
                 <div class="bg-brand-card border border-brand-border p-6 rounded-2xl shadow-sm">
-                    <p class="text-xs text-slate-400 font-medium">Total Cashouts</p>
-                    <h3 id="totalCashoutsDisplay" class="text-2xl font-bold text-white mt-1">$0.00</h3>
-                    <p class="text-[11px] text-slate-400 mt-3">Verified Payouts</p>
+                    <p class="text-xs text-slate-400 font-medium">Active Investments Count</p>
+                    <h3 id="activeInvestments" class="text-2xl font-bold text-white mt-1">0</h3>
+                    <p class="text-[11px] text-slate-400 mt-3">Portfolio Count</p>
                 </div>
             </div>
 
@@ -305,10 +305,10 @@
                 <h3 class="text-lg font-bold text-white">Cash Out Yields</h3>
                 <button onclick="closeModal('withdrawModal')" class="text-slate-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form onsubmit="handleWithdrawalSubmit(event)" class="space-y-4">
+            <form id="withdrawForm" onsubmit="handleWithdrawal(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs text-slate-300 font-medium mb-1.5">Amount ($ USD)</label>
-                    <input type="number" id="withdrawAmountInput" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white">
+                    <input type="number" id="withdrawAmount" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white">
                 </div>
                 <div>
                     <label class="block text-xs text-slate-300 font-medium mb-1.5">USDT Address or Bank AC</label>
@@ -328,44 +328,43 @@
     </div>
 
     <!-- Live Chat Modal Box -->
-<div id="liveChatBox" class="fixed bottom-24 right-6 w-80 sm:w-96 bg-brand-card border border-brand-border rounded-2xl shadow-2xl hidden flex-col z-50 overflow-hidden">
-    <div class="bg-slate-900 p-4 border-b border-brand-border flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-            <div class="relative">
-                <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/40">
-                    CP
+    <div id="liveChatBox" class="fixed bottom-24 right-6 w-80 sm:w-96 bg-brand-card border border-brand-border rounded-2xl shadow-2xl hidden flex-col z-50 overflow-hidden">
+        <div class="bg-slate-900 p-4 border-b border-brand-border flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="relative">
+                    <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/40">
+                        CP
+                    </div>
+                    <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full absolute bottom-0 right-0 border-2 border-slate-900"></span>
                 </div>
-                <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full absolute bottom-0 right-0 border-2 border-slate-900"></span>
+                <div>
+                    <h4 class="text-xs font-bold text-white">CIPHRON Treasury Support</h4>
+                    <p class="text-[10px] text-emerald-400">Online • Typically replies instantly</p>
+                </div>
             </div>
-            <div>
-                <h4 class="text-xs font-bold text-white">CIPHRON Treasury Support</h4>
-                <p class="text-[10px] text-emerald-400">Online • Typically replies instantly</p>
+            <button type="button" onclick="toggleLiveChat()" class="text-slate-400 hover:text-white text-sm p-1 cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 bg-slate-950/50 text-xs flex flex-col">
+            <div class="bg-slate-900 p-3 rounded-xl border border-brand-border/60 max-w-[85%] text-slate-300 self-start">
+                Hello! Welcome to CIPHRON Institutional Treasury Support. How can we assist you with your investments, deposits, or KYC verification today?
             </div>
         </div>
-        <button type="button" onclick="toggleLiveChat()" class="text-slate-400 hover:text-white text-sm p-1 cursor-pointer">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </div>
 
-    <!-- MESSAGES BODY (Added id="chatMessages") -->
-    <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 bg-slate-950/50 text-xs flex flex-col">
-        <div class="bg-slate-900 p-3 rounded-xl border border-brand-border/60 max-w-[85%] text-slate-300 self-start">
-            Hello! Welcome to CIPHRON Institutional Treasury Support. How can we assist you with your investments, deposits, or KYC verification today?
-        </div>
+        <form onsubmit="handleChatSubmit(event)" class="p-3 bg-slate-900 border-t border-brand-border flex items-center gap-2">
+            <input type="text" id="chatInput" placeholder="Type your message..." required class="flex-grow bg-slate-950 border border-brand-border rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-emerald-500">
+            <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 p-2 rounded-lg text-xs font-bold transition cursor-pointer">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>
     </div>
-
-    <form onsubmit="handleChatSubmit(event)" class="p-3 bg-slate-900 border-t border-brand-border flex items-center gap-2">
-        <input type="text" id="chatInput" placeholder="Type your message..." required class="flex-grow bg-slate-950 border border-brand-border rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-emerald-500">
-        <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 p-2 rounded-lg text-xs font-bold transition cursor-pointer">
-            <i class="fa-solid fa-paper-plane"></i>
-        </button>
-    </form>
-</div>
 
     <!-- Scripts -->
     <script>
         let currentUser = JSON.parse(localStorage.getItem('ciphron_active_user')) || {
-            name: "Anderson",
+            name: "Investor",
             email: "investor@ciphron.com",
             stakedCapital: 0,
             unlockedBalance: 0,
@@ -374,26 +373,6 @@
             planName: "None",
             dailyRate: 0
         };
-
-        function updateUI() {
-            document.getElementById('userNameDisplay').textContent = currentUser.name;
-            document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-            document.getElementById('mobileUserNameDisplay').textContent = currentUser.name;
-            document.getElementById('mobileUserAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-            
-            document.getElementById('userBalance').textContent = '$' + currentUser.unlockedBalance.toFixed(2);
-            document.getElementById('stakedCapitalDisplay').textContent = '$' + currentUser.stakedCapital.toFixed(2);
-            document.getElementById('totalProfitDisplay').textContent = '+$' + currentUser.totalProfit.toFixed(2);
-            document.getElementById('totalCashoutsDisplay').textContent = '$' + currentUser.totalCashouts.toFixed(2);
-
-            if (currentUser.stakedCapital > 0) {
-                document.getElementById('stakedStatusText').textContent = currentUser.planName + ' (' + currentUser.dailyRate + '% Daily)';
-                document.getElementById('stakedStatusText').className = 'text-[11px] text-emerald-400 mt-3 font-semibold';
-            } else {
-                document.getElementById('stakedStatusText').textContent = 'No Active Investment';
-                document.getElementById('stakedStatusText').className = 'text-[11px] text-slate-500 mt-3';
-            }
-        }
 
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
         function closeModal(id) { document.getElementById(id).classList.remove('flex'); document.getElementById(id).classList.add('hidden'); }
@@ -414,116 +393,47 @@
             }
         }
 
-                function handleChatSubmit(e) {
-    e.preventDefault();
-    const input = document.getElementById('chatInput');
-    const messagesContainer = document.getElementById('chatMessages');
-    const text = input.value.trim();
+        function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('chatInput');
+            const messagesContainer = document.getElementById('chatMessages');
+            const text = input.value.trim();
 
-    if (!text) return;
+            if (!text) return;
 
-    // 1. Append User Message (Right-aligned green bubble)
-    const userMsgHTML = `
-        <div class="bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 p-3 rounded-xl max-w-[85%] self-end">
-            ${text}
-        </div>
-    `;
-    messagesContainer.insertAdjacentHTML('beforeend', userMsgHTML);
-    input.value = '';
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            const userMsgHTML = `
+                <div class="bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 p-3 rounded-xl max-w-[85%] self-end">
+                    ${text}
+                </div>
+            `;
+            messagesContainer.insertAdjacentHTML('beforeend', userMsgHTML);
+            input.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-    // 2. Simulate Support Typing & Instant Auto-Response after 1 second
-    setTimeout(() => {
-        let replyText = "Thank you for reaching out! A Treasury Support representative has received your request and will assist you shortly.";
-        
-        // Smart keywords response logic
-        const lower = text.toLowerCase();
-        if (lower.includes('deposit') || lower.includes('fund') || lower.includes('vault')) {
-            replyText = "For deposits, please select your desired tier in the dashboard, select your preferred crypto network (USDT TRC-20, ERC-20, or BTC), and submit your transaction reference ID.";
-        } else if (lower.includes('withdraw') || lower.includes('cashout') || lower.includes('pay')) {
-            replyText = "Withdrawals are processed directly to your registered wallet once your KYC verification status is verified.";
-        } else if (lower.includes('kyc') || lower.includes('verify')) {
-            replyText = "You can complete your identity and carrier line verification on the Security & KYC page.";
+            setTimeout(() => {
+                let replyText = "Thank you for reaching out! A Treasury Support representative has received your request.";
+                const lower = text.toLowerCase();
+                if (lower.includes('deposit') || lower.includes('fund')) {
+                    replyText = "For deposits, select your desired tier and crypto network in the deposit window.";
+                } else if (lower.includes('withdraw') || lower.includes('cashout')) {
+                    replyText = "Withdrawals are processed directly to your registered wallet.";
+                }
+
+                const supportMsgHTML = `
+                    <div class="bg-slate-900 p-3 rounded-xl border border-brand-border/60 max-w-[85%] text-slate-300 self-start">
+                        ${replyText}
+                    </div>
+                `;
+                messagesContainer.insertAdjacentHTML('beforeend', supportMsgHTML);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
         }
-
-        const supportMsgHTML = `
-            <div class="bg-slate-900 p-3 rounded-xl border border-brand-border/60 max-w-[85%] text-slate-300 self-start">
-                ${replyText}
-            </div>
-        `;
-        messagesContainer.insertAdjacentHTML('beforeend', supportMsgHTML);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, 1000);
-}
-
 
         function selectPlanAndOpenModal(planName, rate, min) {
             document.getElementById('depositAmountInput').value = min;
             document.getElementById('depositPlanSelect').value = planName + '|' + rate;
             openModal('depositModal');
         }
-
-        function handleDepositSubmit(e) {
-            e.preventDefault();
-            const amount = parseFloat(document.getElementById('depositAmountInput').value);
-            const planVal = document.getElementById('depositPlanSelect').value.split('|');
-            const planName = planVal[0];
-            const dailyRate = parseFloat(planVal[1]);
-
-            let pendingQueue = JSON.parse(localStorage.getItem('ciphron_pending_deposits')) || [];
-            pendingQueue.push({
-                id: 'DEP_' + Math.floor(1000 + Math.random() * 9000),
-                userEmail: currentUser.email,
-                userName: currentUser.name,
-                amount: amount,
-                planName: planName,
-                dailyRate: dailyRate,
-                status: 'Pending Admin Verification'
-            });
-
-            localStorage.setItem('ciphron_pending_deposits', JSON.stringify(pendingQueue));
-            closeModal('depositModal');
-            alert('📩 Deposit Submitted!\n\nYour deposit of $' + amount + ' USD has been sent to the Admin Treasury Desk for verification.');
-        }
-
-        function handleWithdrawalSubmit(e) {
-            e.preventDefault();
-            const amount = parseFloat(document.getElementById('withdrawAmountInput').value);
-
-            if (currentUser.stakedCapital <= 0) {
-                alert('🚫 Withdrawal Restricted!\n\nYou must have an active investment plan to withdraw yields.');
-                return;
-            }
-            if (amount > currentUser.unlockedBalance) {
-                alert('🚫 Insufficient Balance!\n\nYou can only withdraw up to $' + currentUser.unlockedBalance.toFixed(2) + ' USD.');
-                return;
-            }
-
-            currentUser.unlockedBalance -= amount;
-            currentUser.totalCashouts += amount;
-            localStorage.setItem('ciphron_active_user', JSON.stringify(currentUser));
-            updateUI();
-            closeModal('withdrawModal');
-            alert('✅ Cashout Submitted to Admin for Settlement!');
-        }
-
-        setInterval(() => {
-            let savedUsers = JSON.parse(localStorage.getItem('ciphron_users_db')) || {};
-            if (savedUsers[currentUser.email]) {
-                currentUser = savedUsers[currentUser.email];
-            }
-
-            if (currentUser.stakedCapital > 0) {
-                let increment = (currentUser.stakedCapital * (currentUser.dailyRate / 100)) / 100;
-                currentUser.totalProfit += increment;
-                currentUser.unlockedBalance += increment;
-
-                savedUsers[currentUser.email] = currentUser;
-                localStorage.setItem('ciphron_users_db', JSON.stringify(savedUsers));
-                localStorage.setItem('ciphron_active_user', JSON.stringify(currentUser));
-                updateUI();
-            }
-        }, 10000);
 
         window.paymentChannelsData = {
             trc20: `
@@ -578,11 +488,143 @@
         };
 
         document.addEventListener('DOMContentLoaded', function() {
-            updateUI();
             const select = document.getElementById('paymentChannelSelect');
             const initialVal = select ? select.value : 'trc20';
             window.switchPaymentChannel(initialVal);
         });
+    </script>
+
+    <!-- Backend API Integration Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('ciphron_token');
+
+            if (!token) {
+                window.location.href = 'signin.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/dashboard', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const { wallet, activeInvestmentsCount } = result.data;
+
+                    if (document.getElementById('walletBalance')) {
+                        document.getElementById('walletBalance').textContent = `$${wallet.balance.toFixed(2)}`;
+                    }
+                    if (document.getElementById('totalEarnings')) {
+                        document.getElementById('totalEarnings').textContent = `$${wallet.totalEarnings.toFixed(2)}`;
+                    }
+                    if (document.getElementById('activeInvestments')) {
+                        document.getElementById('activeInvestments').textContent = activeInvestmentsCount;
+                    }
+                    if (document.getElementById('userNameDisplay')) {
+                        document.getElementById('userNameDisplay').textContent = result.data.user?.name || 'Investor';
+                    }
+                    if (document.getElementById('mobileUserNameDisplay')) {
+                        document.getElementById('mobileUserNameDisplay').textContent = result.data.user?.name || 'Investor';
+                    }
+                } else {
+                    localStorage.removeItem('ciphron_token');
+                    window.location.href = 'signin.html';
+                }
+            } catch (err) {
+                console.error('Error loading dashboard:', err);
+            }
+        });
+
+        // Deposit Handler
+        async function handleDepositSubmit(event) {
+            event.preventDefault();
+
+            const amountInput = document.getElementById('depositAmountInput');
+            const amount = amountInput ? amountInput.value : 0;
+            const token = localStorage.getItem('ciphron_token');
+
+            if (!token) {
+                window.location.href = 'signin.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/wallet/deposit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        amount: parseFloat(amount),
+                        paymentMethod: document.getElementById('paymentChannelSelect').value,
+                        reference: document.getElementById('depositTxRef').value || ('DEP-' + Math.floor(Math.random() * 1000000))
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    alert('Deposit successful!');
+                    location.reload();
+                } else {
+                    alert(data.error || 'Deposit failed.');
+                }
+            } catch (err) {
+                console.error('Deposit error:', err);
+                alert('Server error processing deposit.');
+            }
+        }
+
+        // Withdrawal Handler
+        async function handleWithdrawal(e) {
+            e.preventDefault();
+
+            const amount = document.getElementById('withdrawAmount').value;
+            const token = localStorage.getItem('ciphron_token');
+
+            if (!token) {
+                window.location.href = 'signin.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/wallet/withdraw', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        amount: parseFloat(amount)
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    alert('Withdrawal processed successfully!');
+                    location.reload();
+                } else {
+                    alert(data.error || 'Withdrawal failed. Check your balance.');
+                }
+            } catch (err) {
+                console.error('Withdrawal error:', err);
+                alert('Server error processing withdrawal.');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('ciphron_token');
+            window.location.href = 'signin.html';
+        }
     </script>
 </body>
 </html>

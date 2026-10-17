@@ -50,10 +50,16 @@
                 <span>Investor Dashboard</span>
             </a>
         </nav>
+        <div class="p-4 border-t border-brand-border mt-auto">
+            <button onclick="logout()" class="w-full flex items-center space-x-2 text-slate-400 hover:text-red-400 text-xs font-semibold p-2 transition cursor-pointer">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Sign Out</span>
+            </button>
+        </div>
     </aside>
 
     <div class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="h-20 bg-slate-900/80 border-b border-brand-border px-8 flex items-center justify-between">
+        <header class="h-20 bg-slate-900/80 border-b border-brand-border px-8 flex items-center justify-between sticky top-0 z-20">
             <h2 class="text-xl font-bold text-white">Incoming Client Deposits & Vault Control</h2>
             <span class="px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-xl text-xs font-bold">
                 Manual Authorization Desk
@@ -61,13 +67,27 @@
         </header>
 
         <main class="p-8 space-y-6 max-w-7xl mx-auto w-full">
+            
+            <!-- Summary Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl">
+                    <p class="text-xs text-slate-400 font-medium">Total Institutional Users</p>
+                    <h3 id="totalUsersCount" class="text-2xl font-bold text-white mt-1">0</h3>
+                </div>
+                <div class="bg-brand-card border border-brand-border p-6 rounded-2xl">
+                    <p class="text-xs text-slate-400 font-medium">Pending Deposits Queue</p>
+                    <h3 id="pendingDepositsCount" class="text-2xl font-bold text-amber-400 mt-1">0</h3>
+                </div>
+            </div>
+
+            <!-- Table Card -->
             <div class="bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4">
                 <div class="flex justify-between items-center border-b border-brand-border/60 pb-4">
                     <div>
                         <h3 class="text-lg font-bold text-white">Pending Client Deposit Queue</h3>
                         <p class="text-xs text-slate-400">Review incoming payments and approve them to credit client dashboards.</p>
                     </div>
-                    <button onclick="loadPendingDeposits()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                    <button onclick="loadAdminOverview()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer">
                         <i class="fa-solid fa-rotate-right mr-1"></i> Refresh Queue
                     </button>
                 </div>
@@ -78,13 +98,17 @@
                             <tr>
                                 <th class="p-3.5">Investor</th>
                                 <th class="p-3.5">Amount ($ USD)</th>
-                                <th class="p-3.5">Selected Plan</th>
-                                <th class="p-3.5">Daily ROI Rate</th>
+                                <th class="p-3.5">Payment Channel</th>
+                                <th class="p-3.5">Reference / TxID</th>
                                 <th class="p-3.5 text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody id="depositTableBody" class="divide-y divide-brand-border/60">
-                            <!-- Injected dynamically -->
+                            <tr>
+                                <td colspan="5" class="p-8 text-center text-slate-500 font-medium">
+                                    Loading live pending queue...
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -92,10 +116,126 @@
         </main>
     </div>
 
+    <!-- Live API Script -->
     <script>
-        function loadPendingDeposits() {
+        function logout() {
+            localStorage.removeItem('ciphron_token');
+            window.location.href = 'signin.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('ciphron_token');
+
+            if (!token) {
+                window.location.href = 'signin.html';
+                return;
+            }
+
+            loadAdminOverview();
+        });
+
+        async function loadAdminOverview() {
+            const token = localStorage.getItem('ciphron_token');
+            const tableBody = document.getElementById('depositTableBody');
+
+            try {
+                const response = await fetch('http://localhost:5000/api/admin/overview', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const { totalUsers, pendingTransactions } = result.data;
+
+                    if (document.getElementById('totalUsersCount')) {
+                        document.getElementById('totalUsersCount').textContent = totalUsers;
+                    }
+                    if (document.getElementById('pendingDepositsCount')) {
+                        document.getElementById('pendingDepositsCount').textContent = pendingTransactions ? pendingTransactions.length : 0;
+                    }
+
+                    renderPendingDeposits(pendingTransactions || []);
+                } else {
+                    renderLocalFallbackQueue();
+                }
+            } catch (err) {
+                console.error('Error contacting admin API, rendering local queue fallback:', err);
+                renderLocalFallbackQueue();
+            }
+        }
+
+        function renderPendingDeposits(deposits) {
+            const tableBody = document.getElementById('depositTableBody');
+
+            if (!deposits || deposits.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="p-8 text-center text-slate-500 font-medium">
+                            No pending deposits found in the queue.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = deposits.map(dep => `
+                <tr class="hover:bg-slate-800/40 transition">
+                    <td class="p-3.5 font-bold text-white">
+                        ${dep.user ? dep.user.name : 'Investor'}
+                        <span class="block text-[10px] text-slate-400 font-normal">${dep.user ? dep.user.email : 'N/A'}</span>
+                    </td>
+                    <td class="p-3.5 font-extrabold text-emerald-400">$${dep.amount.toFixed(2)} USD</td>
+                    <td class="p-3.5 text-slate-200 font-semibold uppercase">${dep.paymentMethod || 'Crypto Vault'}</td>
+                    <td class="p-3.5 text-amber-400 font-mono text-[11px]">${dep.reference || 'REF-PENDING'}</td>
+                    <td class="p-3.5 text-right space-x-2">
+                        <button onclick="approveDepositApi('${dep._id}')" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs transition cursor-pointer">
+                            Approve Deposit
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function approveDepositApi(transactionId) {
+            const token = localStorage.getItem('ciphron_token');
+            if (!confirm('Are you sure you want to authorize this deposit and credit the client account?')) return;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/admin/approve-deposit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ transactionId })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    alert('✅ Deposit Approved & Credited Successfully!');
+                    loadAdminOverview();
+                } else {
+                    alert(data.error || 'Failed to approve deposit.');
+                }
+            } catch (err) {
+                console.error('Approve deposit error:', err);
+                alert('Server error approving deposit.');
+            }
+        }
+
+        function renderLocalFallbackQueue() {
             const tableBody = document.getElementById('depositTableBody');
             let pendingQueue = JSON.parse(localStorage.getItem('ciphron_pending_deposits')) || [];
+
+            if (document.getElementById('pendingDepositsCount')) {
+                document.getElementById('pendingDepositsCount').textContent = pendingQueue.length;
+            }
 
             if (pendingQueue.length === 0) {
                 tableBody.innerHTML = `
@@ -121,11 +261,8 @@
                     <td class="p-3.5 text-slate-200 font-semibold">${dep.planName}</td>
                     <td class="p-3.5 text-amber-400 font-bold">+${dep.dailyRate}% / Day</td>
                     <td class="p-3.5 text-right space-x-2">
-                        <button onclick="approveDeposit(${index})" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs transition cursor-pointer">
+                        <button onclick="approveLocalDeposit(${index})" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs transition cursor-pointer">
                             Approve Deposit
-                        </button>
-                        <button onclick="rejectDeposit(${index})" class="bg-slate-800 hover:bg-red-500/20 text-slate-400 hover:text-red-400 border border-brand-border px-3 py-1.5 rounded-lg text-xs transition cursor-pointer">
-                            Reject
                         </button>
                     </td>
                 `;
@@ -133,13 +270,12 @@
             });
         }
 
-        function approveDeposit(index) {
+        function approveLocalDeposit(index) {
             let pendingQueue = JSON.parse(localStorage.getItem('ciphron_pending_deposits')) || [];
             let approvedItem = pendingQueue[index];
 
             if (!approvedItem) return;
 
-            // Load Users DB
             let savedUsers = JSON.parse(localStorage.getItem('ciphron_users_db')) || {};
             let user = savedUsers[approvedItem.userEmail] || {
                 name: approvedItem.userName,
@@ -152,37 +288,19 @@
                 dailyRate: approvedItem.dailyRate
             };
 
-            // Update capital & plan details
             user.stakedCapital += approvedItem.amount;
             user.planName = approvedItem.planName;
             user.dailyRate = approvedItem.dailyRate;
 
-            // Save back to DB
             savedUsers[approvedItem.userEmail] = user;
             localStorage.setItem('ciphron_users_db', JSON.stringify(savedUsers));
 
-            // Sync active session if logged in
-            let activeUser = JSON.parse(localStorage.getItem('ciphron_active_user'));
-            if (activeUser && activeUser.email === approvedItem.userEmail) {
-                localStorage.setItem('ciphron_active_user', JSON.stringify(user));
-            }
-
-            // Remove item from queue
             pendingQueue.splice(index, 1);
             localStorage.setItem('ciphron_pending_deposits', JSON.stringify(pendingQueue));
 
-            alert('✅ Deposit Approved!\n\n$' + approvedItem.amount + ' USD has been funded into ' + approvedItem.userName + '\'s account. Daily percentage growth is now activated!');
-            loadPendingDeposits();
+            alert('✅ Deposit Approved Local Fallback!');
+            loadAdminOverview();
         }
-
-        function rejectDeposit(index) {
-            let pendingQueue = JSON.parse(localStorage.getItem('ciphron_pending_deposits')) || [];
-            pendingQueue.splice(index, 1);
-            localStorage.setItem('ciphron_pending_deposits', JSON.stringify(pendingQueue));
-            loadPendingDeposits();
-        }
-
-        document.addEventListener('DOMContentLoaded', loadPendingDeposits);
     </script>
 </body>
 </html>
