@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 
-// Simple health check with no DB dependency
+// Main health check endpoint
 app.get('/api/health', (req, res) => {
     res.status(200).json({ 
         status: 'ONLINE', 
@@ -13,5 +13,13 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-// Export raw express app for Vercel
+// Fallback health check endpoint (if Vercel strips /api during routing)
+app.get('/health', (req, res) => {
+    res.status(200).json({ 
+        status: 'ONLINE', 
+        system: 'CIPHRON Treasury API v1.0',
+        environment: process.env.NODE_ENV || 'production'
+    });
+});
+
 module.exports = app;
