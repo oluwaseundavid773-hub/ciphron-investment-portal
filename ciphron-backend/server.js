@@ -1,5 +1,4 @@
 const express = require('express');
-const serverless = require('serverless-http');
 
 const app = express();
 
@@ -14,6 +13,5 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-// Export for Vercel serverless execution
+// Export raw express app for Vercel
 module.exports = app;
-module.exports.handler = serverless(app);
