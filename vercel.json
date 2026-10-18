@@ -1,15 +1,24 @@
 {
   "version": 2,
+  "cleanUrls": true,
   "builds": [
     {
       "src": "ciphron-backend/server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
       "dest": "ciphron-backend/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
