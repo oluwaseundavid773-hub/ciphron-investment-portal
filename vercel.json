@@ -5,10 +5,5 @@
       "source": "/api/(.*)",
       "destination": "/ciphron-backend/server.js"
     }
-  ],
-  "functions": {
-    "ciphron-backend/server.js": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }
