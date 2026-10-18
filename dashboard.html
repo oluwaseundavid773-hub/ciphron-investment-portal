@@ -312,7 +312,7 @@
                 </div>
                 <div>
                     <label class="block text-xs text-slate-300 font-medium mb-1.5">USDT Address or Bank AC</label>
-                    <input type="text" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white">
+                    <input type="text" id="withdrawAddress" required class="w-full bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm text-white">
                 </div>
                 <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl transition text-sm cursor-pointer">Request Withdrawal</button>
             </form>
@@ -496,48 +496,63 @@
 
     <!-- Backend API Integration Script -->
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const token = localStorage.getItem('ciphron_token');
+        // Local testing -> backend on port 5000. Live site -> same domain (Vercel).
+        const API_URL = ['localhost', '127.0.0.1'].includes(location.hostname)
+            ? 'http://localhost:5000'
+            : '';
 
-            if (!token) {
+        // Sends the login token and reads replies safely
+        async function api(path, options = {}) {
+            const token = localStorage.getItem('ciphron_token');
+            const response = await fetch(`${API_URL}${path}`, {
+                ...options,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const text = await response.text();
+            const data = text ? JSON.parse(text) : {};
+            return { response, data };
+        }
+
+        const money = (n) => `$${Number(n || 0).toFixed(2)}`;
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
+
+        // Load dashboard data
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!localStorage.getItem('ciphron_token')) {
                 window.location.href = 'signin.html';
                 return;
             }
 
             try {
-                // Production path relative to Vercel route rewrites
-                const response = await fetch('/api/dashboard', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
+                const { response, data } = await api('/api/dashboard');
 
-                const result = await response.json();
-
-                if (response.ok && result.success) {
-                    const { wallet, activeInvestmentsCount } = result.data;
-
-                    if (document.getElementById('walletBalance')) {
-                        document.getElementById('walletBalance').textContent = `$${wallet.balance.toFixed(2)}`;
-                    }
-                    if (document.getElementById('totalEarnings')) {
-                        document.getElementById('totalEarnings').textContent = `$${wallet.totalEarnings.toFixed(2)}`;
-                    }
-                    if (document.getElementById('activeInvestments')) {
-                        document.getElementById('activeInvestments').textContent = activeInvestmentsCount;
-                    }
-                    if (document.getElementById('userNameDisplay')) {
-                        document.getElementById('userNameDisplay').textContent = result.data.user?.name || 'Investor';
-                    }
-                    if (document.getElementById('mobileUserNameDisplay')) {
-                        document.getElementById('mobileUserNameDisplay').textContent = result.data.user?.name || 'Investor';
-                    }
-                } else {
-                    localStorage.removeItem('ciphron_token');
-                    window.location.href = 'signin.html';
+                // Only sign out when the token is rejected
+                if (response.status === 401 || response.status === 403) {
+                    logout();
+                    return;
                 }
+
+                if (!response.ok || !data.success) {
+                    console.error('Dashboard error:', data.error || response.status);
+                    return;
+                }
+
+                const { wallet, activeInvestmentsCount } = data.data;
+                const name = data.data.user?.name || 'Investor';
+
+                setText('walletBalance', money(wallet.balance));
+                setText('stakedCapitalDisplay', money(wallet.totalInvested));
+                setText('stakedStatusText', activeInvestmentsCount > 0 ? 'Active Investment Running' : 'No Active Investment');
+                setText('totalEarnings', `+${money(wallet.totalEarnings)}`);
+                setText('activeInvestments', activeInvestmentsCount);
+                setText('userNameDisplay', name);
+                setText('mobileUserNameDisplay', name);
             } catch (err) {
                 console.error('Error loading dashboard:', err);
             }
@@ -547,34 +562,20 @@
         async function handleDepositSubmit(event) {
             event.preventDefault();
 
-            const amountInput = document.getElementById('depositAmountInput');
-            const amount = amountInput ? amountInput.value : 0;
-            const token = localStorage.getItem('ciphron_token');
-
-            if (!token) {
-                window.location.href = 'signin.html';
-                return;
-            }
+            const amount = parseFloat(document.getElementById('depositAmountInput').value);
 
             try {
-                // Production path relative to Vercel route rewrites
-                const response = await fetch('/api/wallet/deposit', {
+                const { response, data } = await api('/api/wallet/deposit', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
                     body: JSON.stringify({
-                        amount: parseFloat(amount),
+                        amount,
                         paymentMethod: document.getElementById('paymentChannelSelect').value,
                         reference: document.getElementById('depositTxRef').value || ('DEP-' + Math.floor(Math.random() * 1000000))
                     })
                 });
 
-                const data = await response.json();
-
                 if (response.ok && data.success) {
-                    alert('Deposit successful!');
+                    alert('Deposit submitted!');
                     location.reload();
                 } else {
                     alert(data.error || 'Deposit failed.');
@@ -589,31 +590,17 @@
         async function handleWithdrawal(e) {
             e.preventDefault();
 
-            const amount = document.getElementById('withdrawAmount').value;
-            const token = localStorage.getItem('ciphron_token');
-
-            if (!token) {
-                window.location.href = 'signin.html';
-                return;
-            }
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const address = document.getElementById('withdrawAddress').value;
 
             try {
-                // Production path relative to Vercel route rewrites
-                const response = await fetch('/api/wallet/withdraw', {
+                const { response, data } = await api('/api/wallet/withdraw', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        amount: parseFloat(amount)
-                    })
+                    body: JSON.stringify({ amount, address })
                 });
 
-                const data = await response.json();
-
                 if (response.ok && data.success) {
-                    alert('Withdrawal processed successfully!');
+                    alert('Withdrawal request submitted!');
                     location.reload();
                 } else {
                     alert(data.error || 'Withdrawal failed. Check your balance.');
