@@ -161,6 +161,11 @@
 
     <!-- Form JavaScript Logic -->
     <script>
+        // Local testing -> backend on port 5000. Live site -> same domain (Vercel).
+        const API_URL = ['localhost', '127.0.0.1'].includes(location.hostname)
+            ? 'http://localhost:5000'
+            : '';
+
         function togglePasswordVisibility(inputId, iconId) {
             const input = document.getElementById(inputId);
             const icon = document.getElementById(iconId);
@@ -189,8 +194,7 @@
                 const password = document.getElementById('signinPassword').value;
 
                 try {
-                    // Production path relative to Vercel route rewrites
-                    const response = await fetch('/api/auth/signin', {
+                    const response = await fetch(`${API_URL}/api/auth/signin`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -198,14 +202,16 @@
                         body: JSON.stringify({ email, password }),
                     });
 
-                    const data = await response.json();
+                    // Safe parse: avoids "Unexpected end of JSON input" on empty replies
+                    const text = await response.text();
+                    const data = text ? JSON.parse(text) : {};
 
                     if (response.ok && data.token) {
                         // Save JWT token & redirect to dashboard
                         localStorage.setItem('ciphron_token', data.token);
                         window.location.href = 'dashboard.html';
                     } else {
-                        alert(data.error || 'Invalid credentials.');
+                        alert(data.error || `Sign in failed (status ${response.status}).`);
                     }
                 } catch (err) {
                     console.error('Signin error:', err);

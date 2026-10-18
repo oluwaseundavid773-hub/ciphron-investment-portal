@@ -96,6 +96,11 @@
 
     <!-- Unified JavaScript Logic -->
     <script>
+        // Local testing -> backend on port 5000. Live site -> same domain (Vercel).
+        const API_URL = ['localhost', '127.0.0.1'].includes(location.hostname)
+            ? 'http://localhost:5000'
+            : '';
+
         let faceVerified = false;
         let videoStream = null;
 
@@ -166,8 +171,7 @@
                 const password = document.getElementById('signupPassword').value;
 
                 try {
-                    // Production path relative to Vercel route rewrites
-                    const response = await fetch('/api/auth/signup', {
+                    const response = await fetch(`${API_URL}/api/auth/signup`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -175,7 +179,9 @@
                         body: JSON.stringify({ name, email, password }),
                     });
 
-                    const data = await response.json();
+                    // Safe parse: avoids "Unexpected end of JSON input" on empty replies
+                    const text = await response.text();
+                    const data = text ? JSON.parse(text) : {};
 
                     if (response.ok && data.token) {
                         // Save JWT token & redirect to dashboard
@@ -183,7 +189,7 @@
                         alert('🎉 Account Created Successfully!');
                         window.location.href = 'dashboard.html';
                     } else {
-                        alert(data.error || 'Signup failed. Please try again.');
+                        alert(data.error || `Signup failed (status ${response.status}). Please try again.`);
                     }
                 } catch (err) {
                     console.error('Signup error:', err);
