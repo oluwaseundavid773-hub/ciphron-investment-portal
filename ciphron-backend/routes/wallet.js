@@ -2,20 +2,22 @@
 const express = require('express');
 const router = express.Router();
 const Wallet = require('../models/Wallet');
-const Investment = require('../models/Investment');
 const Transaction = require('../models/Transaction');
-const auth = require('./middleware/auth'); // FIXED: middleware is inside routes/middleware/
+const auth = require('./middleware/auth');
+
+const MIN_DEPOSIT = 100;
 
 // @route   POST /api/wallet/deposit
-// @desc    Initiate a wallet deposit
+// @desc    Submit a deposit for treasury verification (does NOT credit balance)
 // @access  Private
 router.post('/deposit', auth, async (req, res) => {
   try {
     const { amount, reference, paymentMethod } = req.body;
     const userId = req.user.id || req.user.userId;
+    const amt = Number(amount);
 
-    if (!amount || amount <= 0) {
-      return res.status(400).json({ error: 'Please enter a valid deposit amount.' });
+    if (!Number.isFinite(amt) || amt < MIN_DEPOSIT) {
+      return res.status(400).json({ error: `Minimum deposit is $${MIN_DEPOSIT}.` });
     }
 
     const wallet = await Wallet.findOne({ user: userId });
@@ -23,78 +25,75 @@ router.post('/deposit', auth, async (req, res) => {
       return res.status(404).json({ error: 'Wallet not found.' });
     }
 
-    // For instant test environments: auto-complete deposit and credit balance.
-    // In production, keep status as 'pending' until webhook/admin verification.
-    wallet.balance += Number(amount);
-    wallet.updatedAt = Date.now();
-    await wallet.save();
-
-    // Log in Transaction Ledger
-    const transaction = new Transaction({
+    // Balance is NOT changed here. It is credited only after you verify the payment.
+    const transaction = await Transaction.create({
       user: userId,
       type: 'deposit',
-      amount,
-      status: 'completed', // Change to 'pending' if manual admin approval is needed
-      reference: reference || `DEP-${Date.now()}`,
-      description: `Wallet deposit via ${paymentMethod || 'Direct Transfer'}`
+      amount: amt,
+      status: 'pending',
+      reference: String(reference || `DEP-${Date.now()}`).trim().slice(0, 100),
+      description: `Deposit via ${paymentMethod || 'Direct Transfer'} - awaiting verification`
     });
-    await transaction.save();
 
     res.status(200).json({
       success: true,
-      message: 'Deposit processed successfully!',
-      newBalance: wallet.balance,
+      message: 'Deposit submitted. Your balance updates after treasury verification.',
       transaction
     });
 
   } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ error: 'This transaction reference was already submitted.' });
+    }
     console.error('Deposit Error:', err.message);
     res.status(500).json({ error: 'Server error processing deposit.' });
   }
 });
 
 // @route   POST /api/wallet/withdraw
-// @desc    Initiate a payout request
+// @desc    Request a withdrawal (balance is held immediately, payout is manual)
 // @access  Private
 router.post('/withdraw', auth, async (req, res) => {
   try {
-    const { amount, payoutAddress, paymentMethod } = req.body;
+    const { amount, address, payoutAddress, paymentMethod } = req.body;
     const userId = req.user.id || req.user.userId;
+    const amt = Number(amount);
+    const destination = address || payoutAddress || paymentMethod;
 
-    if (!amount || amount <= 0) {
+    if (!Number.isFinite(amt) || amt <= 0) {
       return res.status(400).json({ error: 'Please enter a valid withdrawal amount.' });
     }
 
-    const wallet = await Wallet.findOne({ user: userId });
-    if (!wallet) {
-      return res.status(404).json({ error: 'Wallet not found.' });
-    }
+    // Check balance and deduct in ONE step so two quick requests can't spend the same money
+    const wallet = await Wallet.findOneAndUpdate(
+      { user: userId, balance: { $gte: amt } },
+      { $inc: { balance: -amt, totalWithdrawn: amt }, $set: { updatedAt: Date.now() } },
+      { new: true }
+    );
 
-    // Check if user has sufficient available balance
-    if (wallet.balance < amount) {
+    if (!wallet) {
       return res.status(400).json({ error: 'Insufficient withdrawable balance.' });
     }
 
-    // Deduct amount from available balance immediately to prevent double spending
-    wallet.balance -= Number(amount);
-    wallet.totalWithdrawn += Number(amount);
-    wallet.updatedAt = Date.now();
-    await wallet.save();
-
-    // Create a pending transaction record for financial approval
-    const transaction = new Transaction({
-      user: userId,
-      type: 'withdrawal',
-      amount,
-      status: 'pending', // Pending treasury release
-      reference: `WD-${Date.now()}`,
-      description: `Withdrawal request to ${payoutAddress || paymentMethod || 'Registered Account'}`
-    });
-    await transaction.save();
+    let transaction;
+    try {
+      transaction = await Transaction.create({
+        user: userId,
+        type: 'withdrawal',
+        amount: amt,
+        status: 'pending',
+        reference: `WD-${Date.now()}`,
+        description: `Withdrawal request to ${destination || 'Registered Account'}`
+      });
+    } catch (txErr) {
+      // Put the money back if the record could not be saved
+      await Wallet.updateOne({ user: userId }, { $inc: { balance: amt, totalWithdrawn: -amt } });
+      throw txErr;
+    }
 
     res.status(200).json({
       success: true,
-      message: 'Withdrawal request submitted successfully and is pending approval.',
+      message: 'Withdrawal request submitted and is pending approval.',
       remainingBalance: wallet.balance,
       transaction
     });
