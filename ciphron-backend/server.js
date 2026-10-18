@@ -9,14 +9,18 @@ const connectDB = require('./db');
 const app = express();
 app.set('trust proxy', 1);
 
-connectDB();
-
 app.use(helmet());
 app.use(cors({
     origin: ['http://127.0.0.1:5500', 'http://localhost:5500', 'https://ciphron-investment-portal.vercel.app'],
     credentials: true
 }));
 app.use(express.json());
+
+// Wait for the database connection before handling any request
+app.use(async (req, res, next) => {
+    await connectDB();
+    next();
+});
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
