@@ -203,7 +203,8 @@
             }
 
             try {
-                const response = await fetch('http://localhost:5000/api/investments', {
+                // Production path relative to Vercel route rewrites
+                const response = await fetch('/api/investments', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,

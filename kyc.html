@@ -280,7 +280,8 @@
             }
 
             try {
-                const response = await fetch('http://localhost:5000/api/dashboard', {
+                // Production path relative to Vercel route rewrites
+                const response = await fetch('/api/dashboard', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -331,7 +332,8 @@
             const phone = document.getElementById('kycPhone').value;
 
             try {
-                const response = await fetch('http://localhost:5000/api/kyc/submit', {
+                // Production path relative to Vercel route rewrites
+                const response = await fetch('/api/kyc/submit', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

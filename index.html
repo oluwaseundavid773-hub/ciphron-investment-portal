@@ -87,14 +87,15 @@
             </nav>
 
            <!-- Auth Buttons -->
-<div class="flex items-center space-x-3">
-    <a href="signin.html" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-white px-3 sm:px-4 py-2.5 transition">
-        Sign In
-    </a>
-    <a href="signup.html" class="bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-slate-950 font-bold px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400">
-        Get Started
-    </a>
-</div>
+            <div class="flex items-center space-x-3">
+                <a href="signin.html" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-white px-3 sm:px-4 py-2.5 transition">
+                    Sign In
+                </a>
+                <a href="signup.html" class="bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-slate-950 font-bold px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                    Get Started
+                </a>
+            </div>
+        </div>
     </header>
 
     <!-- Main Landing Page Content -->
@@ -230,62 +231,57 @@
     </main>
 
     <!-- Live Ticker Animation Script -->
-<script>
-    const payoutsList = [
-        { name: "Julius M.", amount: "$45,000", method: "USDT (TRC20)", time: "Just now" },
-        { name: "Kathy R.", amount: "$20,000", method: "Bank Wire", time: "1 min ago" },
-        { name: "Marcus V.", amount: "$12,500", method: "Direct USD Card", time: "2 mins ago" },
-        { name: "Elena S.", amount: "$38,000", method: "USDC", time: "3 mins ago" },
-        { name: "David K.", amount: "$15,200", method: "USDT (TRC20)", time: "4 mins ago" },
-        { name: "Sarah B.", amount: "$50,000", method: "Bank Wire", time: "5 mins ago" },
-        { name: "Alexandre P.", amount: "$8,400", method: "USDT (ERC20)", time: "6 mins ago" },
-        { name: "Nikos G.", amount: "$27,900", method: "Direct USD Card", time: "7 mins ago" },
-        { name: "Chloe T.", amount: "$19,500", method: "USDT (TRC20)", time: "8 mins ago" },
-        { name: "Liam W.", amount: "$33,000", method: "Bank Wire", time: "10 mins ago" },
-        { name: "Steve M.", amount: "$14,000", method: "USDC", time: "11 mins ago" },
-        { name: "Sven H.", amount: "$62,000", method: "USDT (TRC20)", time: "12 mins ago" },
-        { name: "Carlos R.", amount: "$22,100", method: "Direct USD Card", time: "14 mins ago" },
-        { name: "Hannah L.", amount: "$9,800", method: "USDT (TRC20)", time: "15 mins ago" },
-        { name: "Rico B.", amount: "$41,500", method: "Bank Wire", time: "16 mins ago" },
-        { name: "Mei Ling C.", amount: "$29,000", method: "USDC", time: "18 mins ago" },
-        { name: "philip A.", amount: "$18,750", method: "USDT (TRC20)", time: "20 mins ago" }
-    ];
+    <script>
+        const payoutsList = [
+            { name: "Julius M.", amount: "$45,000", method: "USDT (TRC20)", time: "Just now" },
+            { name: "Kathy R.", amount: "$20,000", method: "Bank Wire", time: "1 min ago" },
+            { name: "Marcus V.", amount: "$12,500", method: "Direct USD Card", time: "2 mins ago" },
+            { name: "Elena S.", amount: "$38,000", method: "USDC", time: "3 mins ago" },
+            { name: "David K.", amount: "$15,200", method: "USDT (TRC20)", time: "4 mins ago" },
+            { name: "Sarah B.", amount: "$50,000", method: "Bank Wire", time: "5 mins ago" },
+            { name: "Alexandre P.", amount: "$8,400", method: "USDT (ERC20)", time: "6 mins ago" },
+            { name: "Nikos G.", amount: "$27,900", method: "Direct USD Card", time: "7 mins ago" },
+            { name: "Chloe T.", amount: "$19,500", method: "USDT (TRC20)", time: "8 mins ago" },
+            { name: "Liam W.", amount: "$33,000", method: "Bank Wire", time: "10 mins ago" },
+            { name: "Steve M.", amount: "$14,000", method: "USDC", time: "11 mins ago" },
+            { name: "Sven H.", amount: "$62,000", method: "USDT (TRC20)", time: "12 mins ago" },
+            { name: "Carlos R.", amount: "$22,100", method: "Direct USD Card", time: "14 mins ago" },
+            { name: "Hannah L.", amount: "$9,800", method: "USDT (TRC20)", time: "15 mins ago" },
+            { name: "Rico B.", amount: "$41,500", method: "Bank Wire", time: "16 mins ago" },
+            { name: "Mei Ling C.", amount: "$29,000", method: "USDC", time: "18 mins ago" },
+            { name: "Philip A.", amount: "$18,750", method: "USDT (TRC20)", time: "20 mins ago" }
+        ];
 
-    let currentPayoutIndex = 0;
+        let currentPayoutIndex = 0;
 
-    function cyclePayouts() {
-        const tickerElement = document.getElementById('payoutTicker');
-        const userEl = document.getElementById('payoutUser');
-        const amountEl = document.getElementById('payoutAmount');
-        const methodEl = document.getElementById('payoutMethod');
-        const timeEl = document.getElementById('payoutTime');
+        function cyclePayouts() {
+            const tickerElement = document.getElementById('payoutTicker');
+            const userEl = document.getElementById('payoutUser');
+            const amountEl = document.getElementById('payoutAmount');
+            const methodEl = document.getElementById('payoutMethod');
+            const timeEl = document.getElementById('payoutTime');
 
-        if (!tickerElement) return;
+            if (!tickerElement) return;
 
-        // Fade out transition
-        tickerElement.style.opacity = '0';
-        tickerElement.style.transform = 'translateY(-6px)';
+            tickerElement.style.opacity = '0';
+            tickerElement.style.transform = 'translateY(-6px)';
 
-        setTimeout(() => {
-            // Update to next person in array
-            currentPayoutIndex = (currentPayoutIndex + 1) % payoutsList.length;
-            const current = payoutsList[currentPayoutIndex];
+            setTimeout(() => {
+                currentPayoutIndex = (currentPayoutIndex + 1) % payoutsList.length;
+                const current = payoutsList[currentPayoutIndex];
 
-            userEl.textContent = current.name;
-            amountEl.textContent = current.amount + " USD";
-            methodEl.textContent = current.method;
-            timeEl.textContent = current.time;
+                userEl.textContent = current.name;
+                amountEl.textContent = current.amount + " USD";
+                methodEl.textContent = current.method;
+                timeEl.textContent = current.time;
 
-            // Fade in transition
-            tickerElement.style.opacity = '1';
-            tickerElement.style.transform = 'translateY(0)';
-        }, 400);
-    }
+                tickerElement.style.opacity = '1';
+                tickerElement.style.transform = 'translateY(0)';
+            }, 400);
+        }
 
-    // Change person every 3.5 seconds
-    setInterval(cyclePayouts, 3500);
-</script>
-
+        setInterval(cyclePayouts, 3500);
+    </script>
 
     <!-- Footer -->
     <footer class="bg-slate-950 border-t border-brand-border py-8">

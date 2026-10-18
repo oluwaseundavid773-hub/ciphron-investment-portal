@@ -135,7 +135,7 @@
 
                 <div class="flex flex-col sm:flex-row gap-3">
                     <div class="flex-grow bg-slate-950 border border-brand-border rounded-xl py-3 px-4 text-sm font-mono text-emerald-400 flex items-center justify-between select-all overflow-x-auto">
-                        <span id="referralLinkText">https://ciphron-investment.com/signup.html?ref=CIPHRON_USER</span>
+                        <span id="referralLinkText">https://ciphron-investment-portal.vercel.app/signup.html?ref=CIPHRON_USER</span>
                     </div>
                     <button onclick="copyReferralLink()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-3 rounded-xl transition shadow-lg shadow-emerald-500/20 text-xs flex items-center justify-center space-x-2 shrink-0 cursor-pointer">
                         <i class="fa-solid fa-copy"></i>
@@ -235,7 +235,8 @@
             }
 
             try {
-                const response = await fetch('http://localhost:5000/api/referrals', {
+                // Production path relative to Vercel route rewrites
+                const response = await fetch('/api/referrals', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -254,7 +255,7 @@
                     }
 
                     if (data.referralCode) {
-                        const link = `https://ciphron-investment.com/signup.html?ref=${data.referralCode}`;
+                        const link = `https://ciphron-investment-portal.vercel.app/signup.html?ref=${data.referralCode}`;
                         document.getElementById('referralLinkText').textContent = link;
                     }
 
@@ -272,7 +273,7 @@
                 if (activeUser) {
                     document.getElementById('userNameDisplay').textContent = activeUser.name;
                     document.getElementById('userAvatar').textContent = activeUser.name.charAt(0).toUpperCase();
-                    document.getElementById('referralLinkText').textContent = `https://ciphron-investment.com/signup.html?ref=${activeUser.name.toUpperCase().replace(/\s+/g, '_')}`;
+                    document.getElementById('referralLinkText').textContent = `https://ciphron-investment-portal.vercel.app/signup.html?ref=${activeUser.name.toUpperCase().replace(/\s+/g, '_')}`;
                 }
             }
         });

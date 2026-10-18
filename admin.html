@@ -139,7 +139,8 @@
             const tableBody = document.getElementById('depositTableBody');
 
             try {
-                const response = await fetch('http://localhost:5000/api/admin/overview', {
+                // Production path relative to Vercel route rewrites
+                const response = await fetch('/api/admin/overview', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -206,7 +207,8 @@
             if (!confirm('Are you sure you want to authorize this deposit and credit the client account?')) return;
 
             try {
-                const response = await fetch('http://localhost:5000/api/admin/approve-deposit', {
+                // Production path relative to Vercel route rewrites
+                const response = await fetch('/api/admin/approve-deposit', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

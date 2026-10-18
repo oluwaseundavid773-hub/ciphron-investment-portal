@@ -166,7 +166,8 @@
                 const password = document.getElementById('signupPassword').value;
 
                 try {
-                    const response = await fetch('http://localhost:5000/api/auth/signup', {
+                    // Production path relative to Vercel route rewrites
+                    const response = await fetch('/api/auth/signup', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -186,7 +187,7 @@
                     }
                 } catch (err) {
                     console.error('Signup error:', err);
-                    alert('Server unreachable. Make sure your backend is running on port 5000.');
+                    alert('Server unreachable. Please check your network connection.');
                 }
             });
         }
