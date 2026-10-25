@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -16,9 +17,12 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Wait for the database connection before handling any request
+// Make sure the database is connected before handling any request
 app.use(async (req, res, next) => {
     await connectDB();
+    if (mongoose.connection.readyState !== 1) {
+        return res.status(503).json({ error: 'Database temporarily unavailable. Please try again.' });
+    }
     next();
 });
 
