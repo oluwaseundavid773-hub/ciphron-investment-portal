@@ -361,6 +361,27 @@
         </form>
     </div>
 
+    <!-- CIPHRON KYC Withdrawal Modal -->
+<div class="bg-slate-900 text-white p-6 rounded-xl border border-amber-500/30 max-w-md shadow-2xl">
+  <div class="flex items-center space-x-3 mb-4">
+    <span class="text-2xl">🛡️</span>
+    <h3 class="text-lg font-bold text-amber-400">KYC Verification Required</h3>
+  </div>
+  
+  <p class="text-sm text-slate-300 mb-4">
+    To protect your funds and complete your withdrawal request, please verify your identity. This is a mandatory 1-time security protocol.
+  </p>
+  
+  <ul class="text-xs text-slate-400 space-y-2 mb-6">
+    <li class="flex items-center">✅ Bank-Grade 256-bit Encryption Protection</li>
+    <li class="flex items-center">⚡ Instant Payout Release Upon Approval</li>
+  </ul>
+  
+  <button class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-lg transition-all">
+    Complete KYC & Withdraw
+  </button>
+</div>
+
     <!-- Scripts -->
     <script>
         let currentUser = JSON.parse(localStorage.getItem('ciphron_active_user')) || {
